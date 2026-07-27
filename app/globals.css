@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+/* ============================================================
+   axd.labs — design tokens
+   Dark agent aesthetic. Pure-black canvas, brand gradient orb.
+   Tailwind v4 CSS-first config: tokens live in @theme so they
+   are usable as utilities (e.g. text-brand-orange) AND as raw
+   CSS vars (var(--brand-orange)).
+   ============================================================ */
+
+@theme {
+  /* Brand gradient — the axd.blob */
+  --color-brand-orange: #f59b00;
+  --color-brand-purple: #a11ff2;
+  --color-brand-red: #ef3c3f;
+
+  /* Canvas */
+  --color-ink: #ffffff;
+  --color-canvas: #000000;
+
+  /* Fonts (wired in layout.tsx via next/font) */
+  --font-display: var(--font-display-src), "Neue Montreal", system-ui, sans-serif;
+  --font-sans: var(--font-sans-src), "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --brand-orange: #f59b00;
+  --brand-purple: #a11ff2;
+  --brand-red: #ef3c3f;
+
+  /* The signature 3-stop brand gradient, reused everywhere */
+  --brand-gradient: linear-gradient(
+    180deg,
+    var(--brand-orange) 0%,
+    var(--brand-purple) 49%,
+    var(--brand-red) 100%
+  );
+  --brand-sheen: linear-gradient(
+    180deg,
+    rgba(245, 155, 0, 0.14) 0%,
+    rgba(161, 31, 242, 0.14) 49%,
+    rgba(239, 60, 63, 0.14) 100%
+  );
+  --brand-sheen-soft: linear-gradient(
+    180deg,
+    rgba(245, 155, 0, 0.1) 0%,
+    rgba(161, 31, 242, 0.1) 49%,
+    rgba(239, 60, 63, 0.1) 100%
+  );
+
+  /* Text tiers */
+  --ink-1: rgba(255, 255, 255, 1);
+  --ink-2: rgba(255, 255, 255, 0.7);
+  --ink-3: rgba(255, 255, 255, 0.45);
+  --hairline: rgba(255, 255, 255, 0.12);
+
+  /* Motion */
+  --settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 160ms;
+  --t-base: 320ms;
+  --t-slow: 620ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--ink-1);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(161, 31, 242, 0.4);
+  color: #fff;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Utility: text painted with the brand gradient */
+.text-brand {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ------------------------------------------------------------
+   Page transition (template.tsx re-mounts per navigation)
+   ------------------------------------------------------------ */
+.page-enter {
+  animation: pageEnter var(--t-slow) var(--settle) both;
+}
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* ------------------------------------------------------------
+   axd.blob animation primitives
+   ------------------------------------------------------------ */
+
+/* Gradient body: slow rotation of the conic sheen + breathing */
+@keyframes blobRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes blobBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.035);
+    opacity: 0.92;
+  }
+}
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+/* Highlight blobs drift */
+@keyframes highlightDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(6%, -5%) scale(1.05);
+  }
+  66% {
+    transform: translate(-5%, 4%) scale(0.97);
+  }
+}
+
+/* Ripple rings behind the hero blob */
+@keyframes ripplePulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  22% {
+    opacity: var(--ripple-op, 0.35);
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+/* Liquid-glass sheen sweep */
+@keyframes glassSheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* Reveal-on-scroll (IntersectionObserver adds .in) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(8px);
+  transition: opacity var(--t-slow) var(--settle),
+    transform var(--t-slow) var(--settle), filter var(--t-slow) var(--settle);
+  will-change: opacity, transform, filter;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+/* ------------------------------------------------------------
+   Hero typewriter caret
+   ------------------------------------------------------------ */
+.tw-caret {
+  display: inline-block;
+  width: 3px;
+  height: 0.95em;
+  margin-left: 5px;
+  vertical-align: -0.1em;
+  border-radius: 2px;
+  background: var(--brand-gradient);
+  animation: caretBlink 1.05s steps(1, end) infinite;
+}
+@keyframes caretBlink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   Apple-style letter-by-letter blur reveal (BlurReveal)
+   Letters settle in from just above with a soft blur, staggered.
+   ------------------------------------------------------------ */
+.blur-word {
+  display: inline-block;
+}
+.blur-letter {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(-0.4em);
+  transition: opacity 640ms var(--settle), filter 640ms var(--settle),
+    transform 640ms var(--settle);
+  will-change: opacity, filter, transform;
+}
+.blur-reveal.in .blur-letter {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------
+   axd.blob click reaction — flicker/blink + gradient wave, plus
+   an expanding ripple ring. Triggered by .is-burst on the root.
+   ------------------------------------------------------------ */
+.axd-blob {
+  cursor: pointer;
+}
+.axd-blob.is-burst > svg {
+  animation: blobBurstFx 720ms var(--settle) both;
+}
+@keyframes blobBurstFx {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  8% {
+    opacity: 0.32;
+  }
+  16% {
+    opacity: 0.92;
+    transform: scale(1.07);
+  }
+  27% {
+    opacity: 0.28;
+  }
+  40% {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  56% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+  72% {
+    opacity: 1;
+    transform: scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.blob-burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 55%;
+  height: 55%;
+  border-radius: 9999px;
+  border: 2px solid rgba(200, 140, 255, 0.55);
+  box-shadow: 0 0 34px rgba(161, 31, 242, 0.4);
+  pointer-events: none;
+  animation: blobBurst 900ms var(--settle) forwards;
+}
+@keyframes blobBurst {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .reveal {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .blur-letter {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .tw-caret {
+    animation: none !important;
+  }
+  .axd-blob.is-burst > svg {
+    animation: none !important;
+  }
+  .blob-burst {
+    display: none !important;
+  }
+}
