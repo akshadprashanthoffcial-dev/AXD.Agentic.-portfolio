@@ -47,6 +47,27 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "cms-editor-revamp",
+    title: "Reimagining an Enterprise CMS",
+    fullTitle:
+      "Reimagining an Enterprise CMS into an AI-first Self-Serve Platform",
+    client: "Joveo",
+    year: "2026",
+    categories: ["Web Designs", "Visual Design"],
+    summary:
+      "Turning weeks of cross-team back-and-forth into a guided workflow that lets non-technical marketing teams build enterprise career sites themselves.",
+    role: "Visual Designer → Product Designer → Design Engineer",
+    period: "2026",
+    tools: ["Figma", "Next.js", "React", "TypeScript", "Claude Code"],
+    prototypeUrl: "https://talent-cms-studio.vercel.app/",
+    intro: [
+      "I redesigned the service delivery model of Joveo's enterprise CMS by combining AI planning, reusable widget libraries, and guided editing into a self-serve experience.",
+    ],
+    cover: "/projects/cms-editor/cover.png",
+    banner: "/projects/cms-editor/banner.png",
+    blocks: [],
+  },
+  {
     slug: "myntra-crm",
     title: "CRM Campaign Design",
     client: "Myntra",
@@ -73,27 +94,6 @@ export const PROJECTS: Project[] = [
       { span: "half", src: "/projects/myntra-crm/result-3.jpg", caption: "Diwali Sale — deal templates" },
       { span: "half", src: "/projects/myntra-crm/result-4.jpg", caption: "Wedding season — in-app revenue banners" },
     ],
-  },
-  {
-    slug: "cms-editor-revamp",
-    title: "Reimagining an Enterprise CMS",
-    fullTitle:
-      "Reimagining an Enterprise CMS into an AI-first Self-Serve Platform",
-    client: "Joveo",
-    year: "2026",
-    categories: ["Web Designs", "Visual Design"],
-    summary:
-      "Turning weeks of cross-team back-and-forth into a guided workflow that lets non-technical marketing teams build enterprise career sites themselves.",
-    role: "Visual Designer → Product Designer → Design Engineer",
-    period: "2026",
-    tools: ["Figma", "Next.js", "React", "TypeScript", "Claude Code"],
-    prototypeUrl: "https://talent-cms-studio.vercel.app/",
-    intro: [
-      "I redesigned the service delivery model of Joveo's enterprise CMS by combining AI planning, reusable widget libraries, and guided editing into a self-serve experience.",
-    ],
-    cover: "/projects/cms-editor/cover.png",
-    banner: "/projects/cms-editor/banner.png",
-    blocks: [],
   },
   {
     slug: "web-template",

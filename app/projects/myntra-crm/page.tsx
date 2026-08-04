@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS, getProject } from "@/data/projects";
 import ImageBlock from "@/components/projects/ImageBlock";
-import LiquidImage from "@/components/effects/LiquidImage";
 import Reveal from "@/components/ui/Reveal";
 import BlurReveal from "@/components/ui/BlurReveal";
 import FooterBlob from "@/components/FooterBlob";
@@ -132,19 +131,13 @@ export default function MyntraCaseStudy() {
         <div className="mx-auto max-w-6xl">
           {/* ---------------- Cover — first image in the scroll ---------------- */}
           <Reveal>
-            <figure className="mb-14">
-              <LiquidImage
-                src="/projects/myntra-crm/cover-v2.jpg"
-                alt={`${P.client} · ${P.title}`}
-                ratio={COVER_RATIO}
-                priority
-                className="rounded-2xl border border-white/10"
-                sizes="(max-width: 900px) 100vw, 900px"
-              />
-              <figcaption className="mt-2.5 text-sm text-white/40">
-                {P.client} · {P.title}
-              </figcaption>
-            </figure>
+            <ImageBlock
+              src="/projects/myntra-crm/cover-v2.jpg"
+              caption={`${P.client} · ${P.title}`}
+              ratio={COVER_RATIO}
+              priority
+              className="mb-14"
+            />
           </Reveal>
 
           {/* ---------------- Header ---------------- */}
@@ -169,7 +162,7 @@ export default function MyntraCaseStudy() {
           </header>
 
           {/* ---------------- Facts + story ---------------- */}
-          <div className="grid grid-cols-1 gap-10 pb-24 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-16">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-16">
             {/* Left — fixed project facts */}
             <aside
               aria-label="Project facts"
@@ -227,7 +220,7 @@ export default function MyntraCaseStudy() {
             </aside>
 
             {/* Right — scrolling story */}
-            <div className="min-w-0 max-w-3xl">
+            <div className="min-w-0 max-w-3xl lg:pb-24">
               <h2 className="font-display mb-5 text-[clamp(22px,2.8vw,32px)] text-white">
                 The challenge
               </h2>

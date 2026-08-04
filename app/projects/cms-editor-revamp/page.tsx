@@ -341,15 +341,17 @@ export default function CmsCaseStudy() {
               <div className="text-[11px] uppercase tracking-[0.2em] text-white/35">
                 Tools used
               </div>
-              <div className="mt-3 flex flex-wrap gap-2.5">
+              <div className="mt-4 flex flex-wrap gap-3">
                 {TOOLS.map((t) => (
-                  <div key={t.name} className="group relative">
-                    <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-[9px] border border-white/10 transition-transform duration-200 ease-out group-hover:-translate-y-1 group-hover:border-white/25">
+                  <div
+                    key={t.name}
+                    className="flex items-center gap-2.5 rounded-full border border-white/15 py-2 pl-2.5 pr-4 transition-colors duration-200 hover:border-white/30"
+                    style={{ background: "var(--brand-sheen-soft)" }}
+                  >
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/10">
                       {t.node}
                     </div>
-                    <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-black/90 px-2 py-1 text-[10px] text-white/80 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-                      {t.name}
-                    </span>
+                    <span className="text-[13px] font-medium text-white/85">{t.name}</span>
                   </div>
                 ))}
               </div>
@@ -368,9 +370,8 @@ export default function CmsCaseStudy() {
               </p>
             </Reveal>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <CTA label="Try the live prototype" href="#live-demo" size="md" />
-              <CTA label="View full prototype" href={P.prototypeUrl!} external size="md" />
+            <div className="mt-8">
+              <CTA label="View live prototype" href={P.prototypeUrl!} external size="md" />
             </div>
           </header>
 
