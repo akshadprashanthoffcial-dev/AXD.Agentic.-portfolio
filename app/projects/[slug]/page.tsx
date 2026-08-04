@@ -12,7 +12,7 @@ import CTA from "@/components/ui/CTA";
 
 /** Projects with a bespoke route of their own — those static segments
  *  win over this dynamic one, so they must not be generated here too. */
-const BESPOKE = new Set(["cms-editor-revamp"]);
+const BESPOKE = new Set(["cms-editor-revamp", "myntra-crm"]);
 
 export function generateStaticParams() {
   return PROJECTS.filter((p) => !BESPOKE.has(p.slug)).map((p) => ({
