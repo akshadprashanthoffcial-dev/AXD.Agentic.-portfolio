@@ -33,6 +33,7 @@ import {
   TokenEconomics,
   UserGap,
 } from "@/components/case/Diagrams";
+import { ClaudeIcon, CursorIcon, GithubIcon, VercelIcon } from "@/components/case/ToolIcons";
 
 const P = getProject("cms-editor-revamp")!;
 
@@ -270,6 +271,14 @@ const REFLECTIONS = [
   },
 ];
 
+const TOOLS = [
+  { name: "Cursor", node: <CursorIcon /> },
+  { name: "Claude", node: <ClaudeIcon /> },
+  { name: "Figma", node: <Image src="/projects/cms-editor/tools/figma.png" alt="" width={18} height={18} className="h-[18px] w-[18px] rounded-[3px] object-cover" /> },
+  { name: "GitHub", node: <GithubIcon /> },
+  { name: "Vercel", node: <VercelIcon /> },
+];
+
 const CLOSING_TAKEAWAYS = [
   "Fewer teams between a request and a published page — not a nicer editor.",
   "AI's job: make existing work reachable, not replace it.",
@@ -328,6 +337,24 @@ export default function CmsCaseStudy() {
               <Meta term="Scope" value="Service model, product strategy, UX, design system, prototype" />
             </dl>
 
+            <div className="mt-8 border-t border-white/10 pt-8">
+              <div className="text-[11px] uppercase tracking-[0.2em] text-white/35">
+                Tools used
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2.5">
+                {TOOLS.map((t) => (
+                  <div key={t.name} className="group relative">
+                    <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-[9px] border border-white/10 transition-transform duration-200 ease-out group-hover:-translate-y-1 group-hover:border-white/25">
+                      {t.node}
+                    </div>
+                    <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-black/90 px-2 py-1 text-[10px] text-white/80 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                      {t.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <Reveal>
               <p
                 className="mt-12 rounded-2xl border border-white/15 px-6 py-8 text-[clamp(18px,2.4vw,24px)] leading-snug text-white/90 md:px-10 md:py-10"
@@ -341,8 +368,9 @@ export default function CmsCaseStudy() {
               </p>
             </Reveal>
 
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap gap-4">
               <CTA label="Try the live prototype" href="#live-demo" size="md" />
+              <CTA label="View full prototype" href={P.prototypeUrl!} external size="md" />
             </div>
           </header>
 

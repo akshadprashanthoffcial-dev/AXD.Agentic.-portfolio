@@ -87,7 +87,7 @@ export const PROJECTS: Project[] = [
     role: "Visual Designer → Product Designer → Design Engineer",
     period: "2026",
     tools: ["Figma", "Next.js", "React", "TypeScript", "Claude Code"],
-    prototypeUrl: "http://localhost:3005",
+    prototypeUrl: "https://talent-cms-studio.vercel.app/",
     intro: [
       "I redesigned the service delivery model of Joveo's enterprise CMS by combining AI planning, reusable widget libraries, and guided editing into a self-serve experience.",
     ],

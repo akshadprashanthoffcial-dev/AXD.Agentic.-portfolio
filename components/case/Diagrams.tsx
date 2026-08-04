@@ -407,7 +407,6 @@ export function CaseProgress({
   sections: { id: string; label: string }[];
 }) {
   const [pct, setPct] = useState(0);
-  const [active, setActive] = useState(sections[0]?.id ?? "");
 
   useEffect(() => {
     let raf = 0;
@@ -416,15 +415,6 @@ export function CaseProgress({
       raf = requestAnimationFrame(() => {
         const max = document.body.scrollHeight - window.innerHeight;
         setPct(max > 0 ? Math.min(1, window.scrollY / max) : 0);
-
-        // Active section = the last one whose top has passed 40% of viewport.
-        const line = window.innerHeight * 0.4;
-        let current = sections[0]?.id ?? "";
-        for (const s of sections) {
-          const el = document.getElementById(s.id);
-          if (el && el.getBoundingClientRect().top <= line) current = s.id;
-        }
-        setActive(current);
       });
     };
     onScroll();
@@ -438,47 +428,10 @@ export function CaseProgress({
   }, [sections]);
 
   return (
-    <>
-      <div
-        className="case-progress"
-        style={{ transform: `scaleX(${pct})` }}
-        aria-hidden
-      />
-
-      <nav
-        aria-label="Case study sections"
-        className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 xl:flex"
-      >
-        {sections.map((s) => {
-          const on = s.id === active;
-          return (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className="group flex items-center justify-end gap-3"
-            >
-              <span
-                className={`text-[11px] uppercase tracking-[0.16em] transition-all duration-300 ${
-                  on
-                    ? "text-white/70"
-                    : "text-white/0 group-hover:text-white/40"
-                }`}
-              >
-                {s.label}
-              </span>
-              <span
-                className="h-1.5 rounded-full transition-all duration-300"
-                style={{
-                  width: on ? 22 : 6,
-                  background: on
-                    ? "linear-gradient(90deg, var(--brand-orange), var(--brand-purple))"
-                    : "rgba(255,255,255,0.22)",
-                }}
-              />
-            </a>
-          );
-        })}
-      </nav>
-    </>
+    <div
+      className="case-progress"
+      style={{ transform: `scaleX(${pct})` }}
+      aria-hidden
+    />
   );
 }
