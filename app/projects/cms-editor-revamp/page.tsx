@@ -15,7 +15,6 @@ import BlurReveal from "@/components/ui/BlurReveal";
 import CTA from "@/components/ui/CTA";
 import ScreenFrame from "@/components/case/ScreenFrame";
 import FeatureBlock, { type Feature } from "@/components/case/FeatureBlock";
-import { FeatureRail } from "@/components/case/FeatureRail";
 import LiveDemo from "@/components/case/LiveDemo";
 import {
   Card,
@@ -530,8 +529,6 @@ export default function CmsCaseStudy() {
               title="Eight surfaces, each answering one problem"
               lede="Feature by feature rather than screen by screen — because the interesting part of each surface is the argument it settles, not its layout."
             />
-
-            <FeatureRail features={FEATURES.map((f) => ({ n: f.n, name: f.name }))} />
 
             <div>
               {FEATURES.map((f, i) => (
