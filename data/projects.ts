@@ -55,14 +55,14 @@ export const PROJECTS: Project[] = [
     summary:
       "Push, email and in-app campaign creatives for India's biggest fashion sale events — reaching millions of Myntra users.",
     role: "Design Intern — CRM Team",
-    period: "Jun – Dec 2025",
+    period: "Jul – Nov 2025",
     tools: ["Figma", "Photoshop", "Illustrator", "Midjourney", "Gemini", "ChatGPT"],
     intro: [
       "Myntra's CRM team sends daily campaigns to millions of users — push notifications, emails, and in-app banners. The job wasn't just producing creatives; it was making visuals compelling enough to earn a tap during India's most competitive shopping events, while staying true to each sale's design language.",
       "I owned the deal templates for entire sales — 20+ creatives per event across offer types — plus in-app revenue banners styled as festive editorial product photography. AI became a production partner: Midjourney and Gemini for imagery and festive backgrounds, with design judgment deciding what actually shipped.",
       "The takeaway: speed alone doesn't improve marketing. AI only becomes valuable when it's paired with strong design judgment and a clear understanding of how customers actually behave.",
     ],
-    cover: "/projects/myntra-crm/hero.jpg",
+    cover: "/projects/myntra-crm/cover-list.jpg",
     blocks: [
       { span: "full", src: "/projects/myntra-crm/hero.jpg", caption: "Big Fashion Festival — campaign hero" },
       { span: "half", src: "/projects/myntra-crm/method-1.jpg", caption: "Big Fashion Festival — concept study and visual direction" },
