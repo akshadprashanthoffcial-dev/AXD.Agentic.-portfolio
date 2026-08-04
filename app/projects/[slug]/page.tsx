@@ -10,8 +10,14 @@ import Sparkles from "@/components/ui/Sparkles";
 import { CATEGORY_ICONS } from "@/components/ui/Icons";
 import CTA from "@/components/ui/CTA";
 
+/** Projects with a bespoke route of their own — those static segments
+ *  win over this dynamic one, so they must not be generated here too. */
+const BESPOKE = new Set(["cms-editor-revamp"]);
+
 export function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+  return PROJECTS.filter((p) => !BESPOKE.has(p.slug)).map((p) => ({
+    slug: p.slug,
+  }));
 }
 
 export async function generateMetadata({

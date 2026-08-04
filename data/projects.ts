@@ -29,6 +29,8 @@ export type Block = {
 export type Project = {
   slug: string;
   title: string;
+  /** Long-form headline for bespoke case-study pages. Falls back to `title`. */
+  fullTitle?: string;
   client: string;
   year: string;
   categories: Category[];
@@ -39,6 +41,7 @@ export type Project = {
   prototypeUrl?: string; // "View Prototype" CTA
   intro: string[]; // detail-page opening paragraphs
   cover?: string; // list-page thumbnail; grey box if absent
+  banner?: string; // bespoke case-study hero banner
   blocks: Block[]; // detail-page gallery
 };
 
@@ -73,27 +76,24 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "cms-editor-revamp",
-    title: "CMS Editor Revamp",
+    title: "Reimagining an Enterprise CMS",
+    fullTitle:
+      "Reimagining an Enterprise CMS into an AI-first Self-Serve Platform",
     client: "Joveo",
     year: "2026",
     categories: ["Web Designs", "Visual Design"],
     summary:
-      "Reimagining Joveo's career-site CMS as a guided, brand-live builder — plan cheap, design rich, publish anywhere.",
-    role: "Product Designer",
+      "Turning weeks of cross-team back-and-forth into a guided workflow that lets non-technical marketing teams build enterprise career sites themselves.",
+    role: "Visual Designer → Product Designer → Design Engineer",
     period: "2026",
-    tools: ["Figma", "Next.js", "Claude Code"],
+    tools: ["Figma", "Next.js", "React", "TypeScript", "Claude Code"],
     prototypeUrl: "http://localhost:3005",
     intro: [
-      "Joveo's Talent CMS lets teams assemble career sites, but the old editor asked people to design from a blank canvas. The revamp is built on three principles: plan cheap and design rich, guided assembly instead of a blank canvas, and brand-live previews everywhere.",
-      "The result is a full Create → Plan → Sitemap → Design → Publish flow with a library of 33 widgets and 5 seeded brands, so a first draft looks on-brand before a single manual style is touched.",
+      "I redesigned the service delivery model of Joveo's enterprise CMS by combining AI planning, reusable widget libraries, and guided editing into a self-serve experience.",
     ],
-    blocks: [
-      { span: "full" },
-      { span: "half" },
-      { span: "half" },
-      { span: "full" },
-      { span: "full" },
-    ],
+    cover: "/projects/cms-editor/cover.png",
+    banner: "/projects/cms-editor/banner.png",
+    blocks: [],
   },
   {
     slug: "web-template",
