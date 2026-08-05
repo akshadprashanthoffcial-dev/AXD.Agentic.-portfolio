@@ -1,5 +1,5 @@
 // ============================================================
-// FeatureBlock — one product surface, argued as
+// FeatureBlock, one product surface, argued as
 // Problem → Solution → Impact, next to the screen that proves it.
 // Alternates side so the page has rhythm.
 // ============================================================
@@ -13,7 +13,7 @@ export type Feature = {
   problem: string;
   solution: string;
   impact: string;
-  /** Implementation note — the design-engineer layer. Optional. */
+  /** Implementation note, the design-engineer layer. Optional. */
   build?: string;
   shot?: {
     src: string;

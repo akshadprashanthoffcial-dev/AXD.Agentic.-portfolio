@@ -27,7 +27,7 @@ type Props = {
   onNavigate?: () => void;
 };
 
-/** The home hero search — gradient-bordered liquid-glass bar with a
+/** The home hero search, gradient-bordered liquid-glass bar with a
  *  frosted suggestion dropdown. */
 export default function SearchBar({ autoFocus = false, onNavigate }: Props) {
   const [q, setQ] = useState("");
@@ -104,7 +104,7 @@ export default function SearchBar({ autoFocus = false, onNavigate }: Props) {
         </div>
       </div>
 
-      {/* Suggestions dropdown — dark translucent */}
+      {/* Suggestions dropdown, dark translucent */}
       {showList && list.length > 0 && (
         <ul
           className="absolute left-0 right-0 top-[calc(100%+10px)] z-30 overflow-hidden rounded-[24px] border border-white/10 p-1.5 backdrop-blur-xl"

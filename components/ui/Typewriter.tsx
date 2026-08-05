@@ -17,7 +17,7 @@ type Props = {
 
 /**
  * Typewriter that cycles through phrases: types one out, holds, deletes it,
- * pauses, then moves to the next — forever. A soft gradient caret blinks at
+ * pauses, then moves to the next, forever. A soft gradient caret blinks at
  * the end. Honors prefers-reduced-motion (first phrase only, no motion).
  */
 export default function Typewriter({

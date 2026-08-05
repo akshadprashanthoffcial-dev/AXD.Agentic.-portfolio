@@ -1,7 +1,7 @@
 "use client";
 
 // ============================================================
-// Diagrams — the set-pieces of the CMS case study.
+// Diagrams, the set-pieces of the CMS case study.
 // Each one carries an argument, not decoration.
 // ============================================================
 
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Card, Chain, Tag, useInView } from "./CaseKit";
 
 /* ------------------------------------------------------------
-   1. OrchestratorCompare — why AI doesn't generate everything.
+   1. OrchestratorCompare, why AI doesn't generate everything.
    Two lanes side by side + the cost argument underneath.
    ------------------------------------------------------------ */
 
@@ -80,7 +80,7 @@ function Lane({
       </div>
       <h3 className="font-display mb-6 text-[22px] text-white">{title}</h3>
 
-      {/* Lanes read top-to-bottom at every breakpoint — they sit side by
+      {/* Lanes read top-to-bottom at every breakpoint, they sit side by
           side and are meant to be compared step against step. */}
       <Chain nodes={nodes} tone={tone} dense vertical />
 
@@ -94,7 +94,7 @@ export function TokenEconomics() {
   const { ref } = useInView<HTMLDivElement>("-8%");
 
   const rows = [
-    { label: "Library match — zero generation", pct: 100, tone: "brand" },
+    { label: "Library match, zero generation", pct: 100, tone: "brand" },
     { label: "Library match + AI-written copy", pct: 34, tone: "brand" },
     { label: "Full component generation", pct: 8, tone: "danger" },
   ];
@@ -109,7 +109,7 @@ export function TokenEconomics() {
       </h3>
       <p className="mb-6 max-w-2xl text-[14px] leading-relaxed text-white/50">
         Every request is routed to the cheapest tier that can still answer
-        it — a plain library match, a library match with AI-written copy,
+        it, a plain library match, a library match with AI-written copy,
         or, only when nothing fits, full generation. Each row below is a
         landing tier, and the bar is how often real requests should settle
         there.
@@ -140,7 +140,7 @@ export function TokenEconomics() {
       </div>
 
       <p className="mt-6 text-[14px] leading-relaxed text-white/45">
-        Targets, not measurements — the routing policy the prototype encodes.
+        Targets, not measurements, the routing policy the prototype encodes.
         Pushing the common case down to a library lookup is what makes the
         feature affordable to run at enterprise volume.
       </p>
@@ -149,7 +149,7 @@ export function TokenEconomics() {
 }
 
 /* ------------------------------------------------------------
-   2. TierExplorer — progressive disclosure, made clickable.
+   2. TierExplorer, progressive disclosure, made clickable.
    ------------------------------------------------------------ */
 
 const TIERS = [
@@ -159,7 +159,7 @@ const TIERS = [
     who: "A recruiter marketer who has never built a page.",
     surfaces: ["Plans", "Templates", "AI prompt"],
     hidden: ["Widget internals", "Style controls", "Element overrides"],
-    line: "Answers one question — what is this site for — and gets a full draft.",
+    line: "Answers one question, what is this site for, and gets a full draft.",
   },
   {
     id: "intermediate",
@@ -236,7 +236,7 @@ export function TierExplorer() {
             <Tag>Still hidden</Tag>
             {t.hidden.length === 0 ? (
               <p className="text-[13px] text-white/35">
-                Nothing — the full surface is available at this tier.
+                Nothing, the full surface is available at this tier.
               </p>
             ) : (
               <div className="flex flex-wrap gap-2">
@@ -263,7 +263,7 @@ export function TierExplorer() {
 }
 
 /* ------------------------------------------------------------
-   3. BeforeAfter — the summary table.
+   3. BeforeAfter, the summary table.
    ------------------------------------------------------------ */
 
 const ROWS: [string, string][] = [
@@ -282,7 +282,7 @@ export function BeforeAfter() {
     <div ref={ref} className="ba">
       <div className="mb-10 grid gap-6 md:grid-cols-2">
         <div>
-          <Tag tone="problem">Old — service model</Tag>
+          <Tag tone="problem">Old, service model</Tag>
           <Chain
             nodes={["Service", "Request", "Wait", "Approve", "Repeat"]}
             tone="danger"
@@ -290,7 +290,7 @@ export function BeforeAfter() {
           />
         </div>
         <div>
-          <Tag tone="impact">New — product model</Tag>
+          <Tag tone="impact">New, product model</Tag>
           <Chain
             nodes={["Self-serve", "Plan", "Generate", "Edit", "Publish"]}
             tone="brand"
@@ -322,7 +322,7 @@ export function BeforeAfter() {
 }
 
 /* ------------------------------------------------------------
-   4. UserGap — section 2. What we asked of people vs what they had.
+   4. UserGap, section 2. What we asked of people vs what they had.
    ------------------------------------------------------------ */
 
 export function UserGap() {
@@ -346,7 +346,7 @@ export function UserGap() {
       <Card>
         <Tag tone="problem">Who was actually using it</Tag>
         <p className="mb-6 text-[15px] leading-relaxed text-white/60">
-          Marketing and talent-brand teams — the people accountable for
+          Marketing and talent-brand teams, the people accountable for
           applications, not for markup.
         </p>
         <ul className="space-y-2.5">
@@ -398,7 +398,7 @@ export function UserGap() {
 }
 
 /* ------------------------------------------------------------
-   5. CaseProgress — reading progress + section rail.
+   5. CaseProgress, reading progress + section rail.
    ------------------------------------------------------------ */
 
 export function CaseProgress({

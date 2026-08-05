@@ -27,7 +27,7 @@ export default function ContactPage() {
       />
       <Reveal>
         <p className="mt-4 max-w-md text-white/55">
-          Hiring, collaborating, or just curious about the work — the fastest way
+          Hiring, collaborating, or just curious about the work, the fastest way
           to reach me is below. Based in {SITE.operatedFrom}.
         </p>
       </Reveal>

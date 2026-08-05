@@ -12,6 +12,9 @@ type Props = {
   /** initial delay before the first letter, ms */
   delay?: number;
   style?: React.CSSProperties;
+  /** Skip the scroll check and reveal on mount, for hero text that should
+   *  never wait on a viewport intersection. */
+  immediate?: boolean;
 };
 
 /**
@@ -27,6 +30,7 @@ export default function BlurReveal({
   stagger = 18,
   delay = 0,
   style,
+  immediate = false,
 }: Props) {
   const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(false);
@@ -34,7 +38,7 @@ export default function BlurReveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (immediate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setShown(true);
       return;
     }
@@ -51,7 +55,7 @@ export default function BlurReveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [immediate]);
 
   const words = text.split(" ");
   let i = 0; // running letter index for stagger

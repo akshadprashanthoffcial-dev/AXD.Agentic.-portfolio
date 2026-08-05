@@ -1,10 +1,10 @@
 "use client";
 
 // ============================================================
-// LiveDemo — a working port of Brand Studio from talent-cms-studio:
+// LiveDemo, a working port of Brand Studio from talent-cms-studio:
 // pick a branding on the left, the career-site preview on the right
 // re-skins instantly from that brand's real tokens (color, type,
-// radius). No editing/chat here — Brand Studio is a branding picker,
+// radius). No editing/chat here - Brand Studio is a branding picker,
 // not a content editor, so this only ports that one behavior.
 // ============================================================
 
@@ -137,7 +137,7 @@ export default function LiveDemo() {
         <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.02] px-5 py-3">
           <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden />
           <span className="text-[11px] uppercase tracking-[0.18em] text-white/40">
-            Live preview — {brand.name}
+            Live preview - {brand.name}
           </span>
         </div>
 
@@ -198,7 +198,7 @@ export default function LiveDemo() {
               style={{ color: brand.muted }}
             >
               A look at your body copy in this brand, re-skinned live from
-              real tokens — color, type and radius, zero manual styling.
+              real tokens, color, type and radius, zero manual styling.
             </p>
 
             <div className="mt-7 flex items-center justify-center gap-3">

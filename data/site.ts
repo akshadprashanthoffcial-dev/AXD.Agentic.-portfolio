@@ -3,7 +3,7 @@ export const SITE = {
   name: "AXD",
   fullName: "axd.labs",
   operator: "Akshad Prashanth",
-  tagline: "One operator. Several instruments.",
+  tagline: "Visual & motion design, built with AI.",
   domain: "https://axdlabs.com", // TODO: replace with the real domain
   email: "akshadprashanthoffcial@gmail.com",
   linkedin: "https://www.linkedin.com/in/akshadprashanth",
@@ -13,13 +13,13 @@ export const SITE = {
   operatedFrom: "Bengaluru",
 };
 
-// Rotating headline phrases for the home hero typewriter — a mix of intro,
+// Rotating headline phrases for the home hero typewriter, a mix of intro,
 // what I do, fun facts and the (not-so-subtle) "are you hiring?" nudge.
 export const HERO_PHRASES = [
   "Hello, I am AXD !",
   "I design brands, campaigns & websites.",
   "Are you hiring? Let's talk.",
-  "I turn questions into experiments.",
+  "I turn questions into design.",
   "Fun fact: I think in gradients.",
   "Ask me anything about my work.",
   "Powered by curiosity & caffeine.",

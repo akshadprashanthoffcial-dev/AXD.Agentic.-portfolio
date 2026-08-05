@@ -6,7 +6,7 @@ import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected work — campaigns, product design, brand and motion experiments.",
+  description: "Selected work, campaigns, product design, brand and motion.",
 };
 
 export default function ProjectsPage() {
@@ -19,8 +19,8 @@ export default function ProjectsPage() {
       />
       <Reveal>
         <p className="mx-auto mt-4 max-w-lg text-center text-white/45">
-          A mix of shipped work and self-initiated experiments. Filter by what you
-          care about.
+          A mix of shipped work and self-initiated pieces, top work first. Filter
+          by what you care about.
         </p>
       </Reveal>
       <div className="mt-14">

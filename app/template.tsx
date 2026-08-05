@@ -4,7 +4,7 @@
 //
 // The "page-enter" class drives a CSS animation (opacity/transform/filter)
 // with fill-mode `both` so the entrance state holds. But a *finished*
-// fill-mode animation stays "in effect" forever unless removed — and its
+// fill-mode animation stays "in effect" forever unless removed, and its
 // resolved filter/transform values (interpolated against blur()/translateY())
 // are never a true `none`, even when the keyframe says `none`. A non-none
 // filter or transform on ANY ancestor permanently creates a new containing

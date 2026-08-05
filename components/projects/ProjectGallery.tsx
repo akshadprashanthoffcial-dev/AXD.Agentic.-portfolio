@@ -1,7 +1,7 @@
 "use client";
 
 // ============================================================
-// ProjectGallery — hero image + masonry grid + shared lightbox,
+// ProjectGallery, hero image + masonry grid + shared lightbox,
 // for the richer "branding project" detail layout. Reuses the
 // site's existing reveal/settle motion primitives (no new deps).
 // ============================================================

@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
   /** Corner radius, px. */
   radius?: number;
-  /** Frost strength 0..1 — higher = more opaque (more readable text). */
+  /** Frost strength 0..1, higher = more opaque (more readable text). */
   frost?: number;
   className?: string;
   style?: React.CSSProperties;
@@ -27,7 +27,7 @@ export default function LiquidGlass({
       className={`relative isolate overflow-hidden ${className}`}
       style={{ borderRadius: radius, ...style }}
     >
-      {/* Glass layer — reliable frosted blur */}
+      {/* Glass layer, reliable frosted blur */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"

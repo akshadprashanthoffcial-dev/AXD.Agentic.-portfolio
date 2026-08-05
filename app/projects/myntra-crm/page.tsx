@@ -1,7 +1,6 @@
 // ============================================================
-// Bespoke case study — Myntra CRM Campaign Design.
-// Fixed left-side project facts, right-side scrolling story —
-// the cover is the first image in that scroll, followed by the
+// Bespoke case study - Myntra CRM Campaign Design.
+// Fixed left-side project facts, right-side scrolling story - // the cover is the first image in that scroll, followed by the
 // details and the rest of the gallery. The layout pattern is
 // from axd-labs-site's experiment pages (case-side sticky /
 // case-story scroll), ported to this app's Tailwind dark theme.
@@ -22,7 +21,7 @@ const COVER_RATIO = 1600 / 1563;
 const BEHANCE_URL = "https://www.behance.net/gallery/241507665/Sale-CRM-Creatives";
 
 export const metadata: Metadata = {
-  title: `${P.title} — ${P.client}`,
+  title: `${P.title} - ${P.client}`,
   description: P.summary,
 };
 
@@ -45,16 +44,16 @@ const TOOLS = [
 ];
 
 const CHALLENGE =
-  "Myntra's CRM team sends daily campaigns to millions of users — push notifications, emails, and in-app banners. The job wasn't just producing creatives; it was making visuals compelling enough to earn a tap during India's most competitive shopping events, while staying true to each sale's design language.";
+  "Myntra's CRM team sends daily campaigns to millions of users, push notifications, emails, and in-app banners. The job wasn't just producing creatives; it was making visuals compelling enough to earn a tap during India's most competitive shopping events, while staying true to each sale's design language.";
 
 const WORK = [
   "I designed campaign creatives for Myntra's major sale events: Big Fashion Festival, End of Reason Sale, Diwali Sale, Wedding Season and Winter Sale.",
-  "I owned the deal templates for entire sales — 20+ creatives per event across different offer types — plus in-app revenue banners styled as festive editorial product photography.",
+  "I owned the deal templates for entire sales - 20+ creatives per event across different offer types, plus in-app revenue banners styled as festive editorial product photography.",
   "Every creative had to balance three things at once: make the offer stand out, keep the products the hero, and stay inside Myntra's established sale design language.",
 ];
 
 const AI_NOTE =
-  "AI became a production partner. I used Midjourney and Gemini to generate campaign imagery and festive backgrounds, explore more visual directions faster, and cut creative turnaround time — with design judgment deciding what actually shipped.";
+  "AI became a production partner. I used Midjourney and Gemini to generate campaign imagery and festive backgrounds, explore more visual directions faster, and cut creative turnaround time, with design judgment deciding what actually shipped.";
 
 const OUTCOME =
   "Creatives shipped in multiple nationwide campaigns across the internship, and the AI-assisted workflow helped the team produce more variations in less time. Performance was tracked through click-through rates, which shaped each next round of designs.";
@@ -63,7 +62,7 @@ const LEARNED =
   "Speed alone doesn't improve marketing. AI only becomes valuable when it's paired with strong design judgment and a clear understanding of how customers actually behave.";
 
 // Each sale gets its own named group so more can be dropped in later
-// without restructuring the page — just append to this array.
+// without restructuring the page, just append to this array.
 const SALES = [
   {
     name: "Big Fashion Festival",
@@ -71,54 +70,54 @@ const SALES = [
       {
         src: "/projects/myntra-crm/gallery-1.jpg",
         ratio: 1600 / 2098,
-        caption: "'One Order Free' — creative explorations for the BFF revenue property",
+        caption: "'One Order Free', creative explorations for the BFF revenue property",
       },
       {
         src: "/projects/myntra-crm/gallery-2.jpg",
         ratio: 1600 / 2263,
-        caption: "Deal templates — BFF push banners and the 'Price Crash' creative",
+        caption: "Deal templates - BFF push banners and the 'Price Crash' creative",
       },
       {
         src: "/projects/myntra-crm/gallery-3.jpg",
         ratio: 1600 / 2263,
-        caption: "Revenue Property (In-App) — festive editorial product photography",
+        caption: "Revenue Property (In-App), festive editorial product photography",
       },
       {
         src: "/projects/myntra-crm/gallery-4.jpg",
         ratio: 1600 / 2263,
-        caption: "Revenue Property (In-App) — model photoshoot banners",
+        caption: "Revenue Property (In-App), model photoshoot banners",
       },
     ],
   },
   {
     name: "End of Reason Sale",
     images: [
-      { src: "/projects/myntra-crm/eors-cover.jpg", ratio: 1600 / 2264, caption: "End of Reason Sale — campaign identity" },
-      { src: "/projects/myntra-crm/eors-1.jpg", ratio: 1600 / 2264, caption: "Deal templates — 'Midnight Steals' billboard and podium creatives" },
-      { src: "/projects/myntra-crm/eors-2.jpg", ratio: 1600 / 2264, caption: "Deal templates — VR-frame and drone-frame variants" },
-      { src: "/projects/myntra-crm/eors-3.jpg", ratio: 1600 / 2264, caption: "Deal templates — headset, tricopter and crate-frame variants" },
+      { src: "/projects/myntra-crm/eors-cover.jpg", ratio: 1600 / 2264, caption: "End of Reason Sale, campaign identity" },
+      { src: "/projects/myntra-crm/eors-1.jpg", ratio: 1600 / 2264, caption: "Deal templates - 'Midnight Steals' billboard and podium creatives" },
+      { src: "/projects/myntra-crm/eors-2.jpg", ratio: 1600 / 2264, caption: "Deal templates - VR-frame and drone-frame variants" },
+      { src: "/projects/myntra-crm/eors-3.jpg", ratio: 1600 / 2264, caption: "Deal templates, headset, tricopter and crate-frame variants" },
     ],
   },
   {
     name: "Diwali Sale",
     images: [
-      { src: "/projects/myntra-crm/diwali-cover.jpg", ratio: 1600 / 2264, caption: "Diwali Sale — campaign identity" },
-      { src: "/projects/myntra-crm/diwali-1.jpg", ratio: 1600 / 2264, caption: "Deal templates — 'Shubh Aarambh', 'Crazy Deals' and 'Deals of the Day'" },
-      { src: "/projects/myntra-crm/diwali-2.jpg", ratio: 1600 / 2264, caption: "Deal templates — 'Midnight Steals', 'Brand Deal-Lights' and 'Festive Rush Steal'" },
-      { src: "/projects/myntra-crm/diwali-3.jpg", ratio: 1600 / 2264, caption: "PERF templates — festive editorial model shoots" },
-      { src: "/projects/myntra-crm/diwali-4.jpg", ratio: 1600 / 2264, caption: "Revenue Property (In-App) — footwear and bags" },
-      { src: "/projects/myntra-crm/diwali-5.jpg", ratio: 1600 / 2264, caption: "Revenue Property (In-App) — model photoshoot banners" },
+      { src: "/projects/myntra-crm/diwali-cover.jpg", ratio: 1600 / 2264, caption: "Diwali Sale, campaign identity" },
+      { src: "/projects/myntra-crm/diwali-1.jpg", ratio: 1600 / 2264, caption: "Deal templates - 'Shubh Aarambh', 'Crazy Deals' and 'Deals of the Day'" },
+      { src: "/projects/myntra-crm/diwali-2.jpg", ratio: 1600 / 2264, caption: "Deal templates - 'Midnight Steals', 'Brand Deal-Lights' and 'Festive Rush Steal'" },
+      { src: "/projects/myntra-crm/diwali-3.jpg", ratio: 1600 / 2264, caption: "PERF templates, festive editorial model shoots" },
+      { src: "/projects/myntra-crm/diwali-4.jpg", ratio: 1600 / 2264, caption: "Revenue Property (In-App), footwear and bags" },
+      { src: "/projects/myntra-crm/diwali-5.jpg", ratio: 1600 / 2264, caption: "Revenue Property (In-App), model photoshoot banners" },
     ],
   },
 ];
 
-// Everything past this point isn't broken out by sale yet — shown as
+// Everything past this point isn't broken out by sale yet, shown as
 // one grouped block that links out to the full Behance case study.
 const MORE_WORK = [
-  { src: "/projects/myntra-crm/more-1.jpg", ratio: 1600 / 2263, caption: "Wedding Season — Revenue Property (In-App)" },
-  { src: "/projects/myntra-crm/more-2.jpg", ratio: 1600 / 2263, caption: "Wedding Season — Revenue Property (In-App)" },
-  { src: "/projects/myntra-crm/more-3.jpg", ratio: 1600 / 2263, caption: "Big Winter Bonanza — campaign identity and banners" },
-  { src: "/projects/myntra-crm/more-4.jpg", ratio: 1600 / 2263, caption: "Black Friday Sale — campaign identity and banners" },
+  { src: "/projects/myntra-crm/more-1.jpg", ratio: 1600 / 2263, caption: "Wedding Season - Revenue Property (In-App)" },
+  { src: "/projects/myntra-crm/more-2.jpg", ratio: 1600 / 2263, caption: "Wedding Season - Revenue Property (In-App)" },
+  { src: "/projects/myntra-crm/more-3.jpg", ratio: 1600 / 2263, caption: "Big Winter Bonanza, campaign identity and banners" },
+  { src: "/projects/myntra-crm/more-4.jpg", ratio: 1600 / 2263, caption: "Black Friday Sale, campaign identity and banners" },
 ];
 
 export default function MyntraCaseStudy() {
@@ -129,7 +128,7 @@ export default function MyntraCaseStudy() {
     <article>
       <div className="px-5 pt-32">
         <div className="mx-auto max-w-6xl">
-          {/* ---------------- Cover — first image in the scroll ---------------- */}
+          {/* ---------------- Cover, first image in the scroll ---------------- */}
           <Reveal>
             <ImageBlock
               src="/projects/myntra-crm/cover-v2.jpg"
@@ -163,7 +162,7 @@ export default function MyntraCaseStudy() {
 
           {/* ---------------- Facts + story ---------------- */}
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-16">
-            {/* Left — fixed project facts */}
+            {/* Left, fixed project facts */}
             <aside
               aria-label="Project facts"
               className="grid grid-cols-2 gap-6 self-start rounded-2xl border border-white/10 p-6 sm:grid-cols-4 lg:sticky lg:top-24 lg:grid-cols-1 lg:gap-6"
@@ -219,7 +218,7 @@ export default function MyntraCaseStudy() {
               </div>
             </aside>
 
-            {/* Right — scrolling story */}
+            {/* Right, scrolling story */}
             <div className="min-w-0 max-w-3xl lg:pb-24">
               <h2 className="font-display mb-5 text-[clamp(22px,2.8vw,32px)] text-white">
                 The challenge
@@ -262,7 +261,7 @@ export default function MyntraCaseStudy() {
                 </div>
               ))}
 
-              {/* More work — not yet broken out by sale; hover to jump to the full case study */}
+              {/* More work, not yet broken out by sale; hover to jump to the full case study */}
               <Reveal>
                 <a
                   href={BEHANCE_URL}

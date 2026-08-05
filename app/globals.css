@@ -65,9 +65,11 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* No global `scroll-behavior: smooth` — the site has no in-page anchor
+   links to benefit from it, and it actively breaks Next.js's scroll-to-top
+   on route change: the browser animates that jump, and if it gets
+   interrupted by the new page's layout still settling (images, fonts),
+   navigation can land partway down the page instead of at the top. */
 
 body {
   margin: 0;
@@ -203,6 +205,226 @@ body {
 }
 
 /* ------------------------------------------------------------
+   About — toolkit marquee. Two identical groups scroll as one
+   track; when the first has moved its own width the pair is back
+   where it started, so the loop never seams.
+   ------------------------------------------------------------ */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--hairline);
+  padding-block: 18px;
+  /* Fade the edges instead of hard-cutting the type. */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 34s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding-inline: 26px;
+  font-size: 17px;
+  white-space: nowrap;
+}
+@keyframes marqueeScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------
+   Cursor spotlight panel (about → toolkit)
+   ------------------------------------------------------------ */
+.spotlight {
+  --mx: 50%;
+  --my: 50%;
+  --spot: 0;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  opacity: var(--spot);
+  transition: opacity var(--t-base) var(--settle);
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    rgba(161, 31, 242, 0.16),
+    rgba(245, 155, 0, 0.08) 45%,
+    transparent 70%
+  );
+}
+
+/* ------------------------------------------------------------
+   Generic GSAP scroll-reveal target (see ScrollFX.tsx). Held
+   invisible here so there's no flash of fully-revealed content
+   before that JS runs and takes over.
+   ------------------------------------------------------------ */
+[data-reveal] {
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------
+   About timeline rows. The row itself (opacity/position/blur) is
+   animated directly by GSAP, this just holds it invisible until
+   that runs. The node's pop-in stays CSS, GSAP toggles the `.in`
+   class alongside its own tween so the two stay in step.
+   ------------------------------------------------------------ */
+.tl-row {
+  opacity: 0;
+}
+.tl-node {
+  transform: scale(0.4);
+  transition: transform 620ms var(--settle) 120ms;
+}
+.tl-row.in .tl-node {
+  transform: scale(1);
+}
+
+/* ------------------------------------------------------------
+   Global cursor. Default: a small circle inverted against
+   whatever's under it via mix-blend-mode. Morphed: grows into the
+   site's standard transparent pill and drops the blend mode, used
+   wherever an element carries `data-cursor-label` (currently the
+   projects list). Position comes from CustomCursor's rAF spring
+   loop via `transform`; everything else is a CSS transition on the
+   morph, so the two never fight.
+   ------------------------------------------------------------ */
+.global-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 70;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 999px;
+  background: #fff;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 200ms var(--settle), width 380ms var(--settle),
+    height 380ms var(--settle), margin 380ms var(--settle),
+    background-color 260ms var(--settle), box-shadow 260ms var(--settle);
+  will-change: transform;
+}
+.global-cursor.in {
+  opacity: 1;
+}
+.global-cursor.hover {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+}
+.global-cursor-label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: transparent;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 160ms var(--settle) 60ms;
+}
+.global-cursor.morphed {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 11px 18px;
+  transform-origin: center;
+  mix-blend-mode: normal;
+  background: linear-gradient(var(--brand-sheen), var(--brand-sheen)), rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.global-cursor.morphed .global-cursor-label {
+  color: #fff;
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  a,
+  button,
+  [role="button"],
+  input,
+  textarea,
+  select,
+  [data-cursor-label] {
+    cursor: none;
+  }
+}
+@media (pointer: coarse), (hover: none) {
+  .global-cursor {
+    display: none;
+  }
+}
+
+/* "Top work" tag styling (background, border) lives inline on the element
+   in ProjectsBrowser.tsx, matching the site's standard coloured-transparent
+   chip (`var(--brand-sheen)` + a hairline border). No motion of its own. */
+
+/* ------------------------------------------------------------
+   Filter row, one line; scrolls sideways rather than wrapping
+   on narrow screens.
+   ------------------------------------------------------------ */
+.filter-row {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.filter-row::-webkit-scrollbar {
+  display: none;
+}
+.filter-row > * {
+  flex: 0 0 auto;
+}
+@media (min-width: 900px) {
+  .filter-row {
+    justify-content: center;
+    overflow-x: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   Projects list rows. Entrance is driven entirely by GSAP/
+   ScrollTrigger (see ProjectsBrowser.tsx) so it's genuinely
+   scroll-controlled rather than firing on mount; this just holds
+   rows invisible until that JS runs, avoiding a flash of the
+   unrevealed layout.
+   ------------------------------------------------------------ */
+.proj-row {
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------
    Hero typewriter caret
    ------------------------------------------------------------ */
 .tw-caret {
@@ -232,6 +454,9 @@ body {
    ------------------------------------------------------------ */
 .blur-word {
   display: inline-block;
+  /* Letters are inline-block boxes, and lines may break between inline-level
+     boxes — which split words like PRASHANT/H. Pin each word to one line. */
+  white-space: nowrap;
 }
 .blur-letter {
   display: inline-block;
@@ -246,6 +471,21 @@ body {
   opacity: 1;
   filter: none;
   transform: translateY(0);
+}
+
+/* Gradient text + letter reveal: each letter is its own composited layer, so
+   a background-clip on the parent never reaches them and the line renders
+   blank. Paint the letters instead — the gradient runs top-to-bottom and the
+   letters share a box height, so it reads as one continuous fill. */
+.blur-reveal.text-brand {
+  background: none;
+  color: transparent;
+}
+.blur-reveal.text-brand .blur-letter {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ------------------------------------------------------------
@@ -504,6 +744,23 @@ body {
   }
   .tw-caret {
     animation: none !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+  .tl-row,
+  .tl-node,
+  .proj-row,
+  [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .portrait-card {
+    transition: none !important;
+    transform: none !important;
   }
   .axd-blob.is-burst > svg {
     animation: none !important;

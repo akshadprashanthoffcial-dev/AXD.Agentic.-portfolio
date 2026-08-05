@@ -4,19 +4,19 @@ import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
 import ImageBlock from "@/components/projects/ImageBlock";
 import ProjectGallery from "@/components/projects/ProjectGallery";
-import Reveal from "@/components/ui/Reveal";
 import BlurReveal from "@/components/ui/BlurReveal";
 import FooterBlob from "@/components/FooterBlob";
 import Sparkles from "@/components/ui/Sparkles";
 import { CATEGORY_ICONS } from "@/components/ui/Icons";
 import CTA from "@/components/ui/CTA";
+import ScrollFX from "@/components/effects/ScrollFX";
 
-/** Projects with a bespoke route of their own — those static segments
+/** Projects with a bespoke route of their own, those static segments
  *  win over this dynamic one, so they must not be generated here too. */
 const BESPOKE = new Set(["cms-editor-revamp", "myntra-crm"]);
 
 export function generateStaticParams() {
-  return PROJECTS.filter((p) => !BESPOKE.has(p.slug)).map((p) => ({
+  return PROJECTS.filter((p) => !BESPOKE.has(p.slug) && !p.externalUrl).map((p) => ({
     slug: p.slug,
   }));
 }
@@ -29,7 +29,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const p = getProject(slug);
   if (!p) return {};
-  return { title: `${p.title} — ${p.client}`, description: p.summary };
+  return { title: `${p.title} - ${p.client}`, description: p.summary };
 }
 
 export default async function ProjectPage({
@@ -39,13 +39,16 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) notFound();
+  // Externally-hosted projects have no page here, the list links straight out.
+  if (!project || project.externalUrl) notFound();
 
-  const idx = PROJECTS.findIndex((p) => p.slug === project.slug);
-  const next = PROJECTS[(idx + 1) % PROJECTS.length];
+  const internal = PROJECTS.filter((p) => !p.externalUrl);
+  const idx = internal.findIndex((p) => p.slug === project.slug);
+  const next = internal[(idx + 1) % internal.length];
 
   return (
     <article className="px-5 pt-32">
+      <ScrollFX />
       <div className="mx-auto max-w-5xl">
         {/* Hero */}
         <header className="mb-14">
@@ -107,17 +110,17 @@ export default async function ProjectPage({
         {/* Intro */}
         <div className="mb-16 max-w-3xl space-y-5 text-[18px] leading-relaxed text-white/70">
           {project.intro.map((para, i) => (
-            <Reveal key={i} delay={i * 60}>
-              <p>{para}</p>
-            </Reveal>
+            <p key={i} data-reveal>
+              {para}
+            </p>
           ))}
         </div>
 
         {/* Case-study beats (Challenge / Approach / Outcome, etc.) */}
         {project.caseSections && project.caseSections.length > 0 && (
           <div className="mb-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {project.caseSections.map((s, i) => (
-              <Reveal key={s.label} delay={i * 70} className="border-t border-white/10 pt-5">
+            {project.caseSections.map((s) => (
+              <div key={s.label} data-reveal className="border-t border-white/10 pt-5">
                 <div
                   className="mb-3 text-[12px] uppercase tracking-[0.18em]"
                   style={{ color: "var(--brand-purple)" }}
@@ -126,22 +129,18 @@ export default async function ProjectPage({
                 </div>
                 <h3 className="font-display mb-3 text-[22px] text-white">{s.heading}</h3>
                 <p className="text-[15px] leading-relaxed text-white/45">{s.body}</p>
-              </Reveal>
+              </div>
             ))}
           </div>
         )}
 
-        {/* Gallery — rich lightboxed masonry when `gallery` is set, else the simple block grid */}
+        {/* Gallery, rich lightboxed masonry when `gallery` is set, else the simple block grid */}
         {project.gallery && project.gallery.length > 0 ? (
           <ProjectGallery images={project.gallery} title={project.title} />
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
             {project.blocks.map((b, i) => (
-              <Reveal
-                key={i}
-                delay={(i % 2) * 80}
-                className={b.span === "full" ? "md:col-span-2" : ""}
-              >
+              <div key={i} data-reveal className={b.span === "full" ? "md:col-span-2" : ""}>
                 <ImageBlock
                   src={b.src}
                   caption={b.caption}
@@ -153,7 +152,7 @@ export default async function ProjectPage({
                       : "(max-width: 768px) 100vw, 500px"
                   }
                 />
-              </Reveal>
+              </div>
             ))}
           </div>
         )}

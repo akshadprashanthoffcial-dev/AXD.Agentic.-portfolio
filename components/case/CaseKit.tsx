@@ -1,7 +1,7 @@
 "use client";
 
 // ============================================================
-// CaseKit — primitives for long-form case-study pages.
+// CaseKit, primitives for long-form case-study pages.
 // Everything here is dependency-free motion: one IntersectionObserver
 // hook flips an `.in` class, CSS in globals.css does the rest.
 // ============================================================
@@ -87,7 +87,7 @@ export function Section({
 }
 
 /* ------------------------------------------------------------
-   Chain — the workhorse flow diagram.
+   Chain, the workhorse flow diagram.
    Stacked rail on mobile, inline rail on desktop. Nodes light up
    in sequence; connectors draw themselves between them.
    ------------------------------------------------------------ */
@@ -109,7 +109,7 @@ export function Chain({
 }: {
   nodes: string[];
   tone?: ChainTone;
-  /** Smaller type — for side-by-side lanes. */
+  /** Smaller type, for side-by-side lanes. */
   dense?: boolean;
   /** Stay stacked at every breakpoint (lanes compared side by side). */
   vertical?: boolean;
@@ -117,7 +117,7 @@ export function Chain({
 }) {
   const { ref } = useInView<HTMLDivElement>();
 
-  // Nodes and connectors are siblings, not nested — otherwise each pair
+  // Nodes and connectors are siblings, not nested, otherwise each pair
   // shares one flex slot and the rail distributes unevenly.
   const rail = vertical
     ? "flex-col items-stretch"
@@ -171,7 +171,7 @@ export function LoopBack({ label }: { label: string }) {
 }
 
 /* ------------------------------------------------------------
-   Metric — count-up stat, fires on scroll-in.
+   Metric, count-up stat, fires on scroll-in.
    ------------------------------------------------------------ */
 
 export function Metric({
@@ -201,7 +201,7 @@ export function Metric({
     let raf = 0;
     const tick = (t: number) => {
       const p = Math.min(1, (t - t0) / dur);
-      // easeOutExpo — fast arrival, soft landing
+      // easeOutExpo, fast arrival, soft landing
       const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
       setN(value * e);
       if (p < 1) raf = requestAnimationFrame(tick);
@@ -223,7 +223,7 @@ export function Metric({
 }
 
 /* ------------------------------------------------------------
-   Card — the neutral surface used across the page.
+   Card, the neutral surface used across the page.
    ------------------------------------------------------------ */
 
 export function Card({

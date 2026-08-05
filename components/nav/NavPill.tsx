@@ -111,7 +111,7 @@ export default function NavPill() {
           </div>
         </div>
 
-        {/* Inline dropdown — dark translucent, premade suggestions */}
+        {/* Inline dropdown, dark translucent, premade suggestions */}
         {open && list.length > 0 && (
           <ul
             className="absolute left-0 right-0 top-[calc(100%+8px)] overflow-hidden rounded-2xl border border-white/10 p-1.5 backdrop-blur-xl"

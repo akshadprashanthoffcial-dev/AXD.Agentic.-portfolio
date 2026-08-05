@@ -1,5 +1,5 @@
 /**
- * Small line-icon set drawn to match the brand — gradient stroke, 24-grid,
+ * Small line-icon set drawn to match the brand, gradient stroke, 24-grid,
  * rounded caps. Each icon is chosen to match the meaning of its label so the
  * suggestion chips and project filters read at a glance. No hooks, so these
  * are safe inside server components (same pattern as Sparkles).
@@ -126,6 +126,49 @@ export function VisualIcon(p: IconProps) {
   );
 }
 
+// Projects → a lightbulb (product/research work, often team-made).
+export function ProjectIcon(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M9 17h6M10 20h4" />
+      <path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.6h5.6c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z" />
+    </Svg>
+  );
+}
+
+// Product Design, layered artboards (the thing itself, being assembled).
+export function ProductIcon(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M12 3l8 4.2-8 4.2-8-4.2L12 3z" />
+      <path d="M4 12.2l8 4.2 8-4.2M4 16.4l8 4.2 8-4.2" />
+    </Svg>
+  );
+}
+
+// Experience Design, a journey: connected nodes along a path. Dots are
+// zero-length round-capped strokes rather than filled circles, so they
+// inherit the same gradient/white stroke as the path with no fill trickery.
+export function ExperienceIcon(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M4 18c3-.5 4.5-2.5 5.5-5S11 7.5 14 7s5 1 6 3" />
+      <path d="M4 18h.01M14 7h.01M20 10h.01" strokeWidth="3" />
+    </Svg>
+  );
+}
+
+// Current role, a briefcase. Sits beside the title on the about page.
+export function RoleIcon(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <rect x="3.5" y="7.5" width="17" height="12" rx="2.5" />
+      <path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" />
+      <path d="M3.5 12.8h17" />
+    </Svg>
+  );
+}
+
 /* ---- lookup helpers ---- */
 
 export const SUGGESTION_ICONS = {
@@ -137,9 +180,13 @@ export const SUGGESTION_ICONS = {
 export type SuggestionIcon = keyof typeof SUGGESTION_ICONS;
 
 export const CATEGORY_ICONS: Record<string, (p: IconProps) => React.ReactElement> = {
-  "Motion Graphics": MotionIcon,
-  "Brand Identity": BrandIcon,
-  "Web Designs": WebIcon,
-  "Art Direction": ArtDirectionIcon,
   "Visual Design": VisualIcon,
+  "Brand Identity": BrandIcon,
+  "Product Design": ProductIcon,
+  "Experience Design": ExperienceIcon,
+  "Web Designs": WebIcon,
+  "Motion Graphics": MotionIcon,
+  Projects: ProjectIcon,
+  // Retired filter, kept so any older tag still renders an icon.
+  "Art Direction": ArtDirectionIcon,
 };

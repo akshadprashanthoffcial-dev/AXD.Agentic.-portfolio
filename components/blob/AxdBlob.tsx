@@ -16,11 +16,11 @@ type Props = {
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
 /**
- * axd.blob — the site's character. Renders the exact Figma vector
+ * axd.blob, the site's character. Renders the exact Figma vector
  * (node 57:1266) with independently animated layers:
- *  - gradient body (soft blurred orb) — slow rotation + breathe, tilts to cursor
- *  - internal highlights (plus-lighter) — drift
- *  - eyes — damped pointer tracking, blink, and idle look-around
+ *  - gradient body (soft blurred orb), slow rotation + breathe, tilts to cursor
+ *  - internal highlights (plus-lighter), drift
+ *  - eyes, damped pointer tracking, blink, and idle look-around
  * Honors prefers-reduced-motion (gentle blink only).
  */
 export default function AxdBlob({
@@ -240,7 +240,7 @@ export default function AxdBlob({
           </mask>
         </defs>
 
-        {/* Body — soft blurred gradient orb (glow + core). Slow spin + breathe. */}
+        {/* Body, soft blurred gradient orb (glow + core). Slow spin + breathe. */}
         <g ref={bodyRef}>
           <g style={spin}>
             <circle

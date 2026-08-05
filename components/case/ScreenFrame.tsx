@@ -1,7 +1,7 @@
 "use client";
 
 // ============================================================
-// ScreenFrame — a product screenshot in browser chrome.
+// ScreenFrame, a product screenshot in browser chrome.
 // Pointer-tilt, brand glow, and click-to-zoom (these screens are
 // dense; the case study is unreadable without a lightbox).
 // ============================================================
@@ -135,7 +135,7 @@ export default function ScreenFrame({
           className="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center bg-black/92 p-4 backdrop-blur-sm md:p-10"
           style={{ animation: "pageEnter 320ms var(--settle) both" }}
         >
-          {/* No forced aspect-ratio box here — the thumbnail's `ratio`
+          {/* No forced aspect-ratio box here, the thumbnail's `ratio`
               prop is a crop hint, not a guarantee of the source file's
               true dimensions, so it must not constrain the full image. */}
           <img
