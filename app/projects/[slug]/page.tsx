@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
 import ImageBlock from "@/components/projects/ImageBlock";
+import ProjectGallery from "@/components/projects/ProjectGallery";
 import Reveal from "@/components/ui/Reveal";
 import BlurReveal from "@/components/ui/BlurReveal";
 import FooterBlob from "@/components/FooterBlob";
@@ -71,7 +72,12 @@ export default async function ProjectPage({
               className="font-display max-w-3xl text-[clamp(34px,6vw,64px)] leading-[1.05] text-white"
             />
             {project.prototypeUrl && (
-              <CTA label="View Prototype" href={project.prototypeUrl} external size="md" />
+              <CTA
+                label={project.prototypeLabel ?? "View Prototype"}
+                href={project.prototypeUrl}
+                external
+                size="md"
+              />
             )}
           </div>
 
@@ -82,6 +88,20 @@ export default async function ProjectPage({
             <Meta term="When" value={project.period} />
             <Meta term="Tools" value={project.tools.join(", ")} />
           </dl>
+
+          {project.deliverables && project.deliverables.length > 0 && (
+            <div className="mt-6 flex flex-wrap gap-2">
+              {project.deliverables.map((d) => (
+                <span
+                  key={d}
+                  className="rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-white/60"
+                  style={{ background: "var(--brand-sheen-soft)" }}
+                >
+                  {d}
+                </span>
+              ))}
+            </div>
+          )}
         </header>
 
         {/* Intro */}
@@ -93,28 +113,50 @@ export default async function ProjectPage({
           ))}
         </div>
 
-        {/* Gallery grid */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-          {project.blocks.map((b, i) => (
-            <Reveal
-              key={i}
-              delay={(i % 2) * 80}
-              className={b.span === "full" ? "md:col-span-2" : ""}
-            >
-              <ImageBlock
-                src={b.src}
-                caption={b.caption}
-                ratio={b.ratio ?? (b.span === "full" ? 16 / 8 : 4 / 3)}
-                priority={i === 0}
-                sizes={
-                  b.span === "full"
-                    ? "(max-width: 900px) 100vw, 1000px"
-                    : "(max-width: 768px) 100vw, 500px"
-                }
-              />
-            </Reveal>
-          ))}
-        </div>
+        {/* Case-study beats (Challenge / Approach / Outcome, etc.) */}
+        {project.caseSections && project.caseSections.length > 0 && (
+          <div className="mb-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {project.caseSections.map((s, i) => (
+              <Reveal key={s.label} delay={i * 70} className="border-t border-white/10 pt-5">
+                <div
+                  className="mb-3 text-[12px] uppercase tracking-[0.18em]"
+                  style={{ color: "var(--brand-purple)" }}
+                >
+                  {s.label}
+                </div>
+                <h3 className="font-display mb-3 text-[22px] text-white">{s.heading}</h3>
+                <p className="text-[15px] leading-relaxed text-white/45">{s.body}</p>
+              </Reveal>
+            ))}
+          </div>
+        )}
+
+        {/* Gallery — rich lightboxed masonry when `gallery` is set, else the simple block grid */}
+        {project.gallery && project.gallery.length > 0 ? (
+          <ProjectGallery images={project.gallery} title={project.title} />
+        ) : (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+            {project.blocks.map((b, i) => (
+              <Reveal
+                key={i}
+                delay={(i % 2) * 80}
+                className={b.span === "full" ? "md:col-span-2" : ""}
+              >
+                <ImageBlock
+                  src={b.src}
+                  caption={b.caption}
+                  ratio={b.ratio ?? (b.span === "full" ? 16 / 8 : 4 / 3)}
+                  priority={i === 0}
+                  sizes={
+                    b.span === "full"
+                      ? "(max-width: 900px) 100vw, 1000px"
+                      : "(max-width: 768px) 100vw, 500px"
+                  }
+                />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
 
       <FooterBlob
