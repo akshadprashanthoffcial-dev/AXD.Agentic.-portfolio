@@ -364,13 +364,7 @@ body {
   opacity: 1;
 }
 @media (hover: hover) and (pointer: fine) {
-  a,
-  button,
-  [role="button"],
-  input,
-  textarea,
-  select,
-  [data-cursor-label] {
+  * {
     cursor: none;
   }
 }

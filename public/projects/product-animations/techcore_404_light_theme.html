@@ -1,0 +1,172 @@
+
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  .scene{background:#EEF0FB;width:100%;min-height:540px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+
+  .star{position:absolute;border-radius:50%;animation:twinkle var(--d) ease-in-out infinite alternate}
+  @keyframes twinkle{0%{opacity:.2;transform:scale(1)}100%{opacity:.9;transform:scale(1.5)}}
+
+  .cloud{position:absolute;border-radius:999px;animation:cloudDrift var(--cd) ease-in-out infinite alternate;opacity:.55}
+  @keyframes cloudDrift{0%{transform:translateX(0)}100%{transform:translateX(18px)}}
+
+  .astronaut-wrap{position:absolute;animation:drift 10s ease-in-out infinite}
+  @keyframes drift{
+    0%{transform:translateX(-100px) translateY(0px)}
+    25%{transform:translateX(30px) translateY(-16px)}
+    50%{transform:translateX(140px) translateY(6px)}
+    75%{transform:translateX(50px) translateY(-8px)}
+    100%{transform:translateX(-100px) translateY(0px)}
+  }
+  .astronaut{animation:spin 14s linear infinite}
+  @keyframes spin{from{transform:rotate(-8deg)}to{transform:rotate(352deg)}}
+
+  .bubble{position:absolute;top:-46px;left:50%;transform:translateX(-50%);background:#fff;border-radius:12px;padding:6px 14px;white-space:nowrap;font-size:11px;font-weight:700;color:#1E1B6E;border:1.5px solid #D6D3F0;animation:bobBubble 3s ease-in-out infinite;box-shadow:0 2px 8px rgba(43,63,212,.08)}
+  .bubble::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff}
+  .bubble::before{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid #D6D3F0}
+  @keyframes bobBubble{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-5px)}}
+
+  .four-o-four{position:relative;z-index:2;text-align:center;margin-top:130px}
+  .num{font-family:system-ui,sans-serif;font-size:128px;font-weight:900;letter-spacing:-6px;color:#2B3FD4;line-height:1;animation:breathe 3s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  .glow-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:280px;height:140px;border-radius:50%;background:#7B6FD4;opacity:.08;animation:glowPulse 3s ease-in-out infinite;z-index:-1}
+  @keyframes glowPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.06}50%{transform:translate(-50%,-50%) scale(1.18);opacity:.13}}
+
+  .msg{font-family:system-ui,sans-serif;font-size:17px;font-weight:700;color:#1E1B6E;margin-top:10px}
+  .sub{font-family:system-ui,sans-serif;font-size:13px;color:#7B6FD4;margin-top:5px;font-weight:500}
+
+  .cta{margin-top:28px;padding:13px 38px;background:#2B3FD4;color:#fff;border:none;border-radius:999px;font-size:14px;font-weight:700;font-family:system-ui,sans-serif;letter-spacing:.03em;cursor:pointer;animation:ctaPulse 2.5s ease-in-out infinite;position:relative;z-index:3}
+  @keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(43,63,212,.3)}50%{box-shadow:0 0 0 12px rgba(43,63,212,0)}}
+
+  .orbit-ring{position:absolute;border-radius:50%;border:1.5px dashed rgba(43,63,212,.12);animation:orbitSpin var(--os) linear infinite}
+  @keyframes orbitSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+  .planet{position:absolute;border-radius:50%;animation:floatPlanet var(--fp,16s) ease-in-out infinite alternate}
+  @keyframes floatPlanet{0%{transform:translateY(0)}100%{transform:translateY(-14px)}}
+
+  .shooting-star{position:absolute;height:2px;border-radius:999px;animation:shoot var(--sd) ease-in infinite;opacity:0}
+  @keyframes shoot{0%{opacity:0;transform:translateX(0) translateY(0)}8%{opacity:1}85%{opacity:.5}100%{opacity:0;transform:translateX(220px) translateY(20px)}}
+
+  .dot-grid{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(43,63,212,.12) 1px,transparent 1px);background-size:28px 28px;z-index:0}
+</style>
+
+<div class="scene" id="scene">
+
+  <div class="dot-grid"></div>
+
+  <!-- Orbit rings -->
+  <div class="orbit-ring" style="width:320px;height:320px;top:50%;left:50%;margin:-160px 0 0 -160px;--os:30s"></div>
+  <div class="orbit-ring" style="width:480px;height:480px;top:50%;left:50%;margin:-240px 0 0 -240px;--os:48s;border-color:rgba(123,111,212,.09)"></div>
+
+  <!-- Clouds -->
+  <div class="cloud" style="width:90px;height:28px;background:#fff;top:14%;left:8%;--cd:5s"></div>
+  <div class="cloud" style="width:56px;height:18px;background:#D6D3F0;top:10%;left:14%;--cd:7s"></div>
+  <div class="cloud" style="width:70px;height:22px;background:#fff;top:72%;right:10%;--cd:6s"></div>
+  <div class="cloud" style="width:44px;height:14px;background:#D6D3F0;top:68%;right:6%;--cd:9s"></div>
+  <div class="cloud" style="width:60px;height:18px;background:#fff;top:30%;right:6%;--cd:8s"></div>
+
+  <!-- Planets -->
+  <div class="planet" style="width:42px;height:42px;background:#D6D3F0;top:60px;right:90px;border:3px solid #b0aee0;--fp:18s">
+    <div style="position:absolute;top:12px;left:-6px;width:54px;height:8px;border-radius:999px;background:rgba(123,111,212,.25);transform:rotate(-12deg)"></div>
+  </div>
+  <div class="planet" style="width:16px;height:16px;background:#7B6FD4;top:52px;right:76px;--fp:11s"></div>
+  <div class="planet" style="width:26px;height:26px;background:#EEF0FB;border:2px solid #2B3FD4;top:420px;left:55px;--fp:22s"></div>
+  <div class="planet" style="width:10px;height:10px;background:#2B3FD4;top:390px;left:82px;--fp:13s;opacity:.5"></div>
+
+  <!-- Astronaut -->
+  <div class="astronaut-wrap" style="top:95px;left:50%;z-index:3">
+    <div class="bubble">Oops, this page drifted away...</div>
+    <div class="astronaut">
+      <svg width="66" height="82" viewBox="0 0 66 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Jetpack -->
+        <rect x="23" y="45" width="20" height="18" rx="4" fill="#2B3FD4"/>
+        <rect x="19" y="47" width="8" height="12" rx="3" fill="#1a2ca8"/>
+        <rect x="39" y="47" width="8" height="12" rx="3" fill="#1a2ca8"/>
+        <!-- Flames -->
+        <ellipse cx="23" cy="61" rx="3.5" ry="5" fill="#7B6FD4" opacity=".6"/>
+        <ellipse cx="43" cy="61" rx="3.5" ry="5" fill="#7B6FD4" opacity=".6"/>
+        <ellipse cx="23" cy="63" rx="2" ry="3" fill="#D6D3F0" opacity=".7"/>
+        <ellipse cx="43" cy="63" rx="2" ry="3" fill="#D6D3F0" opacity=".7"/>
+        <!-- Body -->
+        <rect x="19" y="35" width="28" height="26" rx="8" fill="#fff"/>
+        <rect x="19" y="35" width="28" height="26" rx="8" fill="none" stroke="#D6D3F0" stroke-width="1.5"/>
+        <!-- Chest panel -->
+        <rect x="25" y="41" width="16" height="10" rx="3" fill="#EEF0FB"/>
+        <rect x="27" y="44" width="5" height="4" rx="1" fill="#2B3FD4" opacity=".7"/>
+        <rect x="34" y="44" width="5" height="4" rx="1" fill="#7B6FD4" opacity=".7"/>
+        <!-- Helmet -->
+        <ellipse cx="33" cy="27" rx="16" ry="17" fill="#EEF0FB"/>
+        <ellipse cx="33" cy="27" rx="16" ry="17" fill="none" stroke="#D6D3F0" stroke-width="1.5"/>
+        <!-- Visor -->
+        <ellipse cx="33" cy="27" rx="11" ry="11" fill="#2B3FD4"/>
+        <ellipse cx="33" cy="27" rx="8" ry="8" fill="#1a1a6e"/>
+        <ellipse cx="29" cy="23" rx="3" ry="2" fill="#7B6FD4" opacity=".55"/>
+        <ellipse cx="28" cy="22" rx="1.5" ry="1" fill="#fff" opacity=".5"/>
+        <!-- Arms -->
+        <rect x="7" y="35" width="14" height="8" rx="4" fill="#fff" stroke="#D6D3F0" stroke-width="1" transform="rotate(-20 7 35)"/>
+        <rect x="45" y="31" width="14" height="8" rx="4" fill="#fff" stroke="#D6D3F0" stroke-width="1" transform="rotate(25 45 31)"/>
+        <!-- Gloves -->
+        <circle cx="10" cy="47" r="4" fill="#7B6FD4"/>
+        <circle cx="57" cy="35" r="4" fill="#7B6FD4"/>
+        <!-- Legs -->
+        <rect x="21" y="59" width="10" height="16" rx="5" fill="#fff" stroke="#D6D3F0" stroke-width="1.5"/>
+        <rect x="35" y="59" width="10" height="16" rx="5" fill="#fff" stroke="#D6D3F0" stroke-width="1.5"/>
+        <!-- Boots -->
+        <rect x="19" y="71" width="14" height="8" rx="4" fill="#2B3FD4"/>
+        <rect x="33" y="71" width="14" height="8" rx="4" fill="#2B3FD4"/>
+        <!-- Antenna -->
+        <line x1="33" y1="10" x2="33" y2="3" stroke="#b0aee0" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="33" cy="3" r="2.2" fill="#E11D48"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 404 text -->
+  <div class="four-o-four">
+    <div style="position:relative;display:inline-block">
+      <div class="glow-ring"></div>
+      <div class="num">4<span style="color:#7B6FD4">0</span>4</div>
+    </div>
+    <div class="msg">Houston, we have a problem.</div>
+    <div class="sub">The page you're looking for has floated out of orbit.</div>
+    <button class="cta">&#8592; Take me home</button>
+  </div>
+
+</div>
+
+<script>
+  const scene = document.getElementById('scene');
+
+  const stars = [
+    {x:6,y:7,r:2,c:'#7B6FD4',d:'2.2s'},{x:15,y:20,r:1.5,c:'#2B3FD4',d:'3.5s'},
+    {x:25,y:11,r:2.5,c:'#b0aee0',d:'1.9s'},{x:35,y:5,r:1.5,c:'#7B6FD4',d:'4.2s'},
+    {x:46,y:17,r:2,c:'#2B3FD4',d:'2.8s'},{x:57,y:8,r:1.5,c:'#b0aee0',d:'3.6s'},
+    {x:68,y:22,r:2,c:'#7B6FD4',d:'1.6s'},{x:78,y:6,r:1.5,c:'#2B3FD4',d:'2.4s'},
+    {x:87,y:15,r:2,c:'#b0aee0',d:'4.4s'},{x:93,y:29,r:1.5,c:'#7B6FD4',d:'3.0s'},
+    {x:9,y:42,r:1.5,c:'#2B3FD4',d:'2.9s'},{x:19,y:57,r:2,c:'#7B6FD4',d:'2.0s'},
+    {x:29,y:72,r:1.5,c:'#2B3FD4',d:'3.7s'},{x:40,y:84,r:2,c:'#b0aee0',d:'2.3s'},
+    {x:52,y:89,r:1.5,c:'#7B6FD4',d:'4.1s'},{x:64,y:77,r:2,c:'#2B3FD4',d:'1.8s'},
+    {x:74,y:86,r:1.5,c:'#b0aee0',d:'3.4s'},{x:84,y:70,r:2,c:'#7B6FD4',d:'2.6s'},
+    {x:91,y:82,r:1.5,c:'#2B3FD4',d:'4.0s'},{x:96,y:56,r:2,c:'#b0aee0',d:'1.7s'},
+    {x:4,y:63,r:1.5,c:'#7B6FD4',d:'3.9s'},{x:48,y:38,r:2,c:'#2B3FD4',d:'2.5s'},
+    {x:72,y:45,r:1.5,c:'#b0aee0',d:'1.5s'},{x:89,y:40,r:2,c:'#7B6FD4',d:'3.2s'},
+  ];
+  stars.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'star';
+    el.style.cssText = `width:${s.r*2}px;height:${s.r*2}px;background:${s.c};left:${s.x}%;top:${s.y}%;--d:${s.d};animation-delay:${(Math.random()*3).toFixed(1)}s;z-index:1`;
+    scene.appendChild(el);
+  });
+
+  const shoots = [
+    {top:'8%',left:'5%',w:'70px',sd:'7s',delay:'1.5s',c:'#7B6FD4'},
+    {top:'25%',left:'55%',w:'55px',sd:'10s',delay:'4.5s',c:'#2B3FD4'},
+    {top:'60%',left:'3%',w:'90px',sd:'13s',delay:'6s',c:'#b0aee0'},
+    {top:'18%',left:'38%',w:'60px',sd:'9s',delay:'2s',c:'#7B6FD4'},
+  ];
+  shoots.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'shooting-star';
+    el.style.cssText = `top:${s.top};left:${s.left};width:${s.w};--sd:${s.sd};animation-delay:${s.delay};background:linear-gradient(90deg,rgba(0,0,0,0),${s.c});z-index:1`;
+    scene.appendChild(el);
+  });
+</script>

@@ -13,7 +13,7 @@ import ScrollFX from "@/components/effects/ScrollFX";
 
 /** Projects with a bespoke route of their own, those static segments
  *  win over this dynamic one, so they must not be generated here too. */
-const BESPOKE = new Set(["cms-editor-revamp", "myntra-crm"]);
+const BESPOKE = new Set(["cms-editor-revamp", "myntra-crm", "product-animations"]);
 
 export function generateStaticParams() {
   return PROJECTS.filter((p) => !BESPOKE.has(p.slug) && !p.externalUrl).map((p) => ({

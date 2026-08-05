@@ -454,26 +454,21 @@ export const PROJECTS: Project[] = [
   {
     slug: "product-animations",
     title: "Product Animations",
+    fullTitle: "Joveo Product Animations",
     client: "Joveo",
     year: "2026",
-    categories: ["Motion Graphics", "Product Design"],
+    categories: ["Motion Graphics", "Visual Design"],
     clientLogo: "/logos/joveo.png",
     summary:
-      "Micro-interactions and product motion studies, easing, calibration and the small moments that make software feel alive.",
-    role: "Designer",
-    period: "2026",
-    tools: ["After Effects", "Figma", "Claude Code"],
+      "Animations for Joveo's core products, built so a product can be shown rather than explained, clients just watch it work.",
+    role: "Visual Designer",
+    period: "3 weeks",
+    tools: ["After Effects", "Figma"],
     intro: [
-      "Motion is the difference between software that works and software that feels good. This is an ongoing set of studies: loading states, transitions, empty states and the calibration of easing curves until a movement reads as 'right'.",
-      "Each clip is a small experiment, try more directions, measure what feels natural, keep what's good.",
+      "I was asked to make Joveo's products easier to understand through motion. The goal was simple: build animations the team could drop straight into client decks, so a product could be shown rather than explained, clients just watch it work.",
+      "Working in After Effects on the screens our product designers had built, I animated each product's core flow. Along the way I collaborated closely with our product managers, which helped me understand what each product really does for customers, the deeper meaning beyond the screens.",
     ],
-    blocks: [
-      { span: "full" },
-      { span: "half" },
-      { span: "half" },
-      { span: "full" },
-      { span: "full" },
-    ],
+    blocks: [],
   },
 ];
 
