@@ -27,3 +27,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# oversized video source files (>100MB GitHub limit) — compress or
+# re-host before adding to git. See DECISIONS.md v0.14.
+public/projects/Blossom/blossom-animation-3d.mov
+public/projects/Other-Animation/final-mudra-logo.mov

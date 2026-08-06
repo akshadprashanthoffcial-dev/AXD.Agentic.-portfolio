@@ -9,12 +9,12 @@
 
 // Filter categories used on the /projects list page.
 export const CATEGORIES = [
-  "Visual Design",
-  "Brand Identity",
-  "Product Design",
   "Experience Design",
-  "Web Designs",
+  "Visual Design",
+  "Product Design",
   "Motion Graphics",
+  "Web Designs",
+  "Brand Identity",
   "Projects",
 ] as const;
 export type Category = (typeof CATEGORIES)[number];
@@ -70,6 +70,12 @@ export type Project = {
   /** Rich gallery: index 0 is the hero, the rest render as a lightboxed masonry grid.
    *  When present, this replaces `blocks` on the detail page. */
   gallery?: GalleryImage[];
+  /** A click-to-play animation shown below the gallery/blocks, poster image
+   *  + play button that opens a fullscreen lightbox video. */
+  video?: { src: string; poster?: string; caption?: string };
+  /** A real YouTube upload, rendered as a live inline embed (not a lightbox)
+   *  with a "Watch on YouTube" CTA underneath. */
+  youtube?: { id: string; label?: string };
 };
 
 export const PROJECTS: Project[] = [
@@ -125,62 +131,6 @@ export const PROJECTS: Project[] = [
       { span: "half", src: "/projects/myntra-crm/result-3.jpg", caption: "Diwali Sale, deal templates" },
       { span: "half", src: "/projects/myntra-crm/result-4.jpg", caption: "Wedding season, in-app revenue banners" },
     ],
-  },
-  {
-    slug: "lego-rebranding",
-    title: "LEGO Rebranding",
-    fullTitle: "LEGO Rebranding, a childhood icon, widened",
-    client: "LEGO (Personal Project)",
-    year: "2023",
-    categories: ["Brand Identity", "Visual Design"],
-    featured: true,
-    summary:
-      "Rebranding a childhood icon for an audience that never stopped building, reframing play as focus, patience and craft.",
-    role: "Concept & Art Direction",
-    period: "2023",
-    tools: ["Figma"],
-    deliverables: ["Identity refresh", "Packaging", "Campaign", "Art direction"],
-    intro: [
-      "The brief was open: rebrand any well-known name and redefine its purpose so it feels welcoming to a new audience. I chose LEGO and reframed it around the adult builder, play as focus and craft rather than something you grow out of.",
-      "The goal was to widen the doorway without dismantling the equity already built into the logo, colour and system.",
-    ],
-    caseSections: [
-      {
-        label: "Challenge",
-        heading: "Refresh without erasing",
-        body: "Rework one of the most recognised brands on earth without dismantling the equity in its brick, logo and primary palette.",
-      },
-      {
-        label: "Approach",
-        heading: "Keep the brick, rebuild the room",
-        body: "Retain the brick and primary colours, but rebuild the surrounding system, a calmer layout language, grown-up photography and copy that speaks to builders.",
-      },
-      {
-        label: "Outcome",
-        heading: "Same joy, new audience",
-        body: "A rebrand concept expressed across identity, packaging and campaign that invites an older audience in while keeping the play intact.",
-      },
-    ],
-    cover:
-      "https://framerusercontent.com/images/Le1kWnlYb7kErCEUfHZqlDacaE.png?scale-down-to=1024",
-    gallery: [
-      "Le1kWnlYb7kErCEUfHZqlDacaE",
-      "PpOx5L93vKhxOPtJC4gt6RrADM",
-      "1r4BXvVgJw8hRC86GpERrJ2E4",
-      "6iJ9Usrj7IkHXHRIfQ8PiLEV6Xc",
-      "foBvvGAHgPAlSiGXldnKe7N3d0",
-      "YjNegxzJtrWwVVgHRK5oOW4WUs",
-      "mPTE8RYhk7FqZmuKGPkgrbE97T0",
-      "nHhTAUxjKtoyFU4pvbPgXY2b8CY",
-      "3QBfB6WFmgRh1oXUhvEgDmOtc",
-      "8OabC83f8gRp5Xc5lizhJQyAKc",
-      "mu21MjvOWEr0HJXV4TOBXqsu3c",
-      "7WaODQudyHHEjGTvOjwmgg7FZCE",
-      "04HCijJtz18HPDEHHlZLSl6YBig",
-    ].map((id) => ({
-      src: `https://framerusercontent.com/images/${id}.png?scale-down-to=1024`,
-    })),
-    blocks: [],
   },
   {
     slug: "dripps",
@@ -401,54 +351,125 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "rain-mazha",
+    fullTitle: "Rain / Mazha, a music video animation",
     title: "Rain / Mazha",
-    client: "Personal",
-    year: "2026",
-    categories: ["Brand Identity", "Visual Design"],
+    client: "Gypsy Myths Studios (Freelance)",
+    year: "2024",
+    categories: ["Motion Graphics", "Visual Design"],
     summary:
-      "A personal identity experiment exploring monsoon as a mood, type, texture and motion around the word 'Mazha' (rain).",
-    role: "Designer",
-    period: "2026",
-    tools: ["Illustrator", "Photoshop", "After Effects"],
+      "A hand-illustrated music video animation for 'RAIN', a Malayalam single by Sachin Balu, produced by Gypsy Myths Studios. 13K+ views on YouTube.",
+    role: "Motion Graphics, frame ideation",
+    period: "2024",
+    tools: ["After Effects"],
     intro: [
-      "Mazha is the Malayalam word for rain. This is a self-initiated identity study: how do you make a brand feel like the first monsoon shower, cool, textured, a little unpredictable?",
-      "The exploration covers a wordmark, a palette pulled from wet-season light, and a set of motion tests where type behaves like water on glass.",
+      "RAIN is a Malayalam single produced by Gypsy Myths Studios. This was a two-person freelance project: illustrations by Sanghamithra K, and the animation was mine, built entirely in After Effects.",
+      "I was part of the ideation for the frames alongside Sanghamithra, then took her illustrations and animated the full video, matching the song's mood, a monsoon-soaked, slow-burning heartache. The video has crossed 13K views on YouTube.",
     ],
-    blocks: [
-      { span: "full" },
-      { span: "full" },
-    ],
+    cover: "/projects/Rain-Mazha/motion1.png",
+    banner: "/projects/Rain-Mazha/motion1.png",
+    blocks: [],
   },
   {
     slug: "blossom-3d-animation",
     title: "Blossom",
-    fullTitle: "Blossom, a vintage car showcase in 3D",
+    fullTitle: "Blossom, exploring Blender's geometry nodes",
     client: "Personal",
     year: "2024",
     categories: ["Motion Graphics"],
     featured: true,
     summary:
-      "An 11-second 3D showcase animation of two vintage cars, modelled and rendered in Blender with post in After Effects.",
+      "An 11-second 3D showcase animation of two vintage cars, an exploration of Blender's geometry nodes and drone-style camera movement.",
     role: "3D Artist & Animator",
     period: "2024",
     tools: ["Blender", "After Effects"],
     prototypeUrl: "https://www.behance.net/gallery/196650735/Blossom-3D-Animation",
     prototypeLabel: "View on Behance",
     intro: [
-      "Blossom is a short 3D showcase piece built around two vintage cars, a study in lighting, camera choreography and material work rather than narrative. The full model, scene and lighting were built in Blender, with compositing and finishing passes done in After Effects.",
-      "The goal was a clean, premium showcase feel: the kind of confident camera move and material realism you'd expect from an automotive reveal, compressed into eleven seconds.",
+      "Blossom started as a personal exploration of Blender, specifically its geometry nodes and drone-style camera movement, built around two vintage cars as the subject.",
+      "The full model, scene and lighting were built in Blender, with the geometry-node setups driving the environment and camera choreography, and compositing and finishing passes done in After Effects.",
     ],
     cover:
       "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/fb2b94196650735.66234b6ef2b5e.png",
     gallery: [
       "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/fb2b94196650735.66234b6ef2b5e.png",
-      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/f27a49196650735.6623a6edb467f.png",
-      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/379ebd196650735.6623a6edb4e34.png",
-      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/7841d1196650735.6623a6edb3d1c.png",
-      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/be48c8196650735.6623a6edb41d1.png",
-      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/174b46196650735.6623a6edb34e8.png",
-      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/aca86e196650735.6624aa6739035.png",
     ].map((src) => ({ src })),
+    video: {
+      src: "/projects/Blossom/blossom-animation-3d.mov",
+      poster:
+        "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/fb2b94196650735.66234b6ef2b5e.png",
+      caption: "Blossom, full 3D animation",
+    },
+    blocks: [],
+  },
+  {
+    slug: "other-animations",
+    title: "Other Animations",
+    fullTitle: "Other Animations, logo reveals & motion pieces",
+    client: "Personal / Freelance",
+    year: "2024",
+    categories: ["Motion Graphics"],
+    summary:
+      "A small reel of logo reveals and motion pieces, hover any clip to play it.",
+    role: "3D Artist & Animator",
+    period: "2024",
+    tools: ["Blender", "After Effects"],
+    intro: [
+      "A shelf for the shorter motion pieces that don't need a case study of their own, logo reveals and standalone animations. Hover any clip below to play it.",
+    ],
+    blocks: [],
+  },
+  {
+    slug: "la-la-animation",
+    title: "La La Animation",
+    fullTitle: "La La Animation, a 3D animation for 'Vandine Thedum'",
+    client: "Personal",
+    year: "2024",
+    categories: ["Motion Graphics"],
+    summary:
+      "A personal 3D animation piece set to the song 'Vandine Thedum'.",
+    role: "3D Artist & Animator",
+    period: "2024",
+    tools: ["Blender", "After Effects"],
+    intro: [
+      "A personal 3D animation project built around the song 'Vandine Thedum', modelled, lit and animated in Blender with finishing passes in After Effects.",
+    ],
+    youtube: { id: "hq-7QU2GojA" },
+    blocks: [],
+  },
+  {
+    slug: "spider-ai-animation",
+    title: "Spider AI Animation",
+    fullTitle: "Spider AI Animation, an introduction film for Minto AI",
+    client: "Minto AI (Freelance)",
+    year: "2024",
+    categories: ["Motion Graphics"],
+    summary:
+      "An introduction animation made for Minto AI to launch Spider AI, their new product, on their website.",
+    role: "Motion Designer",
+    period: "2024",
+    tools: ["After Effects"],
+    intro: [
+      "Minto AI needed a way to introduce Spider AI, their new product, to visitors landing on their website. I animated the introduction film that plays the concept in a few seconds rather than making people read a feature list.",
+    ],
+    youtube: { id: "2EQi3KlLEoM" },
+    blocks: [],
+  },
+  {
+    slug: "onam-logo-reveal",
+    title: "Onam Logo Reveal",
+    fullTitle: "Onam Logo Reveal, a title animation for a college promo",
+    client: "Personal / College",
+    year: "2024",
+    categories: ["Motion Graphics"],
+    summary:
+      "A title/logo reveal animation made for IIITDM Jabalpur's Onam celebration promo video.",
+    role: "Motion Designer",
+    period: "2024",
+    tools: ["After Effects"],
+    intro: [
+      "A short title animation for our college's Onam celebration promo video, a logo reveal built to open the trailer before it cuts into the actual event coverage.",
+    ],
+    youtube: { id: "QSA0YK0QjyM" },
     blocks: [],
   },
   {

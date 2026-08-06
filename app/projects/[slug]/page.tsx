@@ -4,16 +4,24 @@ import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
 import ImageBlock from "@/components/projects/ImageBlock";
 import ProjectGallery from "@/components/projects/ProjectGallery";
+import PlayableVideo from "@/components/projects/PlayableVideo";
 import BlurReveal from "@/components/ui/BlurReveal";
 import FooterBlob from "@/components/FooterBlob";
 import Sparkles from "@/components/ui/Sparkles";
 import { CATEGORY_ICONS } from "@/components/ui/Icons";
+import { TOOL_LOGOS } from "@/components/ui/ToolLogos";
 import CTA from "@/components/ui/CTA";
 import ScrollFX from "@/components/effects/ScrollFX";
 
 /** Projects with a bespoke route of their own, those static segments
  *  win over this dynamic one, so they must not be generated here too. */
-const BESPOKE = new Set(["cms-editor-revamp", "myntra-crm", "product-animations"]);
+const BESPOKE = new Set([
+  "cms-editor-revamp",
+  "myntra-crm",
+  "product-animations",
+  "other-animations",
+  "rain-mazha",
+]);
 
 export function generateStaticParams() {
   return PROJECTS.filter((p) => !BESPOKE.has(p.slug) && !p.externalUrl).map((p) => ({
@@ -89,7 +97,28 @@ export default async function ProjectPage({
             <Meta term="Client" value={project.client} />
             <Meta term="Role" value={project.role} />
             <Meta term="When" value={project.period} />
-            <Meta term="Tools" value={project.tools.join(", ")} />
+            <div>
+              <dt className="text-white/35">Tools</dt>
+              <dd className="mt-2 flex flex-wrap gap-2">
+                {project.tools.map((t) => {
+                  const ToolLogo = TOOL_LOGOS[t];
+                  return (
+                    <span
+                      key={t}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 py-1 pl-1 pr-3 text-[13px] text-white/80"
+                      style={{ background: "var(--brand-sheen)" }}
+                    >
+                      {ToolLogo && (
+                        <span className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full">
+                          <ToolLogo size={20} />
+                        </span>
+                      )}
+                      {t}
+                    </span>
+                  );
+                })}
+              </dd>
+            </div>
           </dl>
 
           {project.deliverables && project.deliverables.length > 0 && (
@@ -154,6 +183,44 @@ export default async function ProjectPage({
                 />
               </div>
             ))}
+          </div>
+        )}
+
+        {project.video && (
+          <div className="mt-8">
+            <PlayableVideo
+              src={project.video.src}
+              poster={project.video.poster}
+              caption={project.video.caption}
+            />
+          </div>
+        )}
+
+        {project.youtube && (
+          <div className="mt-8">
+            <div
+              className="overflow-hidden rounded-[22px] border border-white/10"
+              style={{ boxShadow: "0 30px 60px -30px rgba(0,0,0,0.8)" }}
+            >
+              <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${project.youtube.id}`}
+                  title={`${project.title}, YouTube video player`}
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <CTA
+                label={project.youtube.label ?? "Watch on YouTube"}
+                href={`https://youtu.be/${project.youtube.id}`}
+                external
+                size="md"
+              />
+            </div>
           </div>
         )}
       </div>

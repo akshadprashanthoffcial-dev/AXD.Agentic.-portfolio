@@ -72,7 +72,9 @@ export default function NavPill() {
           onClick={() => inputRef.current?.focus()}
         >
           <div
-            className="flex h-12 items-center gap-2 rounded-full pl-1.5 pr-4"
+            className={`flex h-12 items-center gap-2 rounded-full ${
+              expanded ? "pl-1.5 pr-4" : "justify-center pl-1.5 pr-2.5"
+            }`}
             style={{
               background:
                 "linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)), var(--brand-sheen-soft)",
@@ -104,7 +106,7 @@ export default function NavPill() {
                 </span>
               </>
             ) : (
-              <span className="font-display flex-1 text-sm font-semibold tracking-wide text-white">
+              <span className="font-display shrink-0 text-sm font-semibold tracking-wide text-white">
                 AXD
               </span>
             )}
