@@ -8,9 +8,34 @@ import Sparkles from "@/components/ui/Sparkles";
 import { CATEGORY_ICONS } from "@/components/ui/Icons";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
+/** Case-insensitive match against CATEGORIES, so a link built from a
+ *  slightly different casing (or a manually-typed URL) still resolves. */
+function categoryFromParam(raw: string | null): Category | null {
+  if (!raw) return null;
+  return CATEGORIES.find((c) => c.toLowerCase() === raw.toLowerCase()) ?? null;
+}
+
 export default function ProjectsBrowser() {
   const [active, setActive] = useState<Category | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
+  // Deep-link support: `/projects?filter=Brand%20Identity` lands with that
+  // chip pre-selected. Read straight from `window.location` in an effect
+  // rather than `useSearchParams`, which would force this (otherwise static)
+  // page out of static rendering unless wrapped in a Suspense boundary.
+  useEffect(() => {
+    const fromUrl = categoryFromParam(new URLSearchParams(window.location.search).get("filter"));
+    if (fromUrl) setActive(fromUrl);
+  }, []);
+
+  // Keep the URL in sync with manual chip clicks too, so the filtered view
+  // is shareable/bookmarkable and survives a refresh or back navigation.
+  const select = (c: Category | null) => {
+    const next = active === c ? null : c;
+    setActive(next);
+    const url = next ? `?filter=${encodeURIComponent(next)}` : window.location.pathname;
+    window.history.replaceState(null, "", url);
+  };
 
   // "All" renders the curated DISPLAY_ORDER from data/projects.ts verbatim.
   // Inside a category filter there's no curated sequence, so top work leads.
@@ -60,14 +85,9 @@ export default function ProjectsBrowser() {
     <div>
       {/* Filter chips, kept to a single line */}
       <div className="filter-row mx-auto mb-16 max-w-5xl items-center">
-        <FilterChip label="All" active={active === null} onClick={() => setActive(null)} />
+        <FilterChip label="All" active={active === null} onClick={() => select(null)} />
         {CATEGORIES.map((c) => (
-          <FilterChip
-            key={c}
-            label={c}
-            active={active === c}
-            onClick={() => setActive(active === c ? null : c)}
-          />
+          <FilterChip key={c} label={c} active={active === c} onClick={() => select(c)} />
         ))}
       </div>
 

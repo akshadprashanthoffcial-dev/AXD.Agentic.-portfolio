@@ -18,7 +18,7 @@
 //                  does know, and offers real chips.
 // ============================================================
 
-import { PROJECTS } from "@/data/projects";
+import { PROJECTS, projectsFilterHref } from "@/data/projects";
 import { OPERATOR, TIMELINE } from "@/data/operator";
 import { SITE } from "@/data/site";
 
@@ -487,7 +487,7 @@ const INTENTS: Intent[] = [
     keys: ["motion", "threed"],
     boost: ["work"],
     answer: `${motionCount} motion pieces are up: a Malayalam music video that's crossed 13K views, product films for Joveo, logo reveals, and 3D work built in Blender. After Effects and Blender do most of the lifting.`,
-    actions: [{ label: "See the motion work", href: "/projects" }],
+    actions: [{ label: "See the motion work", href: projectsFilterHref("Motion Graphics") }],
     chips: ["Tell me about Rain / Mazha", "Show me 3D work", "What tools do you use?"],
     tier: "routed",
     weight: 2,
@@ -498,7 +498,7 @@ const INTENTS: Intent[] = [
     keys: ["branding"],
     boost: ["work"],
     answer: `${brandCount} identity projects, run end to end: Dripps (Gen-Z streetwear), Loomero (minimal essentials), Manas Home Gardens (botanical), plus campaign identity work at Myntra. Marks, type systems, packaging, guidelines.`,
-    actions: [{ label: "See the branding work", href: "/projects" }],
+    actions: [{ label: "See the branding work", href: projectsFilterHref("Brand Identity") }],
     chips: ["Tell me about Dripps", "Tell me about Loomero", "Are you available for work?"],
     tier: "routed",
     weight: 2,
@@ -510,7 +510,10 @@ const INTENTS: Intent[] = [
     boost: ["work"],
     answer:
       "The deepest product work is the Joveo CMS revamp: turning a service-delivered enterprise career-site build into a self-serve, AI-assisted platform, plus a 70+ widget library and the design system behind it.",
-    actions: [{ label: "Read the CMS case study", href: "/projects/cms-editor-revamp" }],
+    actions: [
+      { label: "See the product work", href: projectsFilterHref("Product Design") },
+      { label: "Read the CMS case study", href: "/projects/cms-editor-revamp" },
+    ],
     chips: ["What was your role at Joveo?", "Do you code?", "Show me the work"],
     tier: "routed",
     weight: 2,
@@ -522,7 +525,10 @@ const INTENTS: Intent[] = [
     boost: ["work"],
     answer:
       "Web work is mostly career sites: a composable template system at Joveo whose sections re-skin to any employer's brand without breaking layout. This site is in that family too, hand-built in Next.js.",
-    actions: [{ label: "See the web template project", href: "/projects/web-template" }],
+    actions: [
+      { label: "See the web work", href: projectsFilterHref("Web Designs") },
+      { label: "Open the web template project", href: "/projects/web-template" },
+    ],
     chips: ["How was this site built?", "Do you code?", "Show me the work"],
     tier: "routed",
     weight: 2,

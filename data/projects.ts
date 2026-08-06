@@ -19,6 +19,13 @@ export const CATEGORIES = [
 ] as const;
 export type Category = (typeof CATEGORIES)[number];
 
+/** Link to the projects list with a category pre-selected (read by
+ *  ProjectsBrowser's `?filter=` param). Used by the agent's discipline
+ *  answers so "show me branding work" lands directly on that filter. */
+export function projectsFilterHref(category: Category): string {
+  return `/projects?filter=${encodeURIComponent(category)}`;
+}
+
 // A block on the project detail page. `src` present → real image;
 // absent → grey placeholder box (matching the Figma layout).
 export type Block = {
