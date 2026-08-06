@@ -97,11 +97,11 @@ export default function NavPill() {
                   onFocus={() => setFocused(true)}
                   onBlur={() => setTimeout(() => setFocused(false), 160)}
                   onKeyDown={onKeyDown}
-                  placeholder="Ask me anything…"
-                  className="min-w-0 flex-1 bg-transparent text-[15px] text-white placeholder:text-white/50 outline-none"
+                  placeholder="Ask about the work or the experience"
+                  className="min-w-0 flex-1 bg-transparent text-[15px] text-white placeholder:text-white/64 outline-none"
                   aria-label="Ask the axd.labs agent"
                 />
-                <span className="text-white/55">
+                <span className="text-white/68">
                   <Magnifier />
                 </span>
               </>
@@ -136,7 +136,7 @@ export default function NavPill() {
                 >
                   <span className="text-[15px] text-white/90">{s.label}</span>
                   {s.hint && (
-                    <span className="text-[12px] uppercase tracking-wide text-white/45">
+                    <span className="text-[12px] uppercase tracking-wide text-white/60">
                       {s.hint}
                     </span>
                   )}

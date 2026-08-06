@@ -87,7 +87,7 @@ export default function SearchBar({ autoFocus = false, onNavigate }: Props) {
             boxShadow: "0 12px 28px rgba(0,0,0,0.4)",
           }}
         >
-          <span className="text-white/60">
+          <span className="text-white/72">
             <Magnifier size={22} />
           </span>
           <input
@@ -97,8 +97,8 @@ export default function SearchBar({ autoFocus = false, onNavigate }: Props) {
             onFocus={() => setFocused(true)}
             onBlur={() => setTimeout(() => setFocused(false), 140)}
             onKeyDown={onKeyDown}
-            placeholder="Ask me anything…"
-            className="min-w-0 flex-1 bg-transparent text-[18px] text-white placeholder:text-white/50 outline-none"
+            placeholder="Ask about the work, the experience, or hiring"
+            className="min-w-0 flex-1 bg-transparent text-[18px] text-white placeholder:text-white/64 outline-none"
             aria-label="Ask the axd.labs agent"
           />
         </div>
@@ -127,7 +127,7 @@ export default function SearchBar({ autoFocus = false, onNavigate }: Props) {
               >
                 <span className="text-[16px] text-white/90">{s.label}</span>
                 {s.hint && (
-                  <span className="text-[13px] uppercase tracking-wide text-white/45">
+                  <span className="text-[13px] uppercase tracking-wide text-white/60">
                     {s.hint}
                   </span>
                 )}

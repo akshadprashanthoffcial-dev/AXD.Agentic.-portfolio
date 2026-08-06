@@ -75,7 +75,7 @@ function Lane({
         background: brand ? "var(--brand-sheen-soft)" : "rgba(239,60,63,0.035)",
       }}
     >
-      <div className="mb-1 text-[11px] uppercase tracking-[0.2em] text-white/35">
+      <div className="mb-1 text-[11px] uppercase tracking-[0.2em] text-white/50">
         {kicker}
       </div>
       <h3 className="font-display mb-6 text-[22px] text-white">{title}</h3>
@@ -84,7 +84,7 @@ function Lane({
           side and are meant to be compared step against step. */}
       <Chain nodes={nodes} tone={tone} dense vertical />
 
-      <p className="mt-6 text-[14px] leading-relaxed text-white/50">{note}</p>
+      <p className="mt-6 text-[14px] leading-relaxed text-white/64">{note}</p>
     </div>
   );
 }
@@ -101,13 +101,13 @@ export function TokenEconomics() {
 
   return (
     <div ref={ref} className="chain mt-10 rounded-2xl border border-white/10 p-6 md:p-8">
-      <div className="mb-1 text-[11px] uppercase tracking-[0.2em] text-white/35">
+      <div className="mb-1 text-[11px] uppercase tracking-[0.2em] text-white/50">
         Cost model
       </div>
       <h3 className="font-display mb-6 text-[20px] text-white">
         Where a request is allowed to land
       </h3>
-      <p className="mb-6 max-w-2xl text-[14px] leading-relaxed text-white/50">
+      <p className="mb-6 max-w-2xl text-[14px] leading-relaxed text-white/64">
         Every request is routed to the cheapest tier that can still answer
         it, a plain library match, a library match with AI-written copy,
         or, only when nothing fits, full generation. Each row below is a
@@ -119,8 +119,8 @@ export function TokenEconomics() {
         {rows.map((r, i) => (
           <div key={r.label}>
             <div className="mb-2 flex items-baseline justify-between gap-4 text-[13px]">
-              <span className="text-white/65">{r.label}</span>
-              <span className="text-white/30">{r.pct}% of requests</span>
+              <span className="text-white/76">{r.label}</span>
+              <span className="text-white/45">{r.pct}% of requests</span>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
               <div
@@ -139,7 +139,7 @@ export function TokenEconomics() {
         ))}
       </div>
 
-      <p className="mt-6 text-[14px] leading-relaxed text-white/45">
+      <p className="mt-6 text-[14px] leading-relaxed text-white/60">
         Targets, not measurements, the routing policy the prototype encodes.
         Pushing the common case down to a library lookup is what makes the
         feature affordable to run at enterprise volume.
@@ -199,7 +199,7 @@ export function TierExplorer() {
             className={`rounded-full border px-4 py-2 text-[13px] transition-colors duration-300 ${
               i === active
                 ? "border-white/25 text-white"
-                : "border-white/10 text-white/45 hover:border-white/20 hover:text-white/70"
+                : "border-white/10 text-white/60 hover:border-white/20 hover:text-white/78"
             }`}
             style={i === active ? { background: "var(--brand-sheen)" } : undefined}
           >
@@ -213,7 +213,7 @@ export function TierExplorer() {
           <p className="font-display text-[clamp(20px,3vw,28px)] leading-snug text-white">
             {t.line}
           </p>
-          <p className="mt-4 text-[14px] text-white/45">{t.who}</p>
+          <p className="mt-4 text-[14px] text-white/60">{t.who}</p>
         </div>
 
         <div className="space-y-6">
@@ -223,7 +223,7 @@ export function TierExplorer() {
               {t.surfaces.map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-white/15 px-3 py-1.5 text-[12px] text-white/75"
+                  className="rounded-full border border-white/15 px-3 py-1.5 text-[12px] text-white/82"
                   style={{ background: "var(--brand-sheen)" }}
                 >
                   {s}
@@ -235,7 +235,7 @@ export function TierExplorer() {
           <div>
             <Tag>Still hidden</Tag>
             {t.hidden.length === 0 ? (
-              <p className="text-[13px] text-white/35">
+              <p className="text-[13px] text-white/50">
                 Nothing, the full surface is available at this tier.
               </p>
             ) : (
@@ -243,7 +243,7 @@ export function TierExplorer() {
                 {t.hidden.map((s) => (
                   <span
                     key={s}
-                    className="rounded-full border border-dashed border-white/12 px-3 py-1.5 text-[12px] text-white/30"
+                    className="rounded-full border border-dashed border-white/12 px-3 py-1.5 text-[12px] text-white/45"
                   >
                     {s}
                   </span>
@@ -254,7 +254,7 @@ export function TierExplorer() {
         </div>
       </div>
 
-      <p className="mt-8 border-t border-white/10 pt-6 text-[14px] text-white/45">
+      <p className="mt-8 border-t border-white/10 pt-6 text-[14px] text-white/60">
         Same product, same data model. The only thing that changes is how much
         of it the interface admits to.
       </p>
@@ -301,7 +301,7 @@ export function BeforeAfter() {
 
       <div className="overflow-hidden rounded-2xl border border-white/10">
         <div className="grid grid-cols-2 border-b border-white/10 text-[11px] uppercase tracking-[0.2em]">
-          <div className="px-5 py-3 text-white/30 md:px-7">Before</div>
+          <div className="px-5 py-3 text-white/45 md:px-7">Before</div>
           <div className="px-5 py-3 text-brand md:px-7">After</div>
         </div>
         {ROWS.map(([before, after], i) => (
@@ -310,7 +310,7 @@ export function BeforeAfter() {
             className="ba-row grid grid-cols-2 border-b border-white/[0.06] text-[14px] last:border-b-0 md:text-[15px]"
             style={{ transitionDelay: `${i * 70}ms` }}
           >
-            <div className="px-5 py-4 text-white/40 line-through decoration-white/15 md:px-7 md:py-5">
+            <div className="px-5 py-4 text-white/55 line-through decoration-white/15 md:px-7 md:py-5">
               {before}
             </div>
             <div className="px-5 py-4 text-white/85 md:px-7 md:py-5">{after}</div>
@@ -345,7 +345,7 @@ export function UserGap() {
     <div className="grid gap-6 md:grid-cols-2">
       <Card>
         <Tag tone="problem">Who was actually using it</Tag>
-        <p className="mb-6 text-[15px] leading-relaxed text-white/60">
+        <p className="mb-6 text-[15px] leading-relaxed text-white/72">
           Marketing and talent-brand teams, the people accountable for
           applications, not for markup.
         </p>
@@ -353,7 +353,7 @@ export function UserGap() {
           {had.map((h) => (
             <li
               key={h}
-              className="flex items-center gap-3 text-[14px] text-white/45"
+              className="flex items-center gap-3 text-[14px] text-white/60"
             >
               <span className="h-1 w-1 shrink-0 rounded-full bg-[#ef3c3f]" />
               {h}
@@ -364,7 +364,7 @@ export function UserGap() {
 
       <Card>
         <Tag tone="solution">What the old CMS demanded first</Tag>
-        <p className="mb-6 text-[15px] leading-relaxed text-white/60">
+        <p className="mb-6 text-[15px] leading-relaxed text-white/72">
           The interface exposed its implementation. Every one of these had to be
           understood before the real goal was reachable.
         </p>
@@ -372,7 +372,7 @@ export function UserGap() {
           {demanded.map((d) => (
             <span
               key={d}
-              className="rounded-lg border border-white/12 px-3 py-1.5 text-[13px] text-white/55"
+              className="rounded-lg border border-white/12 px-3 py-1.5 text-[13px] text-white/68"
             >
               {d}
             </span>
@@ -385,7 +385,7 @@ export function UserGap() {
           className="rounded-2xl border border-white/15 px-6 py-8 text-center md:px-10 md:py-10"
           style={{ background: "var(--brand-sheen-soft)" }}
         >
-          <div className="mb-3 text-[11px] uppercase tracking-[0.22em] text-white/35">
+          <div className="mb-3 text-[11px] uppercase tracking-[0.22em] text-white/50">
             The actual goal
           </div>
           <p className="font-display text-[clamp(22px,3.6vw,34px)] leading-snug text-white">
@@ -394,44 +394,5 @@ export function UserGap() {
         </div>
       </div>
     </div>
-  );
-}
-
-/* ------------------------------------------------------------
-   5. CaseProgress, reading progress + section rail.
-   ------------------------------------------------------------ */
-
-export function CaseProgress({
-  sections,
-}: {
-  sections: { id: string; label: string }[];
-}) {
-  const [pct, setPct] = useState(0);
-
-  useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const max = document.body.scrollHeight - window.innerHeight;
-        setPct(max > 0 ? Math.min(1, window.scrollY / max) : 0);
-      });
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [sections]);
-
-  return (
-    <div
-      className="case-progress"
-      style={{ transform: `scaleX(${pct})` }}
-      aria-hidden
-    />
   );
 }

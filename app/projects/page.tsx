@@ -18,9 +18,9 @@ export default function ProjectsPage() {
         className="font-display block text-center text-[clamp(30px,5vw,52px)] text-white"
       />
       <Reveal>
-        <p className="mx-auto mt-4 max-w-lg text-center text-white/45">
-          A mix of shipped work and self-initiated pieces, top work first. Filter
-          by what you care about.
+        <p className="mx-auto mt-4 max-w-lg text-center text-white/60">
+          A mix of shipped work and self-initiated pieces. Filter by what you
+          care about.
         </p>
       </Reveal>
       <div className="mt-14">

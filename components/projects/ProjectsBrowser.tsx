@@ -12,10 +12,13 @@ export default function ProjectsBrowser() {
   const [active, setActive] = useState<Category | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const list = (active ? PROJECTS.filter((p) => p.categories.includes(active)) : PROJECTS)
-    // Top work first, original order preserved within each tier.
-    .slice()
-    .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  // "All" renders the curated DISPLAY_ORDER from data/projects.ts verbatim.
+  // Inside a category filter there's no curated sequence, so top work leads.
+  const list = active
+    ? PROJECTS.filter((p) => p.categories.includes(active))
+        .slice()
+        .sort((a, b) => Number(!!b.featured) - Number(!!a.featured))
+    : PROJECTS;
 
   // Rows remount on every filter change (see the `key` below), so this
   // rebinds a fresh ScrollTrigger.batch each time rather than running once.
@@ -78,7 +81,7 @@ export default function ProjectsBrowser() {
       </div>
 
       {list.length === 0 && (
-        <p className="py-16 text-center text-white/40">Nothing filed under that one yet.</p>
+        <p className="py-16 text-center text-white/55">Nothing filed under that one yet.</p>
       )}
     </div>
   );
@@ -131,7 +134,7 @@ function Row({ project: p }: { project: Project }) {
           <span>{p.title}</span>
           <span
             aria-hidden
-            className="translate-x-[-6px] text-[0.5em] text-white/40 opacity-0 transition-all duration-500 ease-out group-hover:translate-x-0 group-hover:text-white/70 group-hover:opacity-100"
+            className="translate-x-[-6px] text-[0.5em] text-white/55 opacity-0 transition-all duration-500 ease-out group-hover:translate-x-0 group-hover:text-white/78 group-hover:opacity-100"
           >
             {external ? "↗" : "→"}
           </span>
@@ -142,7 +145,7 @@ function Row({ project: p }: { project: Project }) {
             return (
               <span
                 key={c}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-white/75"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-white/82"
                 style={{ background: "var(--brand-sheen)" }}
               >
                 {CatIcon ? <CatIcon size={13} /> : <Sparkles size={13} />}
@@ -151,8 +154,8 @@ function Row({ project: p }: { project: Project }) {
             );
           })}
         </div>
-        <p className="mt-5 max-w-lg text-white/45">{p.summary}</p>
-        <span className="mt-4 inline-flex items-center gap-2.5 text-sm uppercase tracking-wide text-white/35">
+        <p className="mt-5 max-w-lg text-white/60">{p.summary}</p>
+        <span className="mt-4 inline-flex items-center gap-2.5 text-sm uppercase tracking-wide text-white/50">
           {p.clientLogo && (
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/95 p-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -200,7 +203,7 @@ function FilterChip({
       className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all duration-300 ${
         active
           ? "border-transparent text-white"
-          : "border-white/15 text-white/65 hover:border-white/35 hover:text-white"
+          : "border-white/15 text-white/76 hover:border-white/35 hover:text-white"
       }`}
       style={active ? { background: "var(--brand-gradient)" } : { background: "var(--brand-sheen)" }}
     >

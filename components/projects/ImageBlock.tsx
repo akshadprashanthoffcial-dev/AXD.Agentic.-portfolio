@@ -48,7 +48,7 @@ export default function ImageBlock({
         )}
       </div>
       {caption && (
-        <figcaption className="mt-2.5 text-sm text-white/40">{caption}</figcaption>
+        <figcaption className="mt-2.5 text-sm text-white/55">{caption}</figcaption>
       )}
     </figure>
   );

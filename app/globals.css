@@ -50,8 +50,8 @@
 
   /* Text tiers */
   --ink-1: rgba(255, 255, 255, 1);
-  --ink-2: rgba(255, 255, 255, 0.7);
-  --ink-3: rgba(255, 255, 255, 0.45);
+  --ink-2: rgba(255, 255, 255, 0.78);
+  --ink-3: rgba(255, 255, 255, 0.6);
   --hairline: rgba(255, 255, 255, 0.12);
 
   /* Motion */
@@ -71,6 +71,17 @@
    interrupted by the new page's layout still settling (images, fonts),
    navigation can land partway down the page instead of at the top. */
 
+/* Sideways scroll is never wanted on this site: every page is a vertical
+   read, and any horizontal room is a decorative bleed (glows, marquees)
+   escaping its box.
+   `overflow-x: clip` rather than `hidden` — `hidden` on <body> alone doesn't
+   stop <html> from growing, and putting `hidden` on <html> would make it a
+   scroll container and break `position: sticky` inside. `clip` cuts the
+   overflow without creating one. */
+html {
+  overflow-x: clip;
+}
+
 body {
   margin: 0;
   background: var(--color-canvas);
@@ -78,7 +89,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -416,6 +427,72 @@ body {
    ------------------------------------------------------------ */
 .proj-row {
   opacity: 0;
+}
+
+/* ------------------------------------------------------------
+   Agent console (home search). The answer settles in the way the
+   rest of the site reveals, and the "thinking" dots are the only
+   thing standing in for latency, so they carry the illusion.
+   ------------------------------------------------------------ */
+.agent-answer {
+  animation: agentIn 460ms var(--settle) both;
+}
+@keyframes agentIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.agent-dots {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+.agent-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--brand-gradient);
+  animation: agentDot 1.05s ease-in-out infinite;
+}
+.agent-dots i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.agent-dots i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+@keyframes agentDot {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0) scale(0.9);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1);
+  }
+}
+.agent-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 9px 16px;
+  font-size: 14px;
+  color: #fff;
+  transition: transform var(--t-base) var(--settle),
+    border-color var(--t-base) var(--settle);
+}
+.agent-action:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.42);
 }
 
 /* ------------------------------------------------------------
@@ -761,5 +838,12 @@ body {
   }
   .blob-burst {
     display: none !important;
+  }
+  .agent-answer,
+  .agent-dots i {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }

@@ -41,7 +41,11 @@ export default function FeatureBlock({
         shot ? "lg:grid-cols-2" : ""
       }`}
     >
-      <Reveal className={`${flip ? "lg:order-2" : ""} ${shot ? "" : "max-w-3xl"}`}>
+      {/* `min-w-0` on both grid items. An `auto` track is sized to its items'
+          min-content contribution, and the monospace "How it's built" note has
+          a wide one, so on a phone the single column resolved wider than the
+          page and dragged the whole document sideways. */}
+      <Reveal className={`min-w-0 ${flip ? "lg:order-2" : ""} ${shot ? "" : "max-w-3xl"}`}>
         <div className="mb-4 flex items-center gap-3">
           <span className="text-brand font-display text-[13px]">{n}</span>
           <h3 className="font-display text-[clamp(22px,3.4vw,32px)] text-white">
@@ -60,10 +64,10 @@ export default function FeatureBlock({
             className="mt-6 rounded-xl border border-white/10 px-5 py-4"
             style={{ background: "var(--brand-sheen-soft)" }}
           >
-            <div className="mb-1.5 text-[11px] uppercase tracking-[0.2em] text-white/35">
+            <div className="mb-1.5 text-[11px] uppercase tracking-[0.2em] text-white/50">
               How it's built
             </div>
-            <p className="font-mono text-[13px] leading-relaxed text-white/55">
+            <p className="font-mono text-[13px] leading-relaxed text-white/68">
               {build}
             </p>
           </div>
@@ -71,7 +75,7 @@ export default function FeatureBlock({
       </Reveal>
 
       {shot && (
-        <div className={flip ? "lg:order-1" : ""}>
+        <div className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
           <ScreenFrame
             src={shot.src}
             alt={shot.alt}
@@ -104,7 +108,7 @@ function Row({
       <dt className={`pt-0.5 text-[11px] uppercase tracking-[0.2em] ${tone}`}>
         {label}
       </dt>
-      <dd className="text-[15px] leading-relaxed text-white/60">{value}</dd>
+      <dd className="text-[15px] leading-relaxed text-white/72">{value}</dd>
     </div>
   );
 }

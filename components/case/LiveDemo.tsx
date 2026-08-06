@@ -87,7 +87,7 @@ export default function LiveDemo() {
     <div className="grid gap-0 overflow-hidden rounded-2xl border border-white/12 md:grid-cols-[280px_1fr]">
       {/* Brandings list */}
       <div className="border-b border-white/10 bg-white/[0.02] p-4 md:border-r md:border-b-0">
-        <div className="mb-3 px-1 text-[11px] uppercase tracking-[0.2em] text-white/35">
+        <div className="mb-3 px-1 text-[11px] uppercase tracking-[0.2em] text-white/50">
           Brandings
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1 md:flex-col md:overflow-visible md:pb-0">
@@ -117,7 +117,7 @@ export default function LiveDemo() {
                   <span className="block truncate text-[13px] text-white/85">
                     {b.name}
                   </span>
-                  <span className="block truncate text-[11px] text-white/35">
+                  <span className="block truncate text-[11px] text-white/50">
                     {b.heading.split(",")[0].replace(/['"]/g, "")}
                   </span>
                 </span>
@@ -136,7 +136,7 @@ export default function LiveDemo() {
       <div>
         <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.02] px-5 py-3">
           <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden />
-          <span className="text-[11px] uppercase tracking-[0.18em] text-white/40">
+          <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">
             Live preview - {brand.name}
           </span>
         </div>

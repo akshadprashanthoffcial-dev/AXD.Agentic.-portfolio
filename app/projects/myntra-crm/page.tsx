@@ -8,13 +8,13 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { PROJECTS, getProject } from "@/data/projects";
+import { getProject } from "@/data/projects";
 import ImageBlock from "@/components/projects/ImageBlock";
 import Reveal from "@/components/ui/Reveal";
 import BlurReveal from "@/components/ui/BlurReveal";
 import FooterBlob from "@/components/FooterBlob";
 import CTA from "@/components/ui/CTA";
+import ScrollProgress from "@/components/effects/ScrollProgress";
 
 const P = getProject("myntra-crm")!;
 const COVER_RATIO = 1600 / 1563;
@@ -121,11 +121,10 @@ const MORE_WORK = [
 ];
 
 export default function MyntraCaseStudy() {
-  const idx = PROJECTS.findIndex((p) => p.slug === P.slug);
-  const next = PROJECTS[(idx + 1) % PROJECTS.length];
 
   return (
     <article>
+      <ScrollProgress />
       <div className="px-5 pt-32">
         <div className="mx-auto max-w-6xl">
           {/* ---------------- Cover, first image in the scroll ---------------- */}
@@ -141,7 +140,7 @@ export default function MyntraCaseStudy() {
 
           {/* ---------------- Header ---------------- */}
           <header className="mb-14">
-            <div className="mb-5 flex flex-wrap items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/35">
+            <div className="mb-5 flex flex-wrap items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/50">
               <span>{P.client}</span>
               <span className="text-white/15">/</span>
               <span>{P.year}</span>
@@ -155,7 +154,7 @@ export default function MyntraCaseStudy() {
               className="font-display max-w-3xl text-[clamp(34px,6vw,64px)] leading-[1.05] text-white"
             />
 
-            <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-white/60">
+            <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-white/72">
               {P.summary}
             </p>
           </header>
@@ -170,7 +169,7 @@ export default function MyntraCaseStudy() {
             >
               {FACTS.map((f) => (
                 <div key={f.k}>
-                  <dt className="text-[11px] uppercase tracking-[0.2em] text-white/35">
+                  <dt className="text-[11px] uppercase tracking-[0.2em] text-white/50">
                     {f.k}
                   </dt>
                   <dd className="mt-1.5 text-[15px] font-medium text-white/85">
@@ -180,7 +179,7 @@ export default function MyntraCaseStudy() {
               ))}
 
               <div className="col-span-2 lg:col-span-1">
-                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/35">
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/50">
                   Tools
                 </dt>
                 <dd className="mt-3 flex flex-wrap gap-2.5">
@@ -198,14 +197,14 @@ export default function MyntraCaseStudy() {
               </div>
 
               <div className="col-span-2 lg:col-span-1">
-                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/35">
+                <dt className="text-[11px] uppercase tracking-[0.2em] text-white/50">
                   Skills
                 </dt>
                 <dd className="mt-2 flex flex-wrap gap-1.5">
                   {SKILLS.map((s) => (
                     <span
                       key={s}
-                      className="rounded-full border border-white/12 px-2.5 py-1 text-[11px] text-white/70"
+                      className="rounded-full border border-white/12 px-2.5 py-1 text-[11px] text-white/78"
                     >
                       {s}
                     </span>
@@ -223,13 +222,13 @@ export default function MyntraCaseStudy() {
               <h2 className="font-display mb-5 text-[clamp(22px,2.8vw,32px)] text-white">
                 The challenge
               </h2>
-              <p className="text-[16px] leading-relaxed text-white/60">{CHALLENGE}</p>
+              <p className="text-[16px] leading-relaxed text-white/72">{CHALLENGE}</p>
 
               <h2 className="font-display mt-14 mb-5 text-[clamp(22px,2.8vw,32px)] text-white">
                 What I did
               </h2>
               {WORK.map((para, i) => (
-                <p key={i} className="mb-4 text-[16px] leading-relaxed text-white/60">
+                <p key={i} className="mb-4 text-[16px] leading-relaxed text-white/72">
                   {para}
                 </p>
               ))}
@@ -239,10 +238,10 @@ export default function MyntraCaseStudy() {
                   className="mt-8 max-w-2xl rounded-2xl border-l-2 border-white/25 px-6 py-6"
                   style={{ background: "var(--brand-sheen-soft)" }}
                 >
-                  <div className="mb-2.5 text-[11px] uppercase tracking-[0.2em] text-white/40">
+                  <div className="mb-2.5 text-[11px] uppercase tracking-[0.2em] text-white/55">
                     ▪ How AI helped
                   </div>
-                  <p className="text-[15px] leading-relaxed text-white/70">{AI_NOTE}</p>
+                  <p className="text-[15px] leading-relaxed text-white/78">{AI_NOTE}</p>
                 </div>
               </Reveal>
 
@@ -290,23 +289,17 @@ export default function MyntraCaseStudy() {
               <h2 className="font-display mt-14 mb-5 text-[clamp(22px,2.8vw,32px)] text-white">
                 The outcome
               </h2>
-              <p className="text-[16px] leading-relaxed text-white/60">{OUTCOME}</p>
+              <p className="text-[16px] leading-relaxed text-white/72">{OUTCOME}</p>
 
               <h2 className="font-display mt-14 mb-5 text-[clamp(22px,2.8vw,32px)] text-white">
                 What I learned
               </h2>
-              <p className="mb-4 text-[16px] leading-relaxed text-white/60">{LEARNED}</p>
+              <p className="mb-4 text-[16px] leading-relaxed text-white/72">{LEARNED}</p>
             </div>
           </div>
         </div>
 
-        <FooterBlob label="Check out Other Projects !" href={`/projects/${next.slug}`} />
-
-        <div className="pb-16 text-center">
-          <Link href="/projects" className="text-sm text-white/40 hover:text-white/70">
-            ← All projects
-          </Link>
-        </div>
+        <FooterBlob label="Check out other Projects !" href="/projects" />
       </div>
     </article>
   );

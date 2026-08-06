@@ -169,6 +169,16 @@ export function RoleIcon(p: IconProps) {
   );
 }
 
+// Where I'm from, a map pin. Sits under the title on the about page.
+export function PinIcon(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M12 21s6.5-5.6 6.5-10.5a6.5 6.5 0 0 0-13 0C5.5 15.4 12 21 12 21Z" />
+      <circle cx="12" cy="10.3" r="2.4" />
+    </Svg>
+  );
+}
+
 /* ---- lookup helpers ---- */
 
 export const SUGGESTION_ICONS = {

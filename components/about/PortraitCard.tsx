@@ -160,14 +160,14 @@ export default function PortraitCard() {
           <button
             type="button"
             onClick={requestGyro}
-            className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-white/15 py-2.5 text-[13px] text-white/70 md:hidden"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-white/15 py-2.5 text-[13px] text-white/78 md:hidden"
             style={{ background: "var(--brand-sheen)" }}
           >
             <TiltGlyph /> Tap, then tilt your phone
           </button>
         )}
         {gyro === "on" && (
-          <p className="mt-3 flex items-center justify-center gap-2 text-[13px] text-white/40 md:hidden">
+          <p className="mt-3 flex items-center justify-center gap-2 text-[13px] text-white/55 md:hidden">
             <TiltGlyph /> Tilt your phone
           </p>
         )}

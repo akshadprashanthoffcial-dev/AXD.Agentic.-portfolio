@@ -71,7 +71,7 @@ export default function ProjectGallery({ images, title }: Props) {
             <h2 className="font-display text-[clamp(24px,4vw,40px)] text-white">
               The system
             </h2>
-            <span className="text-[13px] uppercase tracking-[0.14em] text-white/35">
+            <span className="text-[13px] uppercase tracking-[0.14em] text-white/50">
               Click any image to zoom
             </span>
           </div>
@@ -152,7 +152,7 @@ export default function ProjectGallery({ images, title }: Props) {
             onClick={(e) => e.stopPropagation()}
             className="max-h-[82vh] max-w-[88vw] rounded-[14px] object-contain shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
           />
-          <span className="absolute bottom-7 left-0 right-0 text-center text-[13px] uppercase tracking-[0.14em] text-white/45">
+          <span className="absolute bottom-7 left-0 right-0 text-center text-[13px] uppercase tracking-[0.14em] text-white/60">
             {open + 1} / {count}
           </span>
         </div>

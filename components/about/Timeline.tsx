@@ -110,28 +110,28 @@ export default function Timeline() {
                   {t.projectSlug && (
                     <span
                       aria-hidden
-                      className="ml-2 inline-block translate-x-[-4px] text-[0.7em] text-white/35 opacity-0 transition-all duration-400 ease-out group-hover:translate-x-0 group-hover:text-white/70 group-hover:opacity-100"
+                      className="ml-2 inline-block translate-x-[-4px] text-[0.7em] text-white/50 opacity-0 transition-all duration-400 ease-out group-hover:translate-x-0 group-hover:text-white/78 group-hover:opacity-100"
                     >
                       →
                     </span>
                   )}
                 </h3>
-                <p className="mt-1 flex flex-wrap items-center gap-2 text-white/75">
+                <p className="mt-1 flex flex-wrap items-center gap-2 text-white/82">
                   {t.role}
                   {t.freelance && (
                     <span
-                      className="rounded-full border border-white/15 px-2.5 py-0.5 text-[11px] uppercase tracking-[0.12em] text-white/55"
+                      className="rounded-full border border-white/15 px-2.5 py-0.5 text-[11px] uppercase tracking-[0.12em] text-white/68"
                       style={{ background: "var(--brand-sheen)" }}
                     >
                       Freelance
                     </span>
                   )}
                 </p>
-                <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/45">
+                <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
                   {t.note}
                 </p>
               </div>
-              <span className="whitespace-nowrap text-sm text-white/35">{t.period}</span>
+              <span className="whitespace-nowrap text-sm text-white/50">{t.period}</span>
             </div>
           );
 

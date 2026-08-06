@@ -26,7 +26,7 @@ export default function ContactPage() {
         className="font-display mt-4 text-[clamp(30px,5vw,52px)] text-white"
       />
       <Reveal>
-        <p className="mt-4 max-w-md text-white/55">
+        <p className="mt-4 max-w-md text-white/68">
           Hiring, collaborating, or just curious about the work, the fastest way
           to reach me is below. Based in {SITE.operatedFrom}.
         </p>
@@ -46,7 +46,7 @@ export default function ContactPage() {
               className="flex items-center justify-between rounded-2xl border border-white/12 px-5 py-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-white/30"
               style={{ background: "var(--brand-sheen)" }}
             >
-              <span className="text-sm uppercase tracking-wide text-white/40">
+              <span className="text-sm uppercase tracking-wide text-white/55">
                 {l.label}
               </span>
               <span className="text-white/85">{l.value}</span>

@@ -62,6 +62,9 @@ export type Project = {
    *  type on them) read better letterboxed than cropped. Defaults to cover. */
   coverFit?: "cover" | "contain";
   banner?: string; // bespoke case-study hero banner
+  /** Portrait-ish crop of the banner for narrow screens. The wide banner
+   *  letterboxes down to a sliver on a phone; this replaces it under 768px. */
+  bannerMobile?: string;
   blocks: Block[]; // detail-page gallery
   /** Chips of physical/digital outputs, deliverables row under the meta grid. */
   deliverables?: string[];
@@ -78,7 +81,7 @@ export type Project = {
   youtube?: { id: string; label?: string };
 };
 
-export const PROJECTS: Project[] = [
+const PROJECT_ENTRIES: Project[] = [
   {
     slug: "cms-editor-revamp",
     title: "Reimagining an Enterprise CMS",
@@ -100,6 +103,7 @@ export const PROJECTS: Project[] = [
     ],
     cover: "/projects/cms-editor/cover.png",
     banner: "/projects/cms-editor/banner.png",
+    bannerMobile: "/projects/cms-editor/mobile-banner.png",
     blocks: [],
   },
   {
@@ -490,6 +494,38 @@ export const PROJECTS: Project[] = [
     blocks: [],
   },
 ];
+
+// ============================================================
+// Display order. This is the order the list renders under the
+// "All" filter, and it also drives the "next project" link on
+// every detail page, so it's the one source of truth for
+// sequence. Anything not named here falls to the end in the
+// order it's written above.
+// ============================================================
+const DISPLAY_ORDER = [
+  "cms-editor-revamp",
+  "myntra-crm",
+  "web-template",
+  "product-animations",
+  "rain-mazha",
+  "dripps",
+  "manas-home-gardens",
+  "loomero",
+  "la-la-animation",
+  "other-animations",
+  "spider-ai-animation",
+  "tapse",
+  "onam-logo-reveal",
+];
+
+const rank = (slug: string) => {
+  const i = DISPLAY_ORDER.indexOf(slug);
+  return i === -1 ? DISPLAY_ORDER.length : i;
+};
+
+export const PROJECTS: Project[] = PROJECT_ENTRIES.map((p, i) => ({ p, i }))
+  .sort((a, b) => rank(a.p.slug) - rank(b.p.slug) || a.i - b.i)
+  .map(({ p }) => p);
 
 export function getProject(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);

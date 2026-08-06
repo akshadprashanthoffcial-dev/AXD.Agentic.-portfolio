@@ -11,7 +11,7 @@ import Capabilities from "@/components/about/Capabilities";
 import Toolkit from "@/components/about/Toolkit";
 import Timeline from "@/components/about/Timeline";
 import ToolMarquee from "@/components/about/ToolMarquee";
-import { RoleIcon } from "@/components/ui/Icons";
+import { RoleIcon, PinIcon } from "@/components/ui/Icons";
 import ScrollFX from "@/components/effects/ScrollFX";
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function AboutPage() {
       <section className="mx-auto grid max-w-6xl gap-y-10 md:grid-cols-[1.05fr_0.95fr] md:gap-x-12">
         <div className="md:col-start-1 md:row-start-1">
           <Reveal immediate>
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.16em] text-white/60"
+            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.16em] text-white/72"
               style={{ background: "var(--brand-sheen)" }}>
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--brand-gradient)" }} />
               About
@@ -62,6 +62,19 @@ export default function AboutPage() {
               {OPERATOR.title}
             </p>
           </Reveal>
+
+          <Reveal immediate delay={160}>
+            <p className="mt-3 flex items-center gap-2.5 pl-0.5 text-[15px] text-white/72">
+              <span
+                aria-hidden
+                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15"
+                style={{ background: "var(--brand-sheen)" }}
+              >
+                <PinIcon size={14} />
+              </span>
+              {OPERATOR.location}
+            </p>
+          </Reveal>
         </div>
 
         {/* The card, tilts to the pointer, or to the phone's gyroscope. */}
@@ -74,7 +87,7 @@ export default function AboutPage() {
         </Reveal>
 
         <div className="md:col-start-1 md:row-start-2">
-          <div className="max-w-md space-y-4 text-[17px] leading-relaxed text-white/70">
+          <div className="max-w-md space-y-4 text-[17px] leading-relaxed text-white/78">
             {OPERATOR.intro.map((p, i) => (
               <Reveal immediate key={i} delay={180 + i * 80}>
                 <p>{p}</p>
@@ -88,15 +101,9 @@ export default function AboutPage() {
               <a
                 href="/resume.pdf"
                 download
-                className="text-sm text-white/45 underline-offset-4 transition-colors hover:text-white hover:underline"
+                className="text-sm text-white/60 underline-offset-4 transition-colors hover:text-white hover:underline"
               >
                 Download my resume
-              </a>
-              <a
-                href={`mailto:${SITE.email}`}
-                className="text-sm text-white/45 underline-offset-4 transition-colors hover:text-white hover:underline"
-              >
-                {SITE.email}
               </a>
             </div>
           </Reveal>
@@ -150,7 +157,7 @@ export default function AboutPage() {
             {OPERATOR.achievements.map((a) => (
               <li
                 key={a}
-                className="flex gap-3 border-b border-white/10 pb-4 text-[15px] leading-relaxed text-white/65 last:border-b-0"
+                className="flex gap-3 border-b border-white/10 pb-4 text-[15px] leading-relaxed text-white/76 last:border-b-0"
               >
                 <span
                   aria-hidden
@@ -172,7 +179,7 @@ export default function AboutPage() {
             {OPERATOR.education.map((e) => (
               <li key={e.school} className="border-b border-white/10 pb-5 last:border-b-0">
                 <p className="text-white/85">{e.school}</p>
-                <p className="mt-1 flex flex-wrap items-baseline gap-x-3 text-sm text-white/40">
+                <p className="mt-1 flex flex-wrap items-baseline gap-x-3 text-sm text-white/55">
                   <span>{e.award}</span>
                   <span>·</span>
                   <span>{e.period}</span>
@@ -192,7 +199,7 @@ export default function AboutPage() {
         <div className="mt-8">
           <CTA label="Get in touch" href="/contact" size="md" />
         </div>
-        <p className="mt-4 text-sm text-white/35">Based in {SITE.operatedFrom}</p>
+        <p className="mt-4 text-sm text-white/50">Based in {SITE.operatedFrom}</p>
       </section>
 
       <FooterBlob />

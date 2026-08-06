@@ -6,6 +6,7 @@
 // ============================================================
 
 import { PROJECTS } from "@/data/projects";
+import { routeFor } from "@/lib/agent";
 
 export type Suggestion = {
   href: string;
@@ -152,11 +153,16 @@ export function suggest(query: string, limit = 4): Suggestion[] {
 
 /**
  * Where should <Enter> take the user?
- * Best confident match, else the fun page (with the query echoed).
+ *
+ * The nav bar is pure navigation (unlike the home console, which answers in
+ * place), so it asks the agent where the answer lives and goes there. Falls
+ * back to the keyword index, then to the fun page with the query echoed.
  */
 export function route(query: string): string {
   const raw = query.trim();
   if (!raw) return "/";
+  const fromAgent = routeFor(raw);
+  if (fromAgent) return fromAgent;
   const results = suggest(query, 1);
   if (results.length > 0) return results[0].href;
   return `/oops?q=${encodeURIComponent(raw)}`;

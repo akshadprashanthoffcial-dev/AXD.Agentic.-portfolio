@@ -101,7 +101,7 @@ export default function ScreenFrame({
               <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/[0.07]" />
-              <span className="ml-3 truncate text-[11px] text-white/25">
+              <span className="ml-3 truncate text-[11px] text-white/40">
                 {alt}
               </span>
             </div>
@@ -120,7 +120,7 @@ export default function ScreenFrame({
         </div>
 
         {caption && (
-          <figcaption className="mt-3.5 text-[13px] leading-relaxed text-white/40">
+          <figcaption className="mt-3.5 text-[13px] leading-relaxed text-white/55">
             {caption}
           </figcaption>
         )}
@@ -143,7 +143,7 @@ export default function ScreenFrame({
             alt={alt}
             className="max-h-[88vh] max-w-[92vw] rounded-xl border border-white/12 object-contain"
           />
-          <span className="absolute bottom-5 text-[12px] uppercase tracking-[0.2em] text-white/30">
+          <span className="absolute bottom-5 text-[12px] uppercase tracking-[0.2em] text-white/45">
             click anywhere to close
           </span>
         </div>

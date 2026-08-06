@@ -38,7 +38,7 @@ export default function Toolkit() {
     >
       {OPERATOR.toolGroups.map((g) => (
         <div key={g.group} className="relative z-10">
-          <p className="mb-4 text-[11px] uppercase tracking-[0.18em] text-white/35">
+          <p className="mb-4 text-[11px] uppercase tracking-[0.18em] text-white/50">
             {g.group}
           </p>
           <ul className="flex flex-col">
@@ -50,7 +50,7 @@ export default function Toolkit() {
                 <span className="min-w-0 text-white/80 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white">
                   {t.name}
                 </span>
-                <span className="shrink-0 text-right text-sm text-white/30 transition-colors duration-300 group-hover:text-white/60">
+                <span className="shrink-0 text-right text-sm text-white/45 transition-colors duration-300 group-hover:text-white/72">
                   {t.use}
                 </span>
               </li>

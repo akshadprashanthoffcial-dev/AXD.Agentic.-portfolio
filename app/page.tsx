@@ -1,5 +1,5 @@
 import AxdBlob from "@/components/blob/AxdBlob";
-import SearchBar from "@/components/search/SearchBar";
+import AgentConsole from "@/components/search/AgentConsole";
 import SuggestionChip from "@/components/ui/SuggestionChip";
 import Typewriter from "@/components/ui/Typewriter";
 import { HERO_PHRASES, HOME_SUGGESTIONS } from "@/data/site";
@@ -15,8 +15,9 @@ export default function Home() {
         <Typewriter phrases={HERO_PHRASES} />
       </h1>
 
+      {/* The console owns the bar, the answer thread, and the follow-ups. */}
       <div className="relative z-20 mt-8 w-full max-w-[640px]">
-        <SearchBar />
+        <AgentConsole />
       </div>
 
       <div className="mt-5 flex flex-wrap items-center justify-center gap-3">

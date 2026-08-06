@@ -7,12 +7,12 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { PROJECTS, getProject } from "@/data/projects";
+import { getProject } from "@/data/projects";
 import BlurReveal from "@/components/ui/BlurReveal";
 import FooterBlob from "@/components/FooterBlob";
 import CTA from "@/components/ui/CTA";
 import ScrollFX from "@/components/effects/ScrollFX";
+import ScrollProgress from "@/components/effects/ScrollProgress";
 import { CATEGORY_ICONS } from "@/components/ui/Icons";
 import { AfterEffectsLogo } from "@/components/ui/ToolLogos";
 
@@ -35,9 +35,6 @@ const CREDITS = [
 ];
 
 export default function RainMazhaCaseStudy() {
-  const internal = PROJECTS.filter((p) => !p.externalUrl);
-  const idx = internal.findIndex((p) => p.slug === P.slug);
-  const next = internal[(idx + 1) % internal.length];
 
   return (
     <>
@@ -55,6 +52,7 @@ export default function RainMazhaCaseStudy() {
         </div>
       )}
       <article className={`px-5 ${P.banner ? "pt-16" : "pt-32"}`}>
+      <ScrollProgress />
       <ScrollFX />
       <div className="mx-auto max-w-4xl">
         {/* ---------------- Hero ---------------- */}
@@ -65,7 +63,7 @@ export default function RainMazhaCaseStudy() {
               return (
                 <span
                   key={c}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-[13px] text-white/70"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-[13px] text-white/78"
                   style={{ background: "var(--brand-sheen)" }}
                 >
                   {CatIcon && <CatIcon size={13} />}
@@ -74,7 +72,7 @@ export default function RainMazhaCaseStudy() {
               );
             })}
             <span
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-[13px] text-white/70"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-[13px] text-white/78"
               style={{ background: "var(--brand-sheen)" }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -96,7 +94,7 @@ export default function RainMazhaCaseStudy() {
             <Meta term="Role" value={P.role} />
             <Meta term="When" value={P.period} />
             <div>
-              <dt className="text-white/35">Tools</dt>
+              <dt className="text-white/50">Tools</dt>
               <dd className="mt-2 flex flex-wrap gap-2">
                 <span
                   className="inline-flex items-center gap-2 rounded-full border border-white/15 py-1 pl-1 pr-3 text-[13px] text-white/80"
@@ -113,7 +111,7 @@ export default function RainMazhaCaseStudy() {
         </header>
 
         {/* ---------------- Intro ---------------- */}
-        <div className="mb-12 max-w-2xl space-y-5 text-[18px] leading-relaxed text-white/70">
+        <div className="mb-12 max-w-2xl space-y-5 text-[18px] leading-relaxed text-white/78">
           {P.intro.map((para, i) => (
             <p key={i} data-reveal>
               {para}
@@ -126,10 +124,10 @@ export default function RainMazhaCaseStudy() {
           {CREDITS.map((c) => (
             <span
               key={c.role}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-white/70"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-[13px] text-white/78"
               style={{ background: "var(--brand-sheen-soft)" }}
             >
-              <span className="text-white/40">{c.role}</span>
+              <span className="text-white/55">{c.role}</span>
               <span className="text-white/85">{c.name}</span>
             </span>
           ))}
@@ -154,7 +152,7 @@ export default function RainMazhaCaseStudy() {
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-            <p className="max-w-md text-[15px] leading-relaxed text-white/45">
+            <p className="max-w-md text-[15px] leading-relaxed text-white/60">
               Watch the full music video on YouTube, or read the credits above for who made what.
             </p>
             <CTA label="Watch on YouTube" href={YOUTUBE_URL} external size="md" />
@@ -162,13 +160,7 @@ export default function RainMazhaCaseStudy() {
         </section>
       </div>
 
-      <FooterBlob label="Check out Other Projects !" href={`/projects/${next.slug}`} />
-
-      <div className="pb-16 text-center">
-        <Link href="/projects" className="text-sm text-white/40 transition-colors hover:text-white/70">
-          ← All projects
-        </Link>
-      </div>
+      <FooterBlob label="Check out other Projects !" href="/projects" />
       </article>
     </>
   );
@@ -177,7 +169,7 @@ export default function RainMazhaCaseStudy() {
 function Meta({ term, value }: { term: string; value: string }) {
   return (
     <div>
-      <dt className="text-white/35">{term}</dt>
+      <dt className="text-white/50">{term}</dt>
       <dd className="mt-1 text-white/80">{value}</dd>
     </div>
   );

@@ -21,7 +21,7 @@ export const HERO_PHRASES = [
   "Are you hiring? Let's talk.",
   "I turn questions into design.",
   "Fun fact: I think in gradients.",
-  "Ask me anything about my work.",
+  "Ask me about the work below.",
   "Powered by curiosity & caffeine.",
 ];
 

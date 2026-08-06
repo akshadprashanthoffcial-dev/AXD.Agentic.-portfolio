@@ -41,6 +41,8 @@ export const OPERATOR = {
   firstName: "AKSHAD",
   lastName: "PRASHANTH",
   title: "Visual and Design Engineer",
+  /** Where he's from. Shown under the role on the about page. */
+  location: "From Kannur, Kerala",
   portrait: "/operator/portrait.jpg",
   hasPortrait: true,
   intro: [

@@ -1,6 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
+
+/** Routes where the fluid background runs at full strength. Everywhere else
+ *  it's the calm variant: dimmer canvas, weaker splats, and only every other
+ *  pointer move injects dye, so the content leads instead of the background. */
+const LOUD_ROUTES = new Set(["/", "/about"]);
 
 /**
  * Brand-colored WebGL fluid simulation, rendered as a fixed full-screen
@@ -13,6 +19,11 @@ import { useEffect, useRef } from "react";
  */
 export default function FluidCursor() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pathname = usePathname();
+  // Read inside the simulation's own closure, which is set up once and never
+  // re-runs; a ref is how the route change reaches it.
+  const calmRef = useRef(false);
+  calmRef.current = !LOUD_ROUTES.has(pathname ?? "/");
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -458,10 +469,19 @@ export default function FluidCursor() {
       if (aspectRatio > 1) radius *= aspectRatio;
       return radius;
     }
+    // On calm routes the splat is weaker and tighter, and only every other
+    // one is injected, so the trail is both fainter and sparser.
+    let splatTick = 0;
     function splatPointer(pointer: any) {
-      const dx = pointer.deltaX * config.SPLAT_FORCE;
-      const dy = pointer.deltaY * config.SPLAT_FORCE;
+      const calm = calmRef.current;
+      if (calm && ++splatTick % 2) return;
+      const force = config.SPLAT_FORCE * (calm ? 0.42 : 1);
+      const dx = pointer.deltaX * force;
+      const dy = pointer.deltaY * force;
+      const radius = config.SPLAT_RADIUS;
+      if (calm) config.SPLAT_RADIUS = radius * 0.55;
       splat(pointer.texcoordX, pointer.texcoordY, dx, dy, pointer.color);
+      config.SPLAT_RADIUS = radius;
     }
     function updatePointerMoveData(pointer: any, posX: number, posY: number, color: any) {
       pointer.prevTexcoordX = pointer.texcoordX;
@@ -485,7 +505,8 @@ export default function FluidCursor() {
     }
     function brandColor() {
       const c = BRAND[Math.floor(Math.random() * BRAND.length)];
-      return { r: c.r * 0.22, g: c.g * 0.22, b: c.b * 0.22 };
+      const k = calmRef.current ? 0.09 : 0.22;
+      return { r: c.r * k, g: c.g * k, b: c.b * k };
     }
 
     let raf = 0;
@@ -537,7 +558,8 @@ export default function FluidCursor() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 -z-10 h-full w-full"
+      className="pointer-events-none fixed inset-0 -z-10 h-full w-full transition-opacity duration-700"
+      style={{ opacity: calmRef.current ? 0.34 : 1 }}
       aria-hidden="true"
     />
   );

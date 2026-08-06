@@ -30,7 +30,7 @@ export default async function OopsPage({
         )}
       </h1>
 
-      <p className="mt-4 max-w-md text-white/55">
+      <p className="mt-4 max-w-md text-white/68">
         I&apos;m only trained on Akshad&apos;s work, life and questionable design
         opinions. Ask me about those and I&apos;ll actually be useful.
       </p>

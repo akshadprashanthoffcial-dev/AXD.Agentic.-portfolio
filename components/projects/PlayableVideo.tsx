@@ -69,7 +69,7 @@ export default function PlayableVideo({ src, poster, caption }: Props) {
             </svg>
           </span>
           {caption && (
-            <span className="absolute bottom-5 left-6 text-[13px] uppercase tracking-[0.14em] text-white/70">
+            <span className="absolute bottom-5 left-6 text-[13px] uppercase tracking-[0.14em] text-white/78">
               {caption}
             </span>
           )}

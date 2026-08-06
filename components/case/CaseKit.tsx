@@ -51,7 +51,7 @@ export function SectionHead({
   return (
     <header className="mb-12 max-w-3xl">
       {(index || eyebrow) && (
-        <div className="mb-4 flex items-center gap-3 text-[12px] uppercase tracking-[0.22em] text-white/35">
+        <div className="mb-4 flex items-center gap-3 text-[12px] uppercase tracking-[0.22em] text-white/50">
           {index && <span className="text-brand font-medium">{index}</span>}
           {eyebrow && <span>{eyebrow}</span>}
         </div>
@@ -60,7 +60,7 @@ export function SectionHead({
         {title}
       </h2>
       {lede && (
-        <p className="mt-5 text-[17px] leading-relaxed text-white/55">{lede}</p>
+        <p className="mt-5 text-[17px] leading-relaxed text-white/68">{lede}</p>
       )}
     </header>
   );
@@ -95,8 +95,8 @@ export function Section({
 export type ChainTone = "muted" | "danger" | "brand";
 
 const NODE_TONE: Record<ChainTone, string> = {
-  muted: "border-white/12 bg-white/[0.03] text-white/60",
-  danger: "border-[#ef3c3f]/30 bg-[#ef3c3f]/[0.07] text-white/70",
+  muted: "border-white/12 bg-white/[0.03] text-white/72",
+  danger: "border-[#ef3c3f]/30 bg-[#ef3c3f]/[0.07] text-white/78",
   brand: "border-white/15 text-white/85",
 };
 
@@ -165,7 +165,7 @@ export function LoopBack({ label }: { label: string }) {
       <span className="text-[#ef3c3f]" aria-hidden>
         ↺
       </span>
-      <span className="text-[13px] text-white/50">{label}</span>
+      <span className="text-[13px] text-white/64">{label}</span>
     </div>
   );
 }
@@ -217,7 +217,7 @@ export function Metric({
         {n.toFixed(decimals)}
         {suffix}
       </div>
-      <div className="mt-3 text-[13px] leading-snug text-white/45">{label}</div>
+      <div className="mt-3 text-[13px] leading-snug text-white/60">{label}</div>
     </div>
   );
 }
@@ -254,7 +254,7 @@ export function Tag({
   tone?: "neutral" | "problem" | "solution" | "impact";
 }) {
   const tones = {
-    neutral: "text-white/35",
+    neutral: "text-white/50",
     problem: "text-[#ef3c3f]/80",
     solution: "text-[#f59b00]/85",
     impact: "text-[#c88cff]",

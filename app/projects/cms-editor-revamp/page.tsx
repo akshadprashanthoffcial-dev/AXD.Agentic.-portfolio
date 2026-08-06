@@ -7,7 +7,6 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { getProject } from "@/data/projects";
 import FooterBlob from "@/components/FooterBlob";
 import Reveal from "@/components/ui/Reveal";
@@ -27,12 +26,12 @@ import {
 } from "@/components/case/CaseKit";
 import {
   BeforeAfter,
-  CaseProgress,
   OrchestratorCompare,
   TierExplorer,
   TokenEconomics,
   UserGap,
 } from "@/components/case/Diagrams";
+import ScrollProgress from "@/components/effects/ScrollProgress";
 import { ClaudeIcon, CursorIcon, GithubIcon, VercelIcon } from "@/components/case/ToolIcons";
 
 const P = getProject("cms-editor-revamp")!;
@@ -41,19 +40,6 @@ export const metadata: Metadata = {
   title: `${P.fullTitle} - Joveo`,
   description: P.summary,
 };
-
-const SECTIONS = [
-  { id: "old-workflow", label: "The old workflow" },
-  { id: "users", label: "The real problem" },
-  { id: "principles", label: "Principles" },
-  { id: "strategy", label: "Strategy" },
-  { id: "orchestration", label: "AI as orchestrator" },
-  { id: "product", label: "The product" },
-  { id: "confidence", label: "Confidence" },
-  { id: "disclosure", label: "Disclosure" },
-  { id: "results", label: "Before / after" },
-  { id: "reflections", label: "Reflections" },
-];
 
 const OLD_FLOW = [
   "Client",
@@ -289,26 +275,42 @@ const CLOSING_TAKEAWAYS = [
 export default function CmsCaseStudy() {
   return (
     <>
-      <CaseProgress sections={SECTIONS} />
+      <ScrollProgress />
 
       {P.banner && (
-        <div className="relative -mt-[1px] h-[70vh] max-h-[760px] min-h-[460px] w-full overflow-hidden bg-black">
-          <Image
-            src={P.banner}
-            alt={`${P.fullTitle ?? P.title}, cover`}
-            fill
-            priority
-            sizes="100vw"
-            className="object-contain object-center"
-          />
-        </div>
+        <>
+          {/* Wide banner: desktop/tablet only. Letterboxed down to a phone
+              width it collapses into a sliver, so a squarer crop takes over
+              under 768px. */}
+          <div className="relative -mt-[1px] hidden h-[70vh] max-h-[760px] min-h-[460px] w-full overflow-hidden bg-black md:block">
+            <Image
+              src={P.banner}
+              alt={`${P.fullTitle ?? P.title}, cover`}
+              fill
+              priority
+              sizes="100vw"
+              className="object-contain object-center"
+            />
+          </div>
+          <div className="relative -mt-[1px] block w-full overflow-hidden bg-black md:hidden">
+            <Image
+              src={P.bannerMobile ?? P.banner}
+              alt={`${P.fullTitle ?? P.title}, cover`}
+              width={1129}
+              height={1145}
+              priority
+              sizes="100vw"
+              className="h-auto w-full object-contain"
+            />
+          </div>
+        </>
       )}
 
       <article className={`px-5 ${P.banner ? "pt-16" : "pt-32"}`}>
         <div className="mx-auto max-w-5xl">
           {/* ---------------- Hero ---------------- */}
           <header className="mb-20">
-            <div className="mb-5 flex flex-wrap items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/35">
+            <div className="mb-5 flex flex-wrap items-center gap-2 text-[12px] uppercase tracking-[0.22em] text-white/50">
               <span>{P.client}</span>
               <span className="text-white/15">/</span>
               <span>{P.year}</span>
@@ -324,7 +326,7 @@ export default function CmsCaseStudy() {
               className="font-display max-w-4xl text-[clamp(28px,4.6vw,52px)] leading-[1.08] text-white"
             />
 
-            <p className="mt-7 max-w-3xl text-[clamp(17px,2vw,21px)] leading-relaxed text-white/60">
+            <p className="mt-7 max-w-3xl text-[clamp(17px,2vw,21px)] leading-relaxed text-white/72">
               Reducing weeks of back-and-forth into a guided workflow that
               enables non-technical marketing teams to build career sites
               themselves.
@@ -338,7 +340,7 @@ export default function CmsCaseStudy() {
             </dl>
 
             <div className="mt-8 border-t border-white/10 pt-8">
-              <div className="text-[11px] uppercase tracking-[0.2em] text-white/35">
+              <div className="text-[11px] uppercase tracking-[0.2em] text-white/50">
                 Tools used
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
@@ -390,14 +392,14 @@ export default function CmsCaseStudy() {
             {/* One round-trip, in days, this is what "weeks" was made of */}
             <div className="mt-14 overflow-hidden rounded-2xl border border-white/10">
               <div className="flex flex-wrap items-end justify-between gap-4 p-6 pb-0 md:p-8 md:pb-0">
-                <div className="text-[11px] uppercase tracking-[0.2em] text-white/35">
+                <div className="text-[11px] uppercase tracking-[0.2em] text-white/50">
                   One review cycle, measured
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="font-display text-[clamp(30px,5vw,44px)] leading-none text-white">
                     6
                   </span>
-                  <span className="text-[13px] text-white/40">
+                  <span className="text-[13px] text-white/55">
                     days minimum, one pass
                   </span>
                 </div>
@@ -413,7 +415,7 @@ export default function CmsCaseStudy() {
                 <span className="text-[#ef3c3f]" aria-hidden>
                   ↺
                 </span>
-                <p className="text-[13px] leading-relaxed text-white/50">
+                <p className="text-[13px] leading-relaxed text-white/64">
                   A client rarely approves on the first round. Each
                   additional round of feedback repeats the same six days -
                   which is how a single heading change became a multi-week
@@ -429,7 +431,7 @@ export default function CmsCaseStudy() {
               </p>
             </Reveal>
 
-            <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-white/45">
+            <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-white/60">
               That&apos;s the real cost. Not the turnaround time on any single
               request, but the fact that the shape of the process made small
               changes structurally expensive, so clients stopped asking, and
@@ -461,13 +463,13 @@ export default function CmsCaseStudy() {
               {PRINCIPLES.map((p, i) => (
                 <Reveal key={p.t} delay={i * 60}>
                   <Card className="h-full" sheen={i % 2 === 0}>
-                    <div className="mb-4 font-display text-[13px] text-white/25">
+                    <div className="mb-4 font-display text-[13px] text-white/40">
                       {String(i + 1).padStart(2, "0")}
                     </div>
                     <h3 className="font-display mb-3 text-[19px] leading-snug text-white">
                       {p.t}
                     </h3>
-                    <p className="text-[14px] leading-relaxed text-white/50">
+                    <p className="text-[14px] leading-relaxed text-white/64">
                       {p.d}
                     </p>
                   </Card>
@@ -539,7 +541,7 @@ export default function CmsCaseStudy() {
                 <h3 className="font-display mb-5 text-[clamp(22px,3.4vw,32px)] text-white">
                   AI as an orchestrator
                 </h3>
-                <p className="text-[16px] leading-relaxed text-white/55">
+                <p className="text-[16px] leading-relaxed text-white/68">
                   Rather than replacing the design system, AI first searches the
                   existing widget library and company assets before generating
                   anything new. That reduces cost, preserves consistency, and
@@ -610,7 +612,7 @@ export default function CmsCaseStudy() {
             <div className="mt-12 grid gap-6 md:grid-cols-2">
               <Card>
                 <Tag tone="problem">What &quot;type anything&quot; costs</Tag>
-                <p className="text-[15px] leading-relaxed text-white/55">
+                <p className="text-[15px] leading-relaxed text-white/68">
                   A blank prompt puts the entire burden of specification on
                   someone who came to the product precisely because they
                   couldn&apos;t specify it. When the output is wrong, they have
@@ -620,7 +622,7 @@ export default function CmsCaseStudy() {
               </Card>
               <Card sheen>
                 <Tag tone="impact">What visible steps buy</Tag>
-                <p className="text-[15px] leading-relaxed text-white/55">
+                <p className="text-[15px] leading-relaxed text-white/68">
                   Every stage shows its state before the next one runs. The user
                   builds an accurate mental model of what the system knows, and
                   each approval is a checkpoint they can return to. Trust here
@@ -668,7 +670,7 @@ export default function CmsCaseStudy() {
                     <h3 className="font-display mb-3 text-[19px] leading-snug text-white">
                       {r.t}
                     </h3>
-                    <p className="text-[14px] leading-relaxed text-white/50">
+                    <p className="text-[14px] leading-relaxed text-white/64">
                       {r.d}
                     </p>
                   </Card>
@@ -704,16 +706,7 @@ export default function CmsCaseStudy() {
           </Section>
         </div>
 
-        <FooterBlob label="Check out Other Projects !" href="/projects/web-template" />
-
-        <div className="pb-16 text-center">
-          <Link
-            href="/projects"
-            className="text-sm text-white/40 transition-colors hover:text-white/70"
-          >
-            ← All projects
-          </Link>
-        </div>
+        <FooterBlob label="Check out other Projects !" href="/projects" />
       </article>
     </>
   );
@@ -722,7 +715,7 @@ export default function CmsCaseStudy() {
 function Meta({ term, value }: { term: string; value: string }) {
   return (
     <div>
-      <dt className="text-white/35">{term}</dt>
+      <dt className="text-white/50">{term}</dt>
       <dd className="mt-1.5 leading-snug text-white/80">{value}</dd>
     </div>
   );
@@ -754,9 +747,9 @@ function CycleStat({
         <span className="font-display text-[clamp(28px,4vw,40px)] leading-none text-white">
           {n}
         </span>
-        <span className="text-[13px] text-white/40">{unit}</span>
+        <span className="text-[13px] text-white/55">{unit}</span>
       </div>
-      <div className="mt-2 max-w-[22ch] text-[13px] leading-snug text-white/50">
+      <div className="mt-2 max-w-[22ch] text-[13px] leading-snug text-white/64">
         {label}
       </div>
       <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
