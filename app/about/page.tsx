@@ -86,6 +86,13 @@ export default function AboutPage() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <CTA label="See the work" href="/projects" size="md" />
               <a
+                href="/resume.pdf"
+                download
+                className="text-sm text-white/45 underline-offset-4 transition-colors hover:text-white hover:underline"
+              >
+                Download my resume
+              </a>
+              <a
                 href={`mailto:${SITE.email}`}
                 className="text-sm text-white/45 underline-offset-4 transition-colors hover:text-white hover:underline"
               >

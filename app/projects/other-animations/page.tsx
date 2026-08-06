@@ -1,7 +1,10 @@
 // ============================================================
 // Bespoke case study - Other Animations.
-// A small reel of logo reveals / motion pieces, each clip plays
-// on hover (desktop) or tap (touch), no autoplay.
+// A small reel of logo reveals / motion pieces, laid out as a
+// vertical list, each clip autoplaying (muted, looped). The Mudra
+// Logo clip is a real YouTube upload (its source file is too large
+// to ship in the repo), embedded with autoplay+mute+loop params to
+// match the local clips' behaviour.
 // ============================================================
 
 import type { Metadata } from "next";
@@ -12,7 +15,6 @@ import FooterBlob from "@/components/FooterBlob";
 import ScrollFX from "@/components/effects/ScrollFX";
 import { CATEGORY_ICONS } from "@/components/ui/Icons";
 import { AfterEffectsLogo, BlenderLogo } from "@/components/ui/ToolLogos";
-import HoverPlayVideo from "@/components/projects/HoverPlayVideo";
 
 const P = getProject("other-animations")!;
 
@@ -21,10 +23,16 @@ export const metadata: Metadata = {
   description: P.summary,
 };
 
-const CLIPS = [
-  { title: "Orange Animation", src: "/projects/Other-Animation/orange-animation.mov" },
-  { title: "Summer Logo", src: "/projects/Other-Animation/summer-logo-final.mp4" },
-  { title: "Mudra Logo", src: "/projects/Other-Animation/final-mudra-logo.mov" },
+type Clip =
+  | { title: string; kind: "local"; src: string }
+  | { title: string; kind: "youtube"; id: string };
+
+const CLIPS: Clip[] = [
+  { title: "Summer Logo", kind: "local", src: "/projects/Other-Animation/summer-logo-final.mp4" },
+  // "Orange Animation" pulled for now — orange-animation.mov is a native
+  // QuickTime codec (likely ProRes) that browsers can't decode, it renders
+  // as a black box. Re-add once it's re-exported as H.264 MP4.
+  { title: "Mudra Logo", kind: "youtube", id: "9H7diJr9NPU" },
 ];
 
 const TOOLS = [
@@ -98,16 +106,43 @@ export default function OtherAnimationsCaseStudy() {
           ))}
         </div>
 
-        {/* ---------------- Clips ---------------- */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        {/* ---------------- Clips, vertical autoplaying list ---------------- */}
+        <div className="flex flex-col gap-14">
           {CLIPS.map((clip, i) => (
             <section key={clip.title} data-reveal className="flex flex-col gap-4">
-              <HoverPlayVideo src={clip.src} title={clip.title} />
               <div className="flex items-baseline gap-2.5">
                 <span className="font-display text-[12px] tracking-[0.08em] text-white/35">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="font-display text-[20px] text-white">{clip.title}</h3>
+              </div>
+
+              <div
+                className="overflow-hidden rounded-[22px] border border-white/10 bg-black"
+                style={{ boxShadow: "0 30px 60px -30px rgba(0,0,0,0.8)" }}
+              >
+                {clip.kind === "local" ? (
+                  <video
+                    src={clip.src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload={i === 0 ? "auto" : "metadata"}
+                    className="block w-full"
+                  />
+                ) : (
+                  <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${clip.id}?autoplay=1&mute=1&loop=1&playlist=${clip.id}&controls=1`}
+                      title={`${clip.title}, video player`}
+                      className="absolute inset-0 h-full w-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  </div>
+                )}
               </div>
             </section>
           ))}

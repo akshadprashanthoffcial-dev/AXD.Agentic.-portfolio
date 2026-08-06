@@ -120,7 +120,7 @@ export const PROJECTS: Project[] = [
       "I owned the deal templates for entire sales - 20+ creatives per event across offer types, plus in-app revenue banners styled as festive editorial product photography. AI became a production partner: Midjourney and Gemini for imagery and festive backgrounds, with design judgment deciding what actually shipped.",
       "The takeaway: speed alone doesn't improve marketing. AI only becomes valuable when it's paired with strong design judgment and a clear understanding of how customers actually behave.",
     ],
-    cover: "/projects/myntra-crm/cover-list.jpg",
+    cover: "/projects/myntra-crm/cover-new.png",
     blocks: [
       { span: "full", src: "/projects/myntra-crm/hero.jpg", caption: "Big Fashion Festival, campaign hero" },
       { span: "half", src: "/projects/myntra-crm/method-1.jpg", caption: "Big Fashion Festival, concept study and visual direction" },
@@ -342,6 +342,7 @@ export const PROJECTS: Project[] = [
       "A template is only useful if it survives contact with real, wildly different brands. This system is a set of composable sections, hero, departments, featured jobs, testimonials, locations, that reflow and re-skin to each employer's identity without breaking layout.",
       "The demo build (a healthcare careers site) stress-tests the system end to end, from statistics and awards strips to an interactive locations map.",
     ],
+    cover: "/projects/web-template/cover.png",
     blocks: [
       { span: "full" },
       { span: "half" },
@@ -393,12 +394,7 @@ export const PROJECTS: Project[] = [
     gallery: [
       "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/fb2b94196650735.66234b6ef2b5e.png",
     ].map((src) => ({ src })),
-    video: {
-      src: "/projects/Blossom/blossom-animation-3d.mov",
-      poster:
-        "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/fb2b94196650735.66234b6ef2b5e.png",
-      caption: "Blossom, full 3D animation",
-    },
+    youtube: { id: "DZnWUURjkaI" },
     blocks: [],
   },
   {
@@ -414,7 +410,7 @@ export const PROJECTS: Project[] = [
     period: "2024",
     tools: ["Blender", "After Effects"],
     intro: [
-      "A shelf for the shorter motion pieces that don't need a case study of their own, logo reveals and standalone animations. Hover any clip below to play it.",
+      "A shelf for the shorter motion pieces that don't need a case study of their own, logo reveals and standalone animations.",
     ],
     blocks: [],
   },
@@ -469,6 +465,7 @@ export const PROJECTS: Project[] = [
     intro: [
       "A short title animation for our college's Onam celebration promo video, a logo reveal built to open the trailer before it cuts into the actual event coverage.",
     ],
+    cover: "/projects/onam-logo-reveal/cover.jpg",
     youtube: { id: "QSA0YK0QjyM" },
     blocks: [],
   },
@@ -489,6 +486,7 @@ export const PROJECTS: Project[] = [
       "I was asked to make Joveo's products easier to understand through motion. The goal was simple: build animations the team could drop straight into client decks, so a product could be shown rather than explained, clients just watch it work.",
       "Working in After Effects on the screens our product designers had built, I animated each product's core flow. Along the way I collaborated closely with our product managers, which helped me understand what each product really does for customers, the deeper meaning beyond the screens.",
     ],
+    cover: "/projects/product-animations/cover.png",
     blocks: [],
   },
 ];
