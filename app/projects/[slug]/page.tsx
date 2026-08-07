@@ -18,6 +18,7 @@ import ScrollProgress from "@/components/effects/ScrollProgress";
 const BESPOKE = new Set([
   "cms-editor-revamp",
   "myntra-crm",
+  "smart-templates",
   "product-animations",
   "other-animations",
   "rain-mazha",

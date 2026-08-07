@@ -364,7 +364,7 @@ const CHIPS_DEFAULT = ["Show me the work", "Are you available for work?", "What 
 const PROJECT_ALIASES: Record<string, string[]> = {
   "cms-editor-revamp": ["cms", "editor", "enterprise", "joveo", "selfserve", "aifirst", "platform"],
   "myntra-crm": ["myntra", "crm", "campaign", "fashion", "sale", "push", "ecommerce"],
-  "web-template": ["template", "career", "careers", "web", "healthcare"],
+  "smart-templates": ["template", "templates", "smart", "career", "careers", "web", "healthcare"],
   "product-animations": ["joveo", "product", "explainer", "demo"],
   "rain-mazha": ["rain", "mazha", "music", "malayalam", "song", "lyric"],
   dripps: ["dripps", "streetwear", "genz", "tee", "clothing"],
@@ -382,7 +382,7 @@ const PROJECT_ALIASES: Record<string, string[]> = {
 const PROJECT_NAMES: Record<string, string[]> = {
   "cms-editor-revamp": ["cms"],
   "myntra-crm": ["myntra", "crm"],
-  "web-template": ["template"],
+  "smart-templates": ["template", "templates"],
   "rain-mazha": ["rain", "mazha"],
   dripps: ["dripps"],
   "manas-home-gardens": ["manas"],
@@ -527,7 +527,7 @@ const INTENTS: Intent[] = [
       "Web work is mostly career sites: a composable template system at Joveo whose sections re-skin to any employer's brand without breaking layout. This site is in that family too, hand-built in Next.js.",
     actions: [
       { label: "See the web work", href: projectsFilterHref("Web Designs") },
-      { label: "Open the web template project", href: "/projects/web-template" },
+      { label: "Open the Smart Templates project", href: "/projects/smart-templates" },
     ],
     chips: ["How was this site built?", "Do you code?", "Show me the work"],
     tier: "routed",

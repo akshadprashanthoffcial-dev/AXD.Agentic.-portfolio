@@ -798,6 +798,116 @@ body {
   }
 }
 
+/* Smart Templates KB animations */
+@keyframes kbPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translateX(0);
+  }
+  12% {
+    opacity: 1;
+    transform: translateX(6px);
+  }
+  40% {
+    opacity: 0.35;
+    transform: translateX(0);
+  }
+}
+
+@keyframes blockFill {
+  0%, 8% {
+    background: #161616;
+  }
+  22%, 92% {
+    background: var(--fillTo, #2a2a2a);
+  }
+  100% {
+    background: #161616;
+  }
+}
+
+@keyframes lineFill {
+  0%, 10% {
+    width: 14%;
+    opacity: 0.25;
+  }
+  26%, 92% {
+    width: var(--lineW, 70%);
+    opacity: 1;
+  }
+  100% {
+    width: 14%;
+    opacity: 0.25;
+  }
+}
+
+@keyframes scanPass {
+  0% {
+    top: -30%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.9;
+  }
+  30% {
+    top: 110%;
+    opacity: 0;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+  }
+}
+
+@keyframes dotRun {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 24px 0;
+  }
+}
+
+.kb-pulse {
+  animation: kbPulse 4.6s var(--settle) infinite;
+}
+
+.kb-pulse:nth-child(2) {
+  animation-delay: 0s;
+}
+
+.kb-pulse:nth-child(3) {
+  animation-delay: 0.35s;
+}
+
+.kb-pulse:nth-child(4) {
+  animation-delay: 0.7s;
+}
+
+.kb-pulse:nth-child(5) {
+  animation-delay: 1.05s;
+}
+
+.kb-pulse:nth-child(6) {
+  animation-delay: 1.4s;
+}
+
+.block-fill {
+  animation: blockFill 6s var(--settle) infinite;
+}
+
+.line-fill {
+  animation: lineFill 6s var(--settle) infinite;
+}
+
+.scan-pass {
+  animation: scanPass 6s var(--settle) infinite;
+}
+
+.dot-run {
+  animation: dotRun 900ms linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-enter,
   .reveal {
