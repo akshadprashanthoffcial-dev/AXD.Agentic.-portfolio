@@ -418,6 +418,7 @@ const PROJECT_ENTRIES: Project[] = [
     intro: [
       "A shelf for the shorter motion pieces that don't need a case study of their own, logo reveals and standalone animations.",
     ],
+    cover: "/projects/Other-Animation/cover.png",
     blocks: [],
   },
   {
@@ -435,6 +436,7 @@ const PROJECT_ENTRIES: Project[] = [
     intro: [
       "A personal 3D animation project built around the song 'Vandine Thedum', modelled, lit and animated in Blender with finishing passes in After Effects.",
     ],
+    cover: "/projects/la-la-animation/cover.png",
     youtube: { id: "hq-7QU2GojA" },
     blocks: [],
   },
@@ -453,6 +455,7 @@ const PROJECT_ENTRIES: Project[] = [
     intro: [
       "Minto AI needed a way to introduce Spider AI, their new product, to visitors landing on their website. I animated the introduction film that plays the concept in a few seconds rather than making people read a feature list.",
     ],
+    cover: "/projects/spider-ai-animation/cover.png",
     youtube: { id: "2EQi3KlLEoM" },
     blocks: [],
   },

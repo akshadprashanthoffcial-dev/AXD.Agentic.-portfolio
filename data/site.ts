@@ -10,7 +10,7 @@ export const SITE = {
   instagram:
     "https://www.instagram.com/axd.labs?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   instagramHandle: "axd.labs",
-  operatedFrom: "Bengaluru",
+  operatedFrom: "Kerala",
 };
 
 // Rotating headline phrases for the home hero typewriter, a mix of intro,

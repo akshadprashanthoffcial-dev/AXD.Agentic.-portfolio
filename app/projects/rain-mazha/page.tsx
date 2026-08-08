@@ -18,7 +18,10 @@ import { AfterEffectsLogo } from "@/components/ui/ToolLogos";
 
 const P = getProject("rain-mazha")!;
 const YOUTUBE_URL = "https://youtu.be/u87dGIlVpzc";
-const YOUTUBE_EMBED = "https://www.youtube.com/embed/u87dGIlVpzc";
+const SCREENSHOTS = Array.from(
+  { length: 12 },
+  (_, i) => `/projects/Rain-Mazha/screenshot-${String(i + 1).padStart(2, "0")}.png`
+);
 
 export const metadata: Metadata = {
   title: `${P.fullTitle} - ${P.client}`,
@@ -111,12 +114,24 @@ export default function RainMazhaCaseStudy() {
         </header>
 
         {/* ---------------- Intro ---------------- */}
-        <div className="mb-12 max-w-2xl space-y-5 text-[18px] leading-relaxed text-white/78">
+        <div className="mb-8 max-w-2xl space-y-5 text-[18px] leading-relaxed text-white/78">
           {P.intro.map((para, i) => (
             <p key={i} data-reveal>
               {para}
             </p>
           ))}
+        </div>
+
+        {/* ---------------- Watch CTA ---------------- */}
+        <div
+          data-reveal
+          className="mb-12 flex flex-wrap items-center justify-between gap-6 rounded-[22px] border border-white/10 p-6"
+          style={{ background: "var(--brand-sheen-soft)" }}
+        >
+          <p className="max-w-md text-[15px] leading-relaxed text-white/60">
+            The video isn&apos;t embeddable here, watch the full music video on YouTube.
+          </p>
+          <CTA label="Watch on YouTube" href={YOUTUBE_URL} external size="md" />
         </div>
 
         {/* ---------------- Credits ---------------- */}
@@ -133,29 +148,27 @@ export default function RainMazhaCaseStudy() {
           ))}
         </div>
 
-        {/* ---------------- Video ---------------- */}
-        <section data-reveal>
-          <div
-            className="overflow-hidden rounded-[22px] border border-white/10"
-            style={{ boxShadow: "0 30px 60px -30px rgba(0,0,0,0.8)" }}
-          >
-            <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
-              <iframe
-                src={YOUTUBE_EMBED}
-                title="RAIN - Sachin Balu, Music Video"
-                className="absolute inset-0 h-full w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-            <p className="max-w-md text-[15px] leading-relaxed text-white/60">
-              Watch the full music video on YouTube, or read the credits above for who made what.
-            </p>
-            <CTA label="Watch on YouTube" href={YOUTUBE_URL} external size="md" />
+        {/* ---------------- Frames from the video ---------------- */}
+        <section data-reveal className="mb-8">
+          <h2 className="mb-6 font-display text-[22px] text-white/90">
+            Frames from the video
+          </h2>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {SCREENSHOTS.map((src) => (
+              <div
+                key={src}
+                className="overflow-hidden rounded-[14px] border border-white/10"
+              >
+                <Image
+                  src={src}
+                  alt="RAIN music video animation frame"
+                  width={640}
+                  height={360}
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
           </div>
         </section>
       </div>

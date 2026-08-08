@@ -33,6 +33,37 @@ export const metadata: Metadata = {
   },
   description:
     "An agent-style portfolio for Akshad Prashanth. Ask about the work, the experience, or how to get in touch.",
+  keywords: [
+    "Akshad Prashanth",
+    "axd.labs",
+    "product designer",
+    "visual designer",
+    "motion designer",
+    "UI UX designer",
+    "brand identity design",
+    "motion graphics portfolio",
+    "AI product design",
+    "Bengaluru designer",
+  ],
+  authors: [{ name: SITE.operator }],
+  creator: SITE.operator,
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    url: SITE.domain,
+    siteName: "axd.labs",
+    title: "axd.labs, talk to Akshad's portfolio",
+    description:
+      "An agent-style portfolio for Akshad Prashanth. Ask about the work, the experience, or how to get in touch.",
+    images: [{ url: "/opengraph-image.png", width: 1386, height: 684 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "axd.labs, talk to Akshad's portfolio",
+    description:
+      "An agent-style portfolio for Akshad Prashanth. Ask about the work, the experience, or how to get in touch.",
+    images: ["/twitter-image.png"],
+  },
 };
 
 export default function RootLayout({
