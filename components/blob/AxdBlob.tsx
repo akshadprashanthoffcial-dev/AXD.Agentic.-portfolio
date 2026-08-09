@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 
 type Mode = "hero" | "nav" | "footer";
@@ -10,8 +11,17 @@ type Props = {
   mode?: Mode;
   /** Follow the pointer. Turn off for purely decorative instances. */
   interactive?: boolean;
+  /**
+   * Three quick taps open the hidden game. Only set this on an instance that
+   * isn't already wrapped in a link — see FooterBlob, whose navigation would
+   * fight it.
+   */
+  secret?: boolean;
   className?: string;
 };
+
+/** How long a tap counts towards the three-tap sequence. */
+const TAP_WINDOW = 700;
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
@@ -27,8 +37,10 @@ export default function AxdBlob({
   size = 320,
   mode = "hero",
   interactive = true,
+  secret = false,
   className = "",
 }: Props) {
+  const router = useRouter();
   const uid = useId().replace(/:/g, "");
   const rootRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<SVGGElement>(null);
@@ -39,8 +51,39 @@ export default function AxdBlob({
   const [burst, setBurst] = useState(false);
   const [rings, setRings] = useState<number[]>([]);
   const ringSeq = useRef(0);
+  // Three taps inside TAP_WINDOW open /eat-jobs. The second tap squashes the
+  // blob a little harder, so a curious visitor can feel something building.
+  const taps = useRef(0);
+  const tapTimer = useRef<number | null>(null);
+  const [charging, setCharging] = useState(false);
+
+  useEffect(
+    () => () => {
+      if (tapTimer.current !== null) window.clearTimeout(tapTimer.current);
+    },
+    []
+  );
+
+  const countTap = () => {
+    if (tapTimer.current !== null) window.clearTimeout(tapTimer.current);
+    taps.current += 1;
+
+    if (taps.current >= 3) {
+      taps.current = 0;
+      setCharging(false);
+      router.push("/eat-jobs");
+      return;
+    }
+
+    setCharging(taps.current === 2);
+    tapTimer.current = window.setTimeout(() => {
+      taps.current = 0;
+      setCharging(false);
+    }, TAP_WINDOW);
+  };
 
   const onActivate = () => {
+    if (secret) countTap();
     setBurst(false);
     // re-enable on the next frame so the animation restarts on rapid clicks
     requestAnimationFrame(() => setBurst(true));
@@ -176,7 +219,9 @@ export default function AxdBlob({
   return (
     <div
       ref={rootRef}
-      className={`axd-blob relative shrink-0 ${burst ? "is-burst" : ""} ${className}`}
+      className={`axd-blob relative shrink-0 ${burst ? "is-burst" : ""} ${
+        charging ? "is-charging" : ""
+      } ${className}`}
       style={{ width: size, height: size }}
       onClick={onActivate}
       aria-hidden="true"

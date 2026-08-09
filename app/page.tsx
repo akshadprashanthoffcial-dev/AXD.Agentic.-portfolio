@@ -8,7 +8,8 @@ export default function Home() {
   return (
     <section className="relative mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-center px-4 py-16">
       <div className="relative flex h-[240px] w-[240px] items-center justify-center">
-        <AxdBlob size={240} />
+        {/* Tap it three times quickly. */}
+        <AxdBlob size={240} secret />
       </div>
 
       <h1 className="font-display mt-2 min-h-[2.2em] text-center text-[clamp(30px,5vw,48px)] font-medium leading-[1.1] tracking-tight text-white">

@@ -601,6 +601,26 @@ body {
     transform: scale(1);
   }
 }
+/* Second tap of the hidden three-tap sequence: a harder squash, so something
+   clearly feels like it's building. */
+.axd-blob.is-charging > svg {
+  animation: blobCharge 520ms var(--settle) both;
+}
+@keyframes blobCharge {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(0.86) rotate(-3deg);
+  }
+  70% {
+    transform: scale(1.12) rotate(2deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .blob-burst {
   position: absolute;
   left: 50%;
@@ -943,7 +963,12 @@ body {
     transition: none !important;
     transform: none !important;
   }
-  .axd-blob.is-burst > svg {
+  .axd-blob.is-burst > svg,
+  .axd-blob.is-charging > svg {
+    animation: none !important;
+  }
+  .eatjobs-cabinet::before,
+  .eatjobs-logo {
     animation: none !important;
   }
   .blob-burst {
@@ -956,4 +981,337 @@ body {
     transform: none !important;
     filter: none !important;
   }
+}
+
+/* ============================================================
+   EAT.JOBS — the hidden arcade cabinet at /eat-jobs.
+   Reached by tapping axd.blob three times on the home page.
+   Pixel feel without a pixel font: the canvas renders at a small
+   internal resolution and is upscaled with image-rendering.
+   ============================================================ */
+.eatjobs {
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  padding: 88px 16px 32px;
+}
+
+.eatjobs-cabinet {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background: linear-gradient(var(--brand-sheen-soft), var(--brand-sheen-soft)),
+    rgba(0, 0, 0, 0.8);
+  padding: 14px;
+  box-shadow: 0 40px 120px -40px rgba(161, 31, 242, 0.55);
+}
+
+.eatjobs-hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 2px 4px 12px;
+}
+.eatjobs-hud-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+.eatjobs-logo {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.eatjobs-level {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.eatjobs-hud-right {
+  display: flex;
+  gap: 14px;
+}
+.eatjobs-count {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.eatjobs-count b {
+  margin-left: 6px;
+  font-size: 14px;
+}
+.eatjobs-count-you b {
+  color: var(--brand-orange);
+}
+.eatjobs-count-ai b {
+  color: var(--brand-red);
+}
+
+/* The screen itself. The maze's own aspect, but never so short that an
+   overlay (the certificate especially) has nowhere to live — on a phone the
+   maze aspect alone leaves barely 220px. */
+.eatjobs-stage {
+  position: relative;
+  /* An explicit width matters: with width auto, the aspect ratio resolves the
+     other way and min-height inflates the box sideways out of the cabinet. */
+  width: 100%;
+  aspect-ratio: 21 / 13;
+  min-height: min(58svh, 520px);
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #000;
+}
+.eatjobs-screen {
+  height: 100%;
+  width: 100%;
+  /* Swipes drive the blob; don't let them scroll the page as well. */
+  touch-action: none;
+}
+.eatjobs-canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+  /* Letterbox rather than stretch when the stage is taller than the maze. */
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* On a phone the maze is short and the overlays are tall, so give the stage
+   more room rather than making people scroll to reach the buttons. */
+@media (max-width: 640px) {
+  .eatjobs-stage {
+    min-height: min(66svh, 580px);
+  }
+}
+
+/* ---- overlays -------------------------------------------------------- */
+.eatjobs-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+}
+.eatjobs-panel {
+  width: 100%;
+  /* min-width: 0 so the panel can shrink below its content's natural width on
+     a narrow screen instead of overflowing the stage sideways. */
+  min-width: 0;
+  max-width: 520px;
+  text-align: center;
+}
+.eatjobs-kicker {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+}
+.eatjobs-title {
+  font-family: var(--font-display);
+  margin-top: 8px;
+  font-size: clamp(34px, 7vw, 60px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.eatjobs-tagline {
+  font-family: var(--font-display);
+  margin-top: 8px;
+  font-size: clamp(14px, 2.4vw, 18px);
+  color: var(--ink-1);
+}
+.eatjobs-memo-title {
+  font-family: var(--font-display);
+  margin-top: 10px;
+  font-size: clamp(17px, 3vw, 24px);
+  line-height: 1.25;
+  color: var(--ink-1);
+}
+.eatjobs-body {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+.eatjobs-keys {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.eatjobs-keys b {
+  color: var(--ink-1);
+}
+.eatjobs-memo {
+  border-left: 2px solid var(--brand-red);
+  padding-left: 18px;
+  text-align: left;
+}
+.eatjobs-memo .eatjobs-actions {
+  justify-content: flex-start;
+}
+
+.eatjobs-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.eatjobs-btn {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--brand-gradient);
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 180ms var(--settle), opacity 180ms ease;
+}
+.eatjobs-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+.eatjobs-btn-quiet {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--ink-3);
+}
+.eatjobs-btn-quiet:hover {
+  color: var(--ink-1);
+}
+
+/* ---- certificate ----------------------------------------------------- */
+.eatjobs-cert {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 520px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+  outline-offset: 5px;
+  border-radius: 4px;
+  background: linear-gradient(var(--brand-sheen), var(--brand-sheen)), #000;
+  padding: clamp(16px, 4vw, 26px) clamp(14px, 4vw, 24px) clamp(14px, 3vw, 22px);
+  text-align: center;
+}
+.eatjobs-cert-kicker {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.eatjobs-cert-title {
+  font-family: var(--font-display);
+  margin-top: 6px;
+  font-size: clamp(22px, 4.4vw, 34px);
+  line-height: 1.05;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.eatjobs-cert-body {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+.eatjobs-cert-stats {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+}
+.eatjobs-cert-stats dt {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.eatjobs-cert-stats dd {
+  font-family: var(--font-display);
+  margin-top: 3px;
+  font-size: 20px;
+  color: var(--ink-1);
+}
+.eatjobs-cert-of {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+.eatjobs-cert-seal {
+  margin: 18px auto 0;
+  height: 44px;
+  width: 44px;
+  border-radius: 999px;
+  background: var(--brand-gradient);
+  box-shadow: 0 0 26px rgba(161, 31, 242, 0.5);
+}
+.eatjobs-cert-fine {
+  margin-top: 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ---- footer ---------------------------------------------------------- */
+.eatjobs-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 12px 4px 2px;
+  min-height: 40px;
+}
+.eatjobs-power {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--brand-orange);
+}
+.eatjobs-power b {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+.eatjobs-power-idle {
+  color: var(--ink-3);
+}
+.eatjobs-exit {
+  font-size: 12px;
+  color: var(--ink-3);
+  text-underline-offset: 4px;
+}
+.eatjobs-exit:hover {
+  color: var(--ink-1);
+  text-decoration: underline;
 }
