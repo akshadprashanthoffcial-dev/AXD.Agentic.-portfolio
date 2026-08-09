@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
+import PixelWipe from "@/components/game/PixelWipe";
 
 type Mode = "hero" | "nav" | "footer";
 
@@ -20,8 +21,17 @@ type Props = {
   className?: string;
 };
 
-/** How long a tap counts towards the three-tap sequence. */
-const TAP_WINDOW = 700;
+/**
+ * How long each tap keeps counting towards the three-tap sequence. Comfortably
+ * more than a second, so a steady one-click-per-second rhythm always gets
+ * there rather than racing the reset.
+ */
+const TAP_WINDOW = 1800;
+
+const TAP_LINES = [
+  "Click me more for a reality check",
+  "Careful. One more click…",
+];
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
@@ -51,11 +61,13 @@ export default function AxdBlob({
   const [burst, setBurst] = useState(false);
   const [rings, setRings] = useState<number[]>([]);
   const ringSeq = useRef(0);
-  // Three taps inside TAP_WINDOW open /eat-jobs. The second tap squashes the
-  // blob a little harder, so a curious visitor can feel something building.
+  // Three taps open /eat-jobs. The window is per tap, not for the whole
+  // sequence, so a steady one-click-a-second rhythm still gets you there.
   const taps = useRef(0);
   const tapTimer = useRef<number | null>(null);
   const [charging, setCharging] = useState(false);
+  const [bubble, setBubble] = useState<string | null>(null);
+  const [wiping, setWiping] = useState(false);
 
   useEffect(
     () => () => {
@@ -70,20 +82,25 @@ export default function AxdBlob({
 
     if (taps.current >= 3) {
       taps.current = 0;
-      setCharging(false);
-      router.push("/eat-jobs");
+      setBubble(null);
+      setWiping(true);
       return;
     }
 
-    setCharging(taps.current === 2);
+    setBubble(TAP_LINES[taps.current - 1]);
     tapTimer.current = window.setTimeout(() => {
       taps.current = 0;
-      setCharging(false);
+      setBubble(null);
     }, TAP_WINDOW);
   };
 
   const onActivate = () => {
     if (secret) countTap();
+    // The same squash every time — the reaction that only fired on the second
+    // tap felt the most alive, so it's now what every click does.
+    setCharging(false);
+    requestAnimationFrame(() => setCharging(true));
+    window.setTimeout(() => setCharging(false), 540);
     setBurst(false);
     // re-enable on the next frame so the animation restarts on rapid clicks
     requestAnimationFrame(() => setBurst(true));
@@ -229,6 +246,12 @@ export default function AxdBlob({
       {rings.map((id) => (
         <span key={id} className="blob-burst" />
       ))}
+
+      {bubble && (
+        <span className="blob-bubble" aria-hidden>
+          {bubble}
+        </span>
+      )}
       <svg
         viewBox="0 0 537 537"
         width={size}
@@ -320,6 +343,11 @@ export default function AxdBlob({
           <rect x="275" y="197" width="32" height="97" rx="12" fill="#fff" />
         </g>
       </svg>
+
+      {/* Pixels close over the screen, then the game page opens them again. */}
+      {wiping && (
+        <PixelWipe mode="cover" onDone={() => router.push("/eat-jobs")} />
+      )}
     </div>
   );
 }

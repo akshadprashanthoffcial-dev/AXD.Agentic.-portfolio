@@ -49,8 +49,8 @@ export const LEVELS: Level[] = [
   },
   {
     label: "Phase two rollout",
-    aiSpeed: 0.64,
-    confusion: 0.22,
+    aiSpeed: 0.68,
+    confusion: 0.2,
     rows: [
       "#####################",
       "#P..#.....#.....#..o#",
@@ -69,8 +69,8 @@ export const LEVELS: Level[] = [
   },
   {
     label: "Company-wide adoption",
-    aiSpeed: 0.78,
-    confusion: 0.12,
+    aiSpeed: 0.85,
+    confusion: 0.1,
     rows: [
       "#####################",
       "#P....#.......#....o#",

@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { attachInput } from "./engine/input";
 import { createGame, step, type Dir, type GameState } from "./engine/game";
-import { TILE, activePowerLabel, canvasSize, render } from "./engine/render";
+import { TILE, activePowers, canvasSize, render } from "./engine/render";
+import type { GameAudio } from "./engine/audio";
 
 /** Fixed simulation step. Movement snapping depends on a steady dt. */
 const DT = 1 / 120;
@@ -14,7 +15,7 @@ export type Hud = {
   saved: number;
   automated: number;
   left: number;
-  power: { label: string; blurb: string; left: number } | null;
+  powers: ReturnType<typeof activePowers>;
   ready: number;
 };
 
@@ -22,18 +23,27 @@ type Props = {
   levelIndex: number;
   /** Bump to restart the same level without remounting. */
   attempt: number;
+  audio: GameAudio;
   onHud: (hud: Hud) => void;
   onEnd: (outcome: "won" | "lost", state: GameState) => void;
 };
 
-export default function GameCanvas({ levelIndex, attempt, onHud, onEnd }: Props) {
+export default function GameCanvas({
+  levelIndex,
+  attempt,
+  audio,
+  onHud,
+  onEnd,
+}: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   // Latest callbacks, so re-renders never restart the round mid-play.
   const hudRef = useRef(onHud);
   const endRef = useRef(onEnd);
+  const audioRef = useRef(audio);
   hudRef.current = onHud;
   endRef.current = onEnd;
+  audioRef.current = audio;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -58,6 +68,7 @@ export default function GameCanvas({ levelIndex, attempt, onHud, onEnd }: Props)
     let ready = READY;
     let hudAt = 0;
     let finished = false;
+    let sirenOn = false;
 
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
@@ -68,12 +79,17 @@ export default function GameCanvas({ levelIndex, attempt, onHud, onEnd }: Props)
 
       if (ready > 0) {
         ready -= elapsed;
+        if (ready <= 0 && !sirenOn) {
+          sirenOn = true;
+          audioRef.current.startSiren();
+        }
       } else if (!finished) {
         accumulator += elapsed;
         while (accumulator >= DT) {
           step(state, DT);
           accumulator -= DT;
         }
+        drainSounds(state, audioRef.current);
       }
 
       render(ctx, state, reduceMotion);
@@ -85,13 +101,16 @@ export default function GameCanvas({ levelIndex, attempt, onHud, onEnd }: Props)
           saved: state.saved,
           automated: state.automated,
           left: state.pelletsLeft,
-          power: activePowerLabel(state),
+          powers: activePowers(state),
           ready: Math.max(0, ready),
         });
+        // The siren tightens as the board empties.
+        audioRef.current.setUrgency(1 - state.pelletsLeft / state.pelletsTotal);
       }
 
       if (!finished && state.outcome !== "playing") {
         finished = true;
+        audioRef.current.stopSiren();
         endRef.current(state.outcome, state);
       }
     };
@@ -108,6 +127,7 @@ export default function GameCanvas({ levelIndex, attempt, onHud, onEnd }: Props)
     return () => {
       cancelAnimationFrame(raf);
       document.removeEventListener("visibilitychange", onVisibility);
+      audioRef.current.stopSiren();
       input.dispose();
     };
   }, [levelIndex, attempt]);
@@ -117,6 +137,26 @@ export default function GameCanvas({ levelIndex, attempt, onHud, onEnd }: Props)
       <canvas ref={canvasRef} className="eatjobs-canvas" aria-label="EAT.JOBS maze" />
     </div>
   );
+}
+
+/**
+ * Turn this frame's simulation events into sound. A fast blob can eat several
+ * jobs inside one frame; playing a chomp for each would machine-gun, so they
+ * collapse into one.
+ */
+function drainSounds(state: GameState, audio: GameAudio) {
+  if (!state.events.length) return;
+  let ate = false;
+  let aiAte = false;
+  for (const e of state.events) {
+    if (e.kind === "eat") ate = true;
+    else if (e.kind === "aiEat") aiAte = true;
+    else if (e.kind === "power") audio.powerUp();
+    else if (e.kind === "stun") audio.stun();
+  }
+  if (ate) audio.chomp();
+  if (aiAte) audio.aiEat();
+  state.events.length = 0;
 }
 
 function drawReady(
@@ -131,9 +171,5 @@ function drawReady(
   ctx.font = "bold 12px ui-monospace, monospace";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(
-    ready > 0.8 ? "READY" : "GO",
-    width / 2,
-    height / 2
-  );
+  ctx.fillText(ready > 0.8 ? "READY" : "GO", width / 2, height / 2);
 }

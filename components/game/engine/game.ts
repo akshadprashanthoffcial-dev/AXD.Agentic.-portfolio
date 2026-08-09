@@ -20,28 +20,48 @@ export const DIRS = {
   none: { x: 0, y: 0 },
 } as const;
 
-export type PowerType = "coffee" | "committee" | "recruiter" | "union";
+export type PowerType =
+  | "coffee"
+  | "committee"
+  | "recruiter"
+  | "union"
+  | "reorg"
+  | "offsite";
 
 export const POWERS: Record<
   PowerType,
-  { label: string; blurb: string; seconds: number }
+  { label: string; blurb: string; seconds: number; glyph: string }
 > = {
-  coffee: { label: "Coffee", blurb: "You move 40% faster", seconds: 4 },
+  coffee: { label: "Coffee", blurb: "You move 40% faster", seconds: 5, glyph: "C" },
   committee: {
     label: "Committee",
     blurb: "AI is stuck in a stakeholder alignment meeting",
-    seconds: 4,
+    seconds: 5,
+    glyph: "M",
   },
-  recruiter: { label: "Recruiter", blurb: "The route to the nearest job", seconds: 3 },
-  union: { label: "Union", blurb: "AI has been asked to stop, and did", seconds: 2 },
+  recruiter: {
+    label: "Recruiter",
+    blurb: "Showing you the route to the nearest job",
+    seconds: 4,
+    glyph: "R",
+  },
+  union: { label: "Union", blurb: "AI has been asked to stop, and did", seconds: 3, glyph: "U" },
+  reorg: { label: "Reorg", blurb: "AI has been reassigned to another team", seconds: 2, glyph: "!" },
+  offsite: {
+    label: "Offsite",
+    blurb: "AI is at an offsite and has lost the thread",
+    seconds: 5,
+    glyph: "O",
+  },
 };
 
 const POWER_TYPES = Object.keys(POWERS) as PowerType[];
 
 /** Player speed in tiles per second. Everything else is relative to this. */
 const BASE_SPEED = 5.4;
-/** Seconds between one power-up being collected and the next appearing. */
-const POWER_RESPAWN = 7;
+/** How many power-ups sit on the board at once, and how fast one is replaced. */
+const MAX_POWERS = 3;
+const POWER_RESPAWN = 3.5;
 /** How long a bump from AI freezes you, and how long you're immune after. */
 const STUN_SECONDS = 0.9;
 const STUN_IMMUNITY = 2.5;
@@ -85,13 +105,28 @@ export type GameState = {
   time: number;
   stunUntil: number;
   immuneUntil: number;
-  power: { type: PowerType; x: number; y: number } | null;
+  powers: { type: PowerType; x: number; y: number }[];
+  /** Simulated time at which the next power-up appears. */
   powerAt: number;
-  active: { type: PowerType; until: number } | null;
+  /** Every effect currently running. Several can overlap. */
+  active: { type: PowerType; until: number }[];
+  /** Where the AI started, so a Reorg can send it back there. */
+  aiSpawn: { x: number; y: number };
   /** Tile path from the player to the nearest pellet, for the recruiter hint. */
   hint: { x: number; y: number }[];
+  /**
+   * Things that happened during this step, drained by the caller to fire
+   * sounds. Keeps the simulation free of any dependency on audio.
+   */
+  events: GameEvent[];
   outcome: "playing" | "won" | "lost";
 };
+
+export type GameEvent =
+  | { kind: "eat" }
+  | { kind: "aiEat" }
+  | { kind: "power"; type: PowerType }
+  | { kind: "stun" };
 
 const idx = (s: { width: number }, x: number, y: number) => y * s.width + x;
 
@@ -129,9 +164,11 @@ export function createGame(levelIndex: number): GameState {
     time: 0,
     stunUntil: 0,
     immuneUntil: 0,
-    power: null,
-    powerAt: 3,
-    active: null,
+    powers: [],
+    powerAt: 2,
+    active: [],
+    aiSpawn: { x: a.x, y: a.y },
+    events: [],
     hint: [],
     outcome: "playing",
   };
@@ -248,17 +285,23 @@ function eat(s: GameState, e: Entity, who: "player" | "ai") {
   if (s.pellets[i] !== 1) return;
   s.pellets[i] = 0;
   s.pelletsLeft--;
-  if (who === "player") s.saved++;
-  else s.automated++;
+  if (who === "player") {
+    s.saved++;
+    s.events.push({ kind: "eat" });
+  } else {
+    s.automated++;
+    s.events.push({ kind: "aiEat" });
+  }
 }
 
-/** Somewhere open, pellet-free, and not right on top of the player. */
+/** Somewhere open, pellet-free, not on top of the player, not already taken. */
 function pickPowerTile(s: GameState): { x: number; y: number } | null {
   const options: { x: number; y: number }[] = [];
   for (let y = 0; y < s.height; y++) {
     for (let x = 0; x < s.width; x++) {
       if (!isOpen(s.rows, x, y)) continue;
       if (hasPellet(s, x, y)) continue;
+      if (s.powers.some((p) => p.x === x && p.y === y)) continue;
       const far = Math.abs(x - s.player.tx) + Math.abs(y - s.player.ty);
       if (far < 4) continue;
       options.push({ x, y });
@@ -268,29 +311,34 @@ function pickPowerTile(s: GameState): { x: number; y: number } | null {
   return options[Math.floor(Math.random() * options.length)];
 }
 
+/** Is a given effect running right now? */
+export const hasEffect = (s: GameState, type: PowerType) =>
+  s.active.some((a) => a.type === type && a.until > s.time);
+
 /** Advance the simulation by a fixed `dt` (seconds). Mutates and returns `s`. */
 export function step(s: GameState, dt: number): GameState {
   if (s.outcome !== "playing") return s;
   s.time += dt;
 
-  const active = s.active && s.active.until > s.time ? s.active : null;
-  if (s.active && !active) s.active = null;
+  if (s.active.length) s.active = s.active.filter((a) => a.until > s.time);
 
   // ---- player -------------------------------------------------------------
   const stunned = s.time < s.stunUntil;
-  const playerSpeed = active?.type === "coffee" ? BASE_SPEED * 1.4 : BASE_SPEED;
+  const playerSpeed = hasEffect(s, "coffee") ? BASE_SPEED * 1.4 : BASE_SPEED;
   if (!stunned) move(s, s.player, playerSpeed, dt, (e) => eat(s, e, "player"));
 
   // ---- AI -----------------------------------------------------------------
   // Greedy: re-target the nearest remaining pellet each time it lands on a
   // tile centre. Its speed, not its cleverness, is the difficulty.
   let aiSpeed = BASE_SPEED * s.level.aiSpeed;
-  if (active?.type === "committee") aiSpeed *= 0.45;
-  if (active?.type === "union") aiSpeed = 0;
+  if (hasEffect(s, "committee")) aiSpeed *= 0.45;
+  if (hasEffect(s, "union")) aiSpeed = 0;
+  // At an offsite it stops pathing altogether and just wanders.
+  const confusion = hasEffect(s, "offsite") ? 1 : s.level.confusion;
 
   move(s, s.ai, aiSpeed, dt, (e) => {
     eat(s, e, "ai");
-    if (Math.random() < s.level.confusion) {
+    if (Math.random() < confusion) {
       e.want = confidentlyWrong(s, e);
       return;
     }
@@ -305,35 +353,43 @@ export function step(s: GameState, dt: number): GameState {
   if (dx * dx + dy * dy < 0.62 * 0.62 && s.time > s.immuneUntil && !stunned) {
     s.stunUntil = s.time + STUN_SECONDS;
     s.immuneUntil = s.time + STUN_SECONDS + STUN_IMMUNITY;
+    s.events.push({ kind: "stun" });
   }
 
   // ---- power-ups ----------------------------------------------------------
-  if (!s.power && s.time >= s.powerAt) {
+  if (s.powers.length < MAX_POWERS && s.time >= s.powerAt) {
     const tile = pickPowerTile(s);
     if (tile) {
-      s.power = {
+      s.powers.push({
         type: POWER_TYPES[Math.floor(Math.random() * POWER_TYPES.length)],
         ...tile,
-      };
-    } else {
-      s.powerAt = s.time + 2;
+      });
     }
+    s.powerAt = s.time + POWER_RESPAWN;
   }
-  if (s.power) {
+
+  for (let i = s.powers.length - 1; i >= 0; i--) {
+    const power = s.powers[i];
     const near =
-      Math.abs(ex(s.player) - s.power.x) < 0.6 &&
-      Math.abs(ey(s.player) - s.power.y) < 0.6;
-    if (near) {
-      s.active = { type: s.power.type, until: s.time + POWERS[s.power.type].seconds };
-      s.power = null;
-      s.powerAt = s.time + POWER_RESPAWN;
+      Math.abs(ex(s.player) - power.x) < 0.6 && Math.abs(ey(s.player) - power.y) < 0.6;
+    if (!near) continue;
+    s.powers.splice(i, 1);
+    s.active.push({ type: power.type, until: s.time + POWERS[power.type].seconds });
+    s.events.push({ kind: "power", type: power.type });
+    // Reorg acts at once rather than over time: AI is sent back to its desk.
+    if (power.type === "reorg") {
+      s.ai.tx = s.aiSpawn.x;
+      s.ai.ty = s.aiSpawn.y;
+      s.ai.p = 0;
+      s.ai.dir = DIRS.none;
+      s.ai.want = DIRS.none;
     }
   }
 
   // Recruiter draws the route to the nearest job. Recomputed each step so the
   // line stays honest as pellets disappear underneath it.
   s.hint =
-    active?.type === "recruiter"
+    hasEffect(s, "recruiter")
       ? bfs(s, { x: s.player.tx, y: s.player.ty }, (x, y) => hasPellet(s, x, y))
       : [];
 

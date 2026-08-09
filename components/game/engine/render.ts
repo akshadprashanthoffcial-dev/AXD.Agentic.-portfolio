@@ -16,13 +16,8 @@ const PURPLE = "#a11ff2";
 const RED = "#ef3c3f";
 const WALL_FILL = "#1b0a2b";
 const WALL_EDGE = "#4a1d78";
-
-const POWER_INITIAL: Record<string, string> = {
-  coffee: "C",
-  committee: "M",
-  recruiter: "R",
-  union: "U",
-};
+const JOB_LIGHT = "#ffd79a";
+const JOB_DARK = "#6f3d00";
 
 export function canvasSize(s: GameState) {
   return { width: s.width * TILE, height: s.height * TILE };
@@ -36,7 +31,7 @@ export function render(ctx: CanvasRenderingContext2D, s: GameState, reduceMotion
   drawMaze(ctx, s);
   drawPellets(ctx, s);
   if (s.hint.length) drawHint(ctx, s);
-  if (s.power) drawPower(ctx, s, reduceMotion);
+  if (s.powers.length) drawPowers(ctx, s, reduceMotion);
   drawAi(ctx, s);
   drawBlob(ctx, s, reduceMotion);
 }
@@ -56,15 +51,29 @@ function drawMaze(ctx: CanvasRenderingContext2D, s: GameState) {
   }
 }
 
+/**
+ * Jobs, drawn as little pixel briefcases. The first version printed the word
+ * "job" in every cell, which read as wallpaper rather than as something to go
+ * and collect — an object with a silhouette reads as loot, a word doesn't. The
+ * intro screen says what they are, so the maze doesn't have to.
+ */
 function drawPellets(ctx: CanvasRenderingContext2D, s: GameState) {
-  ctx.font = "7px ui-monospace, monospace";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle = "rgba(255,255,255,0.72)";
   for (let y = 0; y < s.height; y++) {
     for (let x = 0; x < s.width; x++) {
       if (s.pellets[y * s.width + x] !== 1) continue;
-      ctx.fillText("job", x * TILE + TILE / 2, y * TILE + TILE / 2);
+      const cx = x * TILE + TILE / 2;
+      const cy = y * TILE + TILE / 2;
+
+      ctx.fillStyle = JOB_LIGHT;
+      // handle
+      ctx.fillRect(cx - 2, cy - 5, 4, 1);
+      ctx.fillRect(cx - 2, cy - 4, 1, 1);
+      ctx.fillRect(cx + 1, cy - 4, 1, 1);
+      // case
+      ctx.fillRect(cx - 5, cy - 3, 10, 7);
+      // latch
+      ctx.fillStyle = JOB_DARK;
+      ctx.fillRect(cx - 1, cy - 1, 2, 2);
     }
   }
 }
@@ -76,20 +85,24 @@ function drawHint(ctx: CanvasRenderingContext2D, s: GameState) {
   }
 }
 
-function drawPower(ctx: CanvasRenderingContext2D, s: GameState, reduceMotion: boolean) {
-  if (!s.power) return;
-  const cx = s.power.x * TILE + TILE / 2;
-  const cy = s.power.y * TILE + TILE / 2;
-  const pulse = reduceMotion ? 1 : 0.85 + Math.sin(s.time * 6) * 0.15;
-  const r = 6 * pulse;
-
-  ctx.fillStyle = ORANGE;
-  ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
-  ctx.fillStyle = "#000";
-  ctx.font = "bold 8px ui-monospace, monospace";
+function drawPowers(ctx: CanvasRenderingContext2D, s: GameState, reduceMotion: boolean) {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(POWER_INITIAL[s.power.type] ?? "?", cx, cy + 0.5);
+  for (const power of s.powers) {
+    const cx = power.x * TILE + TILE / 2;
+    const cy = power.y * TILE + TILE / 2;
+    const pulse = reduceMotion ? 1 : 0.88 + Math.sin(s.time * 7 + power.x) * 0.12;
+    const r = 7 * pulse;
+
+    // A halo, so a power-up never reads as just another job.
+    ctx.fillStyle = "rgba(245,155,0,0.22)";
+    ctx.fillRect(cx - r - 2, cy - r - 2, (r + 2) * 2, (r + 2) * 2);
+    ctx.fillStyle = ORANGE;
+    ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    ctx.fillStyle = "#000";
+    ctx.font = "bold 9px ui-monospace, monospace";
+    ctx.fillText(POWERS[power.type].glyph, cx, cy + 0.5);
+  }
 }
 
 function drawAi(ctx: CanvasRenderingContext2D, s: GameState) {
@@ -140,9 +153,15 @@ function drawBlob(ctx: CanvasRenderingContext2D, s: GameState, reduceMotion: boo
   ctx.fillRect(cx + 1.5 + ox, cy - 3 + oy, 2, 6);
 }
 
-/** Label + remaining seconds for the HUD's power-up slot. */
-export function activePowerLabel(s: GameState) {
-  if (!s.active || s.active.until <= s.time) return null;
-  const meta = POWERS[s.active.type];
-  return { label: meta.label, blurb: meta.blurb, left: s.active.until - s.time };
+/** Every running effect, for the HUD strip. */
+export function activePowers(s: GameState) {
+  return s.active
+    .filter((a) => a.until > s.time)
+    .map((a) => ({
+      type: a.type,
+      label: POWERS[a.type].label,
+      blurb: POWERS[a.type].blurb,
+      glyph: POWERS[a.type].glyph,
+      left: a.until - s.time,
+    }));
 }
