@@ -131,6 +131,7 @@ export const TIMELINE: TimelineEntry[] = [
   },
   {
     org: "Swarnabhoomi Academy of Music",
+    freelance: true,
     role: "Design Consultant",
     period: "Aug 2025 - Jun 2026",
     note: "End-to-end design across social, events and web for three semesters, plus brand and campaign for CAMP'ED, a music camp launch.",

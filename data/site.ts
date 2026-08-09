@@ -4,7 +4,7 @@ export const SITE = {
   fullName: "axd.labs",
   operator: "Akshad Prashanth",
   tagline: "Visual & motion design, built with AI.",
-  domain: "https://axdlabs.com", // TODO: replace with the real domain
+  domain: "https://axd-labs.vercel.app", // TODO: replace once a custom domain is connected
   email: "akshadprashanthoffcial@gmail.com",
   linkedin: "https://www.linkedin.com/in/akshadprashanth",
   instagram:

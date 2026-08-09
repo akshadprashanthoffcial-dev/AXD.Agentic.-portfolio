@@ -582,7 +582,7 @@ const INTENTS: Intent[] = [
       "how many years of experience", "who have you worked for",
     ],
     keys: ["experience", "joveo", "myntra", "minto", "swarnabhoomi", "epsilon"],
-    answer: `${TIMELINE.length} roles so far. Joveo (Visual Design Intern, Nov 2025 - Jul 2026, sole designer on the Implementation team), Myntra (Creative Intern on CRM, Jul - Nov 2025), Swarnabhoomi Academy of Music as design consultant, plus freelance brand and motion for Loomero, Minto.ai and Epsilon Delta.`,
+    answer: `${TIMELINE.length} roles so far. Joveo (Visual Design Intern, Nov 2025 - Jul 2026, sole designer on the Implementation team), Myntra (Creative Intern on CRM, Jul - Nov 2025), plus freelance work for Swarnabhoomi Academy of Music, Loomero, Minto.ai and Epsilon Delta.`,
     actions: [
       { label: "See the full timeline", href: "/about" },
       { label: "Download my resume", href: "/resume.pdf", external: true },
