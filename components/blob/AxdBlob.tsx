@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 import PixelWipe from "@/components/game/PixelWipe";
+import { GameAudio } from "@/components/game/engine/audio";
 
 type Mode = "hero" | "nav" | "footer";
 
@@ -68,10 +69,17 @@ export default function AxdBlob({
   const [charging, setCharging] = useState(false);
   const [bubble, setBubble] = useState<string | null>(null);
   const [wiping, setWiping] = useState(false);
+  // Same chiptune voice as the arcade itself, so the sound identity starts
+  // before the game screen does. Only on the instance that leads there —
+  // sound on every blob across the site (nav, footer) wasn't asked for and
+  // would be a surprise on pages that have nothing to do with the game.
+  const audio = useRef<GameAudio | null>(null);
+  if (secret && !audio.current) audio.current = new GameAudio();
 
   useEffect(
     () => () => {
       if (tapTimer.current !== null) window.clearTimeout(tapTimer.current);
+      audio.current?.close();
     },
     []
   );
@@ -95,7 +103,13 @@ export default function AxdBlob({
   };
 
   const onActivate = () => {
-    if (secret) countTap();
+    if (secret) {
+      countTap();
+      // The click itself is the user gesture, so the context is free to
+      // start here even on the very first tap.
+      audio.current?.ensure();
+      audio.current?.tap();
+    }
     // The same squash every time — the reaction that only fired on the second
     // tap felt the most alive, so it's now what every click does.
     setCharging(false);

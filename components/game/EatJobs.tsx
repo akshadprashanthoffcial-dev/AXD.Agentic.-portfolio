@@ -129,9 +129,9 @@ export default function EatJobs() {
               </span>
             </>
           ) : (
-            <span className="eatjobs-count eatjobs-count-idle">
-              Insert coin. No coin required.
-            </span>
+            // Empty but present, so the row still reserves its height and
+            // nothing above jumps when a round starts or ends.
+            <span className="eatjobs-count eatjobs-count-idle">&nbsp;</span>
           )}
         </div>
 
@@ -222,6 +222,9 @@ export default function EatJobs() {
                     <button type="button" className="eatjobs-btn" onClick={play}>
                       Appeal the decision
                     </button>
+                    <Link href="/" className="eatjobs-btn eatjobs-btn-quiet">
+                      Back to axd.labs
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -249,6 +252,9 @@ export default function EatJobs() {
                     <button type="button" className="eatjobs-btn" onClick={nextRound}>
                       Next round
                     </button>
+                    <Link href="/" className="eatjobs-btn eatjobs-btn-quiet">
+                      Back to axd.labs
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -265,28 +271,26 @@ export default function EatJobs() {
           )}
         </div>
 
-        <footer className="eatjobs-footer">
-          <span className="eatjobs-power-strip">
-            {screen === "playing" && hud.powers.length
-              ? hud.powers.map((p) => (
+        {/* Each screen carries its own way back to axd.labs now, rather than
+            one link pinned to every screen's footer regardless of context. */}
+        {screen === "playing" && (
+          <footer className="eatjobs-footer">
+            <span className="eatjobs-power-strip">
+              {hud.powers.length ? (
+                hud.powers.map((p) => (
                   <span key={p.type} className="eatjobs-power">
                     <i>{p.glyph}</i>
                     {p.blurb} <b>{p.left.toFixed(1)}s</b>
                   </span>
                 ))
-              : screen === "playing" && (
-                  <span className="eatjobs-power eatjobs-power-idle">
-                    {hud.left} jobs still on the board
-                  </span>
-                )}
-          </span>
-          {/* The certificate carries its own way out, so no second one here. */}
-          {screen !== "certificate" && (
-            <Link href="/" className="eatjobs-exit">
-              ← Back to axd.labs
-            </Link>
-          )}
-        </footer>
+              ) : (
+                <span className="eatjobs-power eatjobs-power-idle">
+                  {hud.left} jobs still on the board
+                </span>
+              )}
+            </span>
+          </footer>
+        )}
       </div>
     </div>
   );

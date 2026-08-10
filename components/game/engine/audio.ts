@@ -120,6 +120,17 @@ export class GameAudio {
 
   // ---- game sounds --------------------------------------------------------
 
+  /**
+   * A bright two-note blip, same voice as the in-game chomp. Used outside the
+   * arcade itself — on the home page, for the blob taps that lead into it —
+   * so the sound identity starts before the game screen does.
+   */
+  tap() {
+    if (!this.ctx || this.muted) return;
+    this.tone(660, 0.045, { wave: "square", gain: 0.28, slide: 880 });
+    this.tone(880, 0.06, { wave: "square", gain: 0.22, at: 0.045 });
+  }
+
   /** The waka: alternating down-sweeps, so a run of them sounds like chewing. */
   chomp() {
     if (!this.ctx || this.muted) return;
@@ -241,5 +252,18 @@ export class GameAudio {
   quiet() {
     this.stopSiren();
     void this.ctx?.suspend();
+  }
+
+  /**
+   * Full teardown. Safe where the instance is scoped to one component that
+   * genuinely owns it start to finish (the home blob's tap sound) — unlike
+   * `quiet()`, this is wrong to call on an instance a remount might still
+   * be using.
+   */
+  close() {
+    this.stopSiren();
+    void this.ctx?.close();
+    this.ctx = null;
+    this.master = null;
   }
 }

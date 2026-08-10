@@ -87,6 +87,13 @@ short entry with each new feature or prompt.**
 
 ### Changelog
 
+- **2026-08-10 — v0.20** EAT.JOBS follow-up: the CTAs and the persistent exit link.
+  - **Certificate's primary CTA is now "Back to axd.labs"**, with "Play again" demoted to the quiet secondary — a portfolio Easter egg should point back at the portfolio by default.
+  - **The lost screen gained the same secondary CTA.** "Appeal the decision" (retry) stays primary; "Back to axd.labs" sits beside it. The round-cleared card got the same secondary link, since it needed one now that the footer's copy disappeared (see below).
+  - **The one footer link pinned to every screen is gone**, replaced by per-screen CTAs in each panel's own action row. The footer itself now only renders while actually playing, and only holds the power-up strip.
+  - **Removed "Insert coin. No coin required."** from the idle scoreline; the row stays in the DOM as a `&nbsp;` spacer so nothing above it jumps when a round starts or ends.
+  - **The home blob got a matching tap sound** (`GameAudio.tap()`, same square-wave voice as the in-game chomp) — gated to the `secret` hero instance only, not every `AxdBlob` on the site, since sound on the nav pill or footer blob wasn't asked for and would be a surprise on pages that have nothing to do with the game. Added `GameAudio.close()` for this case: unlike the shared, remount-surviving instance in `EatJobs` (which must only ever `quiet()`, per the v0.19 note on why closing that one breaks the intro jingle), the blob's instance is scoped to one component that owns it start to finish, so a real teardown on unmount is correct there.
+
 - **2026-08-10 — v0.19** EAT.JOBS polish pass: sound, a proper cabinet, and a vintage way in.
   - **Chiptune audio, no audio files** (`components/game/engine/audio.ts`): a small Web Audio synth — square/triangle oscillators, hard attack, short decay. An attract-mode jingle on arrival, an alternating two-tone waka on every job eaten, a dull flat blip when AI takes one instead, power-up arpeggio, layoff and victory jingles, and a background siren whose wobble tightens as the board empties. Mute + volume live in the marquee and persist to `localStorage`.
   - **Don't close a shared AudioContext in an effect cleanup.** The first version disposed the context on unmount; because React mounts this component twice (StrictMode, page transitions) and the instance is shared in a ref, the *first* mount's cleanup closed the *second* mount's context and the jingle silently never played. Cleanup now suspends instead, and `intro()` self-guards against firing twice within 3s. Verified by counting `createOscillator` calls from Playwright — 0 before, 22 after.

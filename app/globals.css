@@ -1630,17 +1630,6 @@ body {
 .eatjobs-power-idle {
   color: rgba(255, 255, 255, 0.4);
 }
-.eatjobs-exit {
-  margin-left: auto;
-  font-size: 11.5px;
-  letter-spacing: 0.04em;
-  color: var(--ink-3);
-  text-underline-offset: 4px;
-}
-.eatjobs-exit:hover {
-  color: var(--ink-1);
-  text-decoration: underline;
-}
 
 @media (prefers-reduced-motion: reduce) {
   /* The wipe still covers and uncovers, it just doesn't animate doing it. */

@@ -62,12 +62,12 @@ export default function Certificate({ saved, total, seconds, onReplay }: Props) 
           </p>
 
           <div className="eatjobs-actions">
-            <button type="button" className="eatjobs-btn" onClick={onReplay}>
-              Play again
-            </button>
-            <Link href="/" className="eatjobs-btn eatjobs-btn-quiet">
+            <Link href="/" className="eatjobs-btn">
               Back to axd.labs
             </Link>
+            <button type="button" className="eatjobs-btn eatjobs-btn-quiet" onClick={onReplay}>
+              Play again
+            </button>
           </div>
         </div>
       </div>
