@@ -72,6 +72,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>
+        {/* Shared gradient referenced by the icon set (components/ui/Icons.tsx) via url(#axd-ic). */}
+        <svg width="0" height="0" aria-hidden="true" style={{ position: "absolute" }}>
+          <defs>
+            <linearGradient id="axd-ic" x1="0" y1="0" x2="24" y2="24">
+              <stop stopColor="#F59B00" />
+              <stop offset="0.5" stopColor="#A11FF2" />
+              <stop offset="1" stopColor="#EF3C3F" />
+            </linearGradient>
+          </defs>
+        </svg>
         <FluidCursor />
         <CustomCursor />
         <NavPill />

@@ -374,6 +374,9 @@ export default function CmsCaseStudy() {
 
             <div className="mt-8">
               <CTA label="View live prototype" href={P.prototypeUrl!} external size="md" />
+              <p className="mt-3 text-[13px] text-white/50 md:hidden">
+                Best viewed on desktop, the prototype isn&apos;t optimized for mobile.
+              </p>
             </div>
           </header>
 
